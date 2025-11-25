@@ -15,6 +15,7 @@ class AppColors {
   static const Color neutral700 = Color(0xFF334155);
   static const Color neutral900 = Color(0xFF0F172A);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color transparent = Colors.transparent;
 }
 
 class AppTextStyles {
@@ -62,7 +63,7 @@ class AppTheme {
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
-        background: AppColors.neutral50,
+        surface: AppColors.neutral50,
       ),
       scaffoldBackgroundColor: AppColors.white,
       appBarTheme: const AppBarTheme(
