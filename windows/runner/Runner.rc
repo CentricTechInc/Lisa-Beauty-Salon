@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.centrictech" "\0"
-            VALUE "FileDescription", "lisa_beauty_saloon" "\0"
+            VALUE "FileDescription", "lisa_beauty_salon" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "lisa_beauty_saloon" "\0"
+            VALUE "InternalName", "lisa_beauty_salon" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.centrictech. All rights reserved." "\0"
-            VALUE "OriginalFilename", "lisa_beauty_saloon.exe" "\0"
-            VALUE "ProductName", "lisa_beauty_saloon" "\0"
+            VALUE "OriginalFilename", "lisa_beauty_salon.exe" "\0"
+            VALUE "ProductName", "lisa_beauty_salon" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

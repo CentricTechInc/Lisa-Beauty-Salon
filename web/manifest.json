@@ -1,11 +1,11 @@
 {
-    "name": "lisa_beauty_saloon",
-    "short_name": "lisa_beauty_saloon",
+    "name": "lisa_beauty_salon",
+    "short_name": "lisa_beauty_salon",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Lisa Beauty Saloon Project",
+    "description": "Lisa Beauty salon Project",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:ui';
 
-import 'package:lisa_beauty_saloon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/themes/theme.dart';
 
 
 class LoggerService {

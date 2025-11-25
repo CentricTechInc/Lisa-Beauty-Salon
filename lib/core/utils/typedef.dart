@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:lisa_beauty_saloon/core/errors/failures.dart';
+import 'package:lisa_beauty_salon/core/errors/failures.dart';
 
 
 typedef ResultFuture<T> = Future<Either<Failure, T>>;

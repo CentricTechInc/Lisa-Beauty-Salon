@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lisa_beauty_saloon/app/bindings/app_bindings.dart';
-import 'package:lisa_beauty_saloon/app/router/app_pages.dart';
-import 'package:lisa_beauty_saloon/core/constants/app_constants.dart';
-import 'package:lisa_beauty_saloon/core/constants/route_constants.dart';
-import 'package:lisa_beauty_saloon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/app/bindings/app_bindings.dart';
+import 'package:lisa_beauty_salon/app/router/app_pages.dart';
+import 'package:lisa_beauty_salon/core/constants/app_constants.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
+import 'package:lisa_beauty_salon/core/themes/theme.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

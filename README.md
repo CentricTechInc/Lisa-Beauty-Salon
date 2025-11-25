@@ -1,6 +1,6 @@
-# lisa_beauty_saloon
+# lisa_beauty_salon
 
-Lisa Beauty Saloon Project
+Lisa Beauty salon Project
 
 ## Getting Started
 

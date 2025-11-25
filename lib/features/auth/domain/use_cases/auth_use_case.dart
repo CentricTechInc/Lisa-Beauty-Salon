@@ -1,6 +1,6 @@
-import 'package:lisa_beauty_saloon/core/utils/typedef.dart';
-import 'package:lisa_beauty_saloon/features/auth/data/dto/user_dto.dart';
-import 'package:lisa_beauty_saloon/features/auth/domain/repositories/auth_repository.dart';
+import 'package:lisa_beauty_salon/core/utils/typedef.dart';
+import 'package:lisa_beauty_salon/features/auth/data/dto/user_dto.dart';
+import 'package:lisa_beauty_salon/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthUseCase {
   const AuthUseCase(this._repository);

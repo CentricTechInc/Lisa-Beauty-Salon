@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:lisa_beauty_saloon/core/errors/exceptions.dart';
-import 'package:lisa_beauty_saloon/core/networks/api_service.dart';
-import 'package:lisa_beauty_saloon/features/auth/data/dto/user_dto.dart';
+import 'package:lisa_beauty_salon/core/errors/exceptions.dart';
+import 'package:lisa_beauty_salon/core/networks/api_service.dart';
+import 'package:lisa_beauty_salon/features/auth/data/dto/user_dto.dart';
 
 abstract class AuthDataSource {
   Future<UserDto> login({

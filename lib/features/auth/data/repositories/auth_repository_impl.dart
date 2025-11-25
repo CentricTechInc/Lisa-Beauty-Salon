@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:lisa_beauty_saloon/core/errors/exceptions.dart';
-import 'package:lisa_beauty_saloon/core/errors/failures.dart';
-import 'package:lisa_beauty_saloon/core/utils/typedef.dart';
-import 'package:lisa_beauty_saloon/features/auth/data/data_sources/auth_data_source.dart';
-import 'package:lisa_beauty_saloon/features/auth/data/dto/user_dto.dart';
-import 'package:lisa_beauty_saloon/features/auth/domain/repositories/auth_repository.dart';
+import 'package:lisa_beauty_salon/core/errors/exceptions.dart';
+import 'package:lisa_beauty_salon/core/errors/failures.dart';
+import 'package:lisa_beauty_salon/core/utils/typedef.dart';
+import 'package:lisa_beauty_salon/features/auth/data/data_sources/auth_data_source.dart';
+import 'package:lisa_beauty_salon/features/auth/data/dto/user_dto.dart';
+import 'package:lisa_beauty_salon/features/auth/domain/repositories/auth_repository.dart';
 
 
 class AuthRepositoryImpl implements AuthRepository {

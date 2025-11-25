@@ -1,5 +1,5 @@
-import 'package:lisa_beauty_saloon/core/utils/typedef.dart';
-import 'package:lisa_beauty_saloon/features/auth/domain/entities/user_model.dart';
+import 'package:lisa_beauty_salon/core/utils/typedef.dart';
+import 'package:lisa_beauty_salon/features/auth/domain/entities/user_model.dart';
 
 class UserDto extends UserModel {
   const UserDto({

@@ -1,5 +1,5 @@
-import 'package:lisa_beauty_saloon/core/utils/typedef.dart';
-import 'package:lisa_beauty_saloon/features/auth/data/dto/user_dto.dart';
+import 'package:lisa_beauty_salon/core/utils/typedef.dart';
+import 'package:lisa_beauty_salon/features/auth/data/dto/user_dto.dart';
 
 abstract class AuthRepository {
   ResultFuture<UserDto> login({

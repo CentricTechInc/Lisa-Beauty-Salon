@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lisa_beauty_saloon/shared/widgets/common_text.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
