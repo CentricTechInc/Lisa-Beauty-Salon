@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 
@@ -49,6 +51,14 @@ class _SplashPageState extends State<SplashPage>
         curve: const Interval(0.4, 1.0, curve: Curves.easeOut),
       ),
     );
+
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          Get.offNamed(RouteNames.welcome);
+        });
+      }
+    });
 
     controller.forward();
   }

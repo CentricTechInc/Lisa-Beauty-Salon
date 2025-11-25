@@ -63,19 +63,19 @@ class CommonScaffoldWidget extends StatelessWidget {
       ),
 
       body: SafeArea(
-        top: top,
+        top: image != null ? false : top,
         bottom: Platform.isIOS ? false : true,
         child: image != null ? Container(
-            height: context.height,
-            padding: padding ?? AppConstants.kScreenPadding,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  image ?? '',
-                ),
-                fit: fit ?? BoxFit.cover,
+          height: context.height,
+          padding: padding ?? AppConstants.kScreenPadding,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                image ?? '',
               ),
+              fit: fit ?? BoxFit.cover,
             ),
+          ),
             child: child
         ) : Padding(
           padding: padding ?? AppConstants.kScreenPadding,
