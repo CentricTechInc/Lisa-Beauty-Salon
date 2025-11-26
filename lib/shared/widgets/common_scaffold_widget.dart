@@ -18,6 +18,9 @@ class CommonScaffoldWidget extends StatelessWidget {
     this.imageAlignment,
     this.top = true,
     this.resizeToAvoidBottomInset = true,
+    this.extendBodyBehindAppBar = false,
+    this.extendBody = false,
+    this.useSafeArea = true,
     this.bgColor,
     this.drawerKey,
     this.drawer,
@@ -33,6 +36,9 @@ class CommonScaffoldWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final bool top;
   final bool resizeToAvoidBottomInset;
+  final bool extendBodyBehindAppBar;
+  final bool extendBody;
+  final bool useSafeArea;
   final Color? bgColor;
   final Key? drawerKey;
   final Widget? drawer;
@@ -49,12 +55,13 @@ class CommonScaffoldWidget extends StatelessWidget {
 
     final scaffold = Scaffold(
       key: drawerKey,
-      backgroundColor: bgColor ?? AppColors.white,
+      backgroundColor: bgColor ?? AppColors.whiteOne,
       bottomNavigationBar: bottomNavigationBar,
       persistentFooterButtons: footerButton,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       drawer: drawer,
-
+      extendBodyBehindAppBar: extendBodyBehindAppBar,
+      extendBody: extendBody,
       appBar: top ? null : PreferredSize(
         preferredSize: const Size.fromHeight(0),
         child: AppBar(
@@ -62,7 +69,7 @@ class CommonScaffoldWidget extends StatelessWidget {
         ),
       ),
 
-      body: SafeArea(
+      body: useSafeArea ? SafeArea(
         top: image != null ? false : top,
         bottom: Platform.isIOS ? false : true,
         child: image != null ? Container(
@@ -81,6 +88,21 @@ class CommonScaffoldWidget extends StatelessWidget {
           padding: padding ?? AppConstants.kScreenPadding,
           child: child,
         ),
+      ) : image != null ? Container(
+          height: context.height,
+          padding: padding ?? AppConstants.kScreenPadding,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                image ?? '',
+              ),
+              fit: fit ?? BoxFit.cover,
+            ),
+          ),
+          child: child
+      ) : Padding(
+        padding: padding ?? AppConstants.kScreenPadding,
+        child: child,
       ),
     );
 

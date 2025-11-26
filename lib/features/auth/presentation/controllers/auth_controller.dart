@@ -4,10 +4,11 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/user_dto.dart';
+import 'package:lisa_beauty_salon/features/auth/domain/repositories/auth_repository.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 
 class AuthController extends GetxController {
-  final AuthRepositoryImpl _authRepository = Get.find<AuthRepositoryImpl>();
+  final AuthRepository _authRepository = Get.find<AuthRepository>();
 
   final Rx<UserDto?> _currentUser = Rx<UserDto?>(null);
   final RxBool isLoading = false.obs;

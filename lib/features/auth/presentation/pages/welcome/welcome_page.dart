@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -19,30 +23,28 @@ class _WelcomePageState extends State<WelcomePage> {
   final welcomePages = <Map<String, dynamic>>[
     {
       "imageUrl": Assets.welcomeOne,
-      "title": "Best Stylist For You",
-      "subTitle": "Styling your appearance according to your lifestyle",
-      "buttonText": "Next",
+      "title": Strings.welcomeOneTitle,
+      "subTitle": Strings.welcomeOneSubTitle,
+      "buttonText": Strings.welcomeOneButtonText,
     },
     {
       "imageUrl": Assets.welcomeTwo,
-      "title": "Meet Our Specialists",
-      "subTitle": "There are many best stylists from all the best salons ever",
-      "buttonText": "Next",
+      "title": Strings.welcomeTwoTitle,
+      "subTitle": Strings.welcomeTwoSubTitle,
+      "buttonText": Strings.welcomeTwoButtonText,
     },
     {
       "imageUrl": Assets.welcomeThree,
-      "title": "Find The Best Service",
-      "subTitle": "There are various services from the best salons that have become our partners.",
-      "buttonText": "Get Started",
+      "title": Strings.welcomeThreeTitle,
+      "subTitle": Strings.welcomeThreeSubTitle,
+      "buttonText": Strings.welcomeThreeButtonText,
     },
   ];
 
 
   void _nextPage() {
-    // Determine the current page index without relying on local state
-    final int currentPage = _pageController.hasClients && _pageController.page != null
-        ? _pageController.page!.round()
-        : 0;
+    final int currentPage = _pageController.hasClients &&
+      _pageController.page != null ? _pageController.page!.round() : 0;
 
     if (currentPage < welcomePages.length - 1) {
       _pageController.nextPage(
@@ -50,8 +52,9 @@ class _WelcomePageState extends State<WelcomePage> {
         curve: Curves.easeIn,
       );
     } else {
-      // Handle completion of onboarding (e.g., navigate to home screen)
-      LoggerService.info("Welcome Pages Completed!");
+      Get.offNamed(
+        RouteNames.signIn
+      );
     }
   }
 
@@ -62,7 +65,7 @@ class _WelcomePageState extends State<WelcomePage> {
       height: 8.0,
       width: currentPage == index ? 24.0 : 8.0,
       decoration: BoxDecoration(
-        color: currentPage == index ? Colors.white : Colors.white54,
+        color: currentPage == index ? AppColors.whiteOne : AppColors.whiteOne,
         borderRadius: BorderRadius.circular(4),
       ),
     );
@@ -72,35 +75,33 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return CommonScaffoldWidget(
       padding: EdgeInsets.zero,
-      top: false,
+      extendBodyBehindAppBar: true,
+      bgColor: AppColors.transparent,
+      useSafeArea: false,
       child: Stack(
         children: <Widget>[
-          // --- BACKGROUND SLIDER (PageView) ---
           Positioned.fill(
             child: PageView.builder(
               controller: _pageController,
               itemCount: welcomePages.length,
               itemBuilder: (context, index) {
-                // Background image and overlay logic remains the same
                 return Stack(
                   children: [
                     Image.asset(
                       welcomePages[index]['imageUrl'],
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                       width: double.infinity,
                       height: double.infinity,
-                      // Fallback image in case placeholder link fails
                       errorBuilder: (context, error, stackTrace) => Container(
-                        color: Colors.grey[800],
+                        color: AppColors.neutral200,
                         child: const Center(
-                          child: Text(
-                            'Image not available',
-                            style: TextStyle(color: Colors.white70),
+                          child: CommonText(
+                            Strings.imageNotAvailableText,
+                            color: AppColors.whiteOne,
                           ),
                         ),
                       ),
                     ),
-                    // Dark Overlay for better text readability
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -148,49 +149,46 @@ class _WelcomePageState extends State<WelcomePage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      // Animated Text Content
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         child: Column(
-                          // Key is crucial for AnimatedSwitcher to recognize content change
                           key: ValueKey<int>(currentPage),
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
+                            CommonText(
                               currentPageData['title'] ?? '',
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 4.0,
-                                    color: Colors.black54,
-                                  ),
-                                ],
-                              ),
+                              color: AppColors.whiteOne,
+                              fontSize: 32,
+                              fontWeight: 600,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 4.0,
+                                  color: AppColors.neutral100,
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 8),
-                            Text(
+
+                            VerticalSpacing(8),
+
+                            CommonText(
                               currentPageData['subTitle'] ?? '',
+                              color: AppColors.whiteOne,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 4.0,
-                                    color: Colors.black54,
-                                  ),
-                                ],
-                              ),
+                              fontSize: 16,
+                              textOverflow: TextOverflow.visible,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 4.0,
+                                  color: AppColors.neutral700,
+                                ),
+                              ]
                             ),
                           ],
                         ),
                       ),
 
-                      const SizedBox(height: 32),
+                      VerticalSpacing(32),
 
                       // Dot Indicators
                       Row(
@@ -200,62 +198,55 @@ class _WelcomePageState extends State<WelcomePage> {
                         }),
                       ),
 
-                      const SizedBox(height: 32),
+                      VerticalSpacing(32),
 
-                      // Action Button
                       SizedBox(
                         width: double.infinity,
                         height: 56,
                         child: ElevatedButton(
                           onPressed: _nextPage,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFFC5672), // Custom pink/red color
+                            backgroundColor: AppColors.pinkOne,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
                             elevation: 5,
                           ),
-                          child: Text(
+                          child: CommonText(
                             currentPageData['buttonText'] ?? '',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                            fontSize: 18,
+                            fontWeight: 600,
+                            color: AppColors.whiteOne,
                           ),
                         ),
                       ),
 
-                      const SizedBox(height: 16),
+                      VerticalSpacing(16),
 
-                      // Sign Up Link (static)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Text(
-                            'First time here? ',
-                            style: TextStyle(
-                              color: Colors.white54,
-                              fontSize: 14,
-                            ),
+                          CommonText(
+                            Strings.firstTimeHereText,
+                            color: AppColors.whiteOne,
+                            fontSize: 14,
                           ),
                           GestureDetector(
                             onTap: () {
                               LoggerService.info('Sign Up tapped');
-                              // Navigate to Sign Up screen
                             },
-                            child: const Text(
-                              'Sign up',
-                              style: TextStyle(
-                                color: Color(0xFFFC5672), // Custom link color
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: const CommonText(
+                              Strings.signUpText,
+                              color: AppColors.pinkTwo,
+                              fontSize: 14,
+                              fontWeight: 600,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+
+                      VerticalSpacing(16),
+
                     ],
                   ),
                 );

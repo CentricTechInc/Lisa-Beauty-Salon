@@ -3,20 +3,21 @@ import 'package:lisa_beauty_salon/core/themes/theme.dart';
 
 class CommonText extends StatelessWidget {
   const CommonText(
-      this.text, {
-        super.key,
-        this.fontSize = 16,
-        this.color = AppColors.neutral50,
-        this.fontWeight = 400,
-        this.fontFamily = 'Onest',
-        this.textOverflow = TextOverflow.ellipsis,
-        this.textAlign = TextAlign.start,
-        this.lineHeight = 1.5,
-        this.letterSpacing = 0.5,
-        this.maxLines,
-        this.decoration,
-        this.shadows,
-      });
+    this.text, {
+      super.key,
+      this.fontSize = 16,
+      this.color = AppColors.neutral50,
+      this.fontWeight = 400,
+      this.fontFamily = 'Onest',
+      this.textOverflow = TextOverflow.ellipsis,
+      this.textAlign = TextAlign.start,
+      this.lineHeight = 1.5,
+      this.letterSpacing = 0.5,
+      this.fontStyle = FontStyle.normal,
+      this.maxLines,
+      this.decoration,
+      this.shadows,
+  });
 
   final String text;
   final double fontSize;
@@ -25,6 +26,7 @@ class CommonText extends StatelessWidget {
   final String fontFamily;
   final TextOverflow textOverflow;
   final TextAlign textAlign;
+  final FontStyle fontStyle;
   final double lineHeight;
   final double letterSpacing;
   final int? maxLines;
@@ -49,6 +51,7 @@ class CommonText extends StatelessWidget {
         letterSpacing: letterSpacing,
         shadows: shadows,
         fontVariations: [FontVariation.weight(fontWeight)],
+        fontStyle: fontStyle
       ),
     );
   }
