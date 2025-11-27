@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
@@ -124,12 +125,19 @@ class _SignInPageState extends State<SignInPage> {
                         },
                       ),
                     ),
-                    CommonText(
-                      Strings.forgotPasswordText,
-                      fontSize: 14,
-                      fontWeight: 400,
-                      color: AppColors.pinkTwo,
-                      decoration: TextDecoration.underline,
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(
+                          RouteNames.forgotPassword
+                        );
+                      },
+                      child: CommonText(
+                        Strings.forgotPasswordText,
+                        fontSize: 14,
+                        fontWeight: 400,
+                        color: AppColors.pinkTwo,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ],
                 ),

@@ -23,8 +23,11 @@ class Strings {
   static const String passwordPlaceholderText = "Password";
   static const String rememberMeText = "Remember me";
   static const String forgotPasswordText = "Forgot Password";
+  static const String forgotPasswordDescriptionText =
+      "Enter your email and we’ll send you a OTP to reset the password";
   static const String orText = "Or";
   static const String googleText = "Google";
   static const String appleText = "Apple";
+  static const String sendText = "Send";
 
 }
