@@ -29,5 +29,11 @@ class Strings {
   static const String googleText = "Google";
   static const String appleText = "Apple";
   static const String sendText = "Send";
+  static const String otpVerificationText = "OTP Verification";
+  static const String otpVerificationDescriptionText = "Enter your OTP code here";
+  static const String didNotReceiveTheOtpText = "Didn’t receive the OTP? ";
+  static const String resendText = "Resend";
+  static const String verifyText = "Verify";
+
 
 }
