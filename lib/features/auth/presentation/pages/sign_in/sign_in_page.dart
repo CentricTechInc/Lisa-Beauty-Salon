@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -30,7 +33,9 @@ class _SignInPageState extends State<SignInPage> {
     return CommonScaffoldWidget(
       padding: EdgeInsets.zero,
       systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: AppColors.whiteTwo
+        statusBarColor: AppColors.whiteTwo,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
       ),
       bgColor: AppColors.blackThree,
       child: Column(
@@ -44,7 +49,7 @@ class _SignInPageState extends State<SignInPage> {
               )
             ),
             padding: EdgeInsets.symmetric(
-              horizontal: 30
+              horizontal: 20
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +113,8 @@ class _SignInPageState extends State<SignInPage> {
                     Obx(
                       () => CommonCheckbox(
                         label: Strings.rememberMeText,
-                        labelFontSize: 16,
+                        spacing: 5,
+                        labelFontSize: 14,
                         labelFontWeight: 400,
                         inactiveColor: AppColors.whiteTwo,
                         activeColor: AppColors.pinkTwo,
@@ -120,7 +126,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     CommonText(
                       Strings.forgotPasswordText,
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: 400,
                       color: AppColors.pinkTwo,
                       decoration: TextDecoration.underline,
@@ -128,22 +134,18 @@ class _SignInPageState extends State<SignInPage> {
                   ],
                 ),
                 VerticalSpacing(30),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.pinkTwo,
-                    borderRadius: BorderRadius.circular(15)
+                CommonButton(
+                  backgroundColor: AppColors.pinkTwo,
+                  radius: 15,
+                  child: CommonText(
+                    Strings.loginText,
+                    color: AppColors.whiteOne,
+                    fontWeight: 600,
+                    fontSize: 18,
                   ),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 20
-                  ),
-                  child: Center(
-                    child: CommonText(
-                      Strings.loginText,
-                      color: AppColors.whiteOne,
-                      fontWeight: 600,
-                      fontSize: 18,
-                    ),
-                  ),
+                  onPressed: () {
+                    LoggerService.info('Login button pressed');
+                  },
                 ),
                 VerticalSpacing(30),
               ],
@@ -175,37 +177,102 @@ class _SignInPageState extends State<SignInPage> {
           VerticalSpacing(40),
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 20
+              horizontal: 30
             ),
             child: Row(
               children: [
                 Expanded(
                   child: Divider(
-                    color: AppColors.greyTwo.withValues(
-                      alpha: 0.3
-                    ),
+                    color: AppColors.greyThree,
                   ),
                 ),
-                HorizontalSpacing(15),
+                HorizontalSpacing(20),
                 CommonText(
                   Strings.orText,
                   color: AppColors.whiteTwo,
                 ),
-                HorizontalSpacing(15),
+                HorizontalSpacing(20),
                 Expanded(
                   child: Divider(
-                    color: AppColors.greyTwo.withValues(
-                      alpha: 0.3
-                    ),
+                    color: AppColors.greyThree,
                   ),
                 ),
               ],
             ),
           ),
           VerticalSpacing(20),
-          Row(
-            children: [],
-          )
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: CommonButton(
+                    backgroundColor: AppColors.whiteOne,
+                    radius: 15,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          Assets.googleIcon
+                        ),
+                        HorizontalSpacing(15),
+                        Container(
+                          width: 1,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: AppColors.greyOne
+                          ),
+                        ),
+                        HorizontalSpacing(15),
+                        CommonText(
+                          Strings.googleText,
+                          color: AppColors.blackOne,
+                          fontSize: 14,
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      LoggerService.info('Login button pressed');
+                    },
+                  ),
+                ),
+                HorizontalSpacing(10),
+                Expanded(
+                  child: CommonButton(
+                    backgroundColor: AppColors.whiteOne,
+                    radius: 15,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          Assets.appleIcon
+                        ),
+                        HorizontalSpacing(15),
+                        Container(
+                          width: 1,
+                          height: 32,
+                          decoration: BoxDecoration(
+                              color: AppColors.greyOne
+                          ),
+                        ),
+                        HorizontalSpacing(15),
+                        CommonText(
+                          Strings.appleText,
+                          color: AppColors.blackOne,
+                          fontSize: 14,
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      LoggerService.info('Login button pressed');
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
           VerticalSpacing(20),
         ],
       ),

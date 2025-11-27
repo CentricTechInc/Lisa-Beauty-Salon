@@ -159,7 +159,8 @@ class _WelcomePageState extends State<WelcomePage> {
                               currentPageData['title'] ?? '',
                               textAlign: TextAlign.center,
                               color: AppColors.whiteOne,
-                              fontSize: 32,
+                              textOverflow: TextOverflow.visible,
+                              fontSize: 30,
                               fontWeight: 600,
                               shadows: [
                                 Shadow(

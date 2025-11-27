@@ -24,5 +24,7 @@ class Strings {
   static const String rememberMeText = "Remember me";
   static const String forgotPasswordText = "Forgot Password";
   static const String orText = "Or";
+  static const String googleText = "Google";
+  static const String appleText = "Apple";
 
 }
