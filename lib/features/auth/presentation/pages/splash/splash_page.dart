@@ -20,10 +20,11 @@ class _SplashPageState extends State<SplashPage>
   late Animation<double> textOpacityAnimation;
   late Animation<Offset> textSlideAnimation;
 
+  bool _imagesPrecached = false;
+
   @override
   void initState() {
     super.initState();
-
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -61,6 +62,28 @@ class _SplashPageState extends State<SplashPage>
     });
 
     controller.forward();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_imagesPrecached) {
+      _precacheImages();
+      _imagesPrecached = true;
+    }
+  }
+
+  Future<void> _precacheImages() async {
+    final welcomePages = [
+      Assets.welcomeOne,
+      Assets.welcomeTwo,
+      Assets.welcomeThree
+    ];
+    for (var page in welcomePages) {
+      final image = AssetImage(page);
+      precacheImage(image, context);
+    }
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
-import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -234,7 +233,9 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              LoggerService.info('Sign Up tapped');
+                              Get.toNamed(
+                                RouteNames.signUp
+                              );
                             },
                             child: const CommonText(
                               Strings.signUpText,

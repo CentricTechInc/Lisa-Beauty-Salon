@@ -12,8 +12,10 @@ class AuthController extends GetxController {
 
   final Rx<UserDto?> _currentUser = Rx<UserDto?>(null);
   final RxBool isLoading = false.obs;
+  final RxBool agreeToTermsAndCondition = false.obs;
   final RxBool rememberMe = false.obs;
   final RxString errorMessage = ''.obs;
+  final RxString selectedCategory = ''.obs;
 
   UserDto? get currentUser => _currentUser.value;
 
@@ -21,6 +23,10 @@ class AuthController extends GetxController {
   void onInit() {
     // checkAuthStatus();
     super.onInit();
+  }
+
+  void selectCategory(String category) {
+    selectedCategory.value = category;
   }
 
   // Future<void> checkAuthStatus() async {

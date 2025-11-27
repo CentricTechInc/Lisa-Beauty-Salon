@@ -5,7 +5,10 @@ class RouteNames {
   static const String signIn = '/signIn';
   static const String forgotPassword = '/forgotPassword';
   static const String otpVerification = '/otpVerification';
+  static const String resetPassword = '/resetPassword';
   static const String signUp = '/signUp';
+  static const String emailVerification = '/emailVerification';
+  static const String createAccount = '/createAccount';
 
 
 }

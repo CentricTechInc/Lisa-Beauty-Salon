@@ -10,14 +10,14 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 
-class OtpVerificationPage extends StatefulWidget {
-  const OtpVerificationPage({super.key});
+class EmailVerificationPage extends StatefulWidget {
+  const EmailVerificationPage({super.key});
 
   @override
-  State<OtpVerificationPage> createState() => _OtpVerificationPageState();
+  State<EmailVerificationPage> createState() => _EmailVerificationPageState();
 }
 
-class _OtpVerificationPageState extends State<OtpVerificationPage> {
+class _EmailVerificationPageState extends State<EmailVerificationPage> {
 
   final int _otpLength = 4;
   late final List<TextEditingController> _controllers;
@@ -27,12 +27,12 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
   void initState() {
     super.initState();
     _controllers = List.generate(
-      _otpLength,
-      (_) => TextEditingController()
+        _otpLength,
+            (_) => TextEditingController()
     );
     _focusNodes = List.generate(
-      _otpLength,
-      (_) => FocusNode()
+        _otpLength,
+            (_) => FocusNode()
     );
   }
 
@@ -92,7 +92,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     // ScaffoldMessenger.of(context).showSnackBar(
     //   SnackBar(content: Text('OTP submitted: $otp')),
     // );
-    Get.toNamed(RouteNames.resetPassword);
+    Get.toNamed(RouteNames.createAccount);
   }
 
 
@@ -126,23 +126,23 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        VerticalSpacing(25),
+                        VerticalSpacing(30),
                         Center(
                           child: CommonText(
-                            Strings.otpVerificationText,
+                            Strings.verifyEmailText,
                             fontSize: 24,
                             fontWeight: 600,
                             color: AppColors.blackTwo,
                           ),
                         ),
-                        VerticalSpacing(25),
+                        VerticalSpacing(20),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 40
                           ),
                           child: Center(
                             child: CommonText(
-                              Strings.otpVerificationDescriptionText,
+                              Strings.verifyEmailDescriptionText,
                               fontSize: 16,
                               fontWeight: 400,
                               color: AppColors.greyTwo,
@@ -157,9 +157,9 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: List.generate(
                               _otpLength,
-                              (index) => Padding(
+                                  (index) => Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 15
+                                    horizontal: 15
                                 ),
                                 child: _buildOtpField(index),
                               ),
@@ -167,8 +167,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                           ),
                         ),
                         VerticalSpacing(250),
-                      ],
-                    ),
+                      ]
+                    )
                   ),
                   VerticalSpacing(30),
                   Row(
@@ -189,12 +189,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                       ),
                     ],
                   ),
-                  VerticalSpacing(10),
                 ],
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
@@ -202,23 +200,18 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
             ),
             child: SafeArea(
               top: false,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20
+              child: CommonButton(
+                backgroundColor: AppColors.pinkTwo,
+                radius: 15,
+                child: CommonText(
+                  Strings.verifyText,
+                  color: AppColors.whiteOne,
+                  fontWeight: 600,
+                  fontSize: 18,
                 ),
-                child: CommonButton(
-                  backgroundColor: AppColors.pinkTwo,
-                  radius: 15,
-                  child: CommonText(
-                    Strings.verifyText,
-                    color: AppColors.whiteOne,
-                    fontWeight: 600,
-                    fontSize: 18,
-                  ),
-                  onPressed: () {
-                    _submitOtp();
-                  },
-                ),
+                onPressed: () {
+                  _submitOtp();
+                },
               ),
             ),
           )

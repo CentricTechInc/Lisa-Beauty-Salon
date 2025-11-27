@@ -10,22 +10,28 @@ import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
 
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
+  final ageController = TextEditingController();
+  final genderController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,22 +65,85 @@ class _SignInPageState extends State<SignInPage> {
                   VerticalSpacing(30),
                   Center(
                     child: CommonText(
-                      Strings.loginText,
+                      Strings.signUpText,
                       fontSize: 24,
                       fontWeight: 600,
                       color: AppColors.blackTwo,
                     ),
                   ),
-                  VerticalSpacing(30),
-                  CommonText(
-                    Strings.loginDescriptionText,
-                    fontSize: 16,
-                    fontWeight: 400,
-                    color: AppColors.greyTwo,
-                    textOverflow: TextOverflow.visible,
-                    textAlign: TextAlign.center,
+                  VerticalSpacing(15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20
+                    ),
+                    child: CommonText(
+                      Strings.signUpDescriptionText,
+                      fontSize: 16,
+                      fontWeight: 400,
+                      color: AppColors.greyTwo,
+                      textOverflow: TextOverflow.visible,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   VerticalSpacing(30),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CommonText(
+                              Strings.firstNameText,
+                              fontSize: 12,
+                              fontWeight: 400,
+                              color: AppColors.blackTwo,
+                            ),
+                            VerticalSpacing(5),
+                            CommonTextField(
+                              controller: firstNameController,
+                              labelText: Strings.firstNamePlaceholderText,
+                              labelSize: 15,
+                              labelColor: AppColors.greyTwo,
+                              hintText: Strings.firstNamePlaceholderText,
+                              hintSize: 15,
+                              hintColor: AppColors.greyTwo,
+                              borderColor: AppColors.greyOne,
+                              fontSize: 15,
+                              textColor: AppColors.greyTwo,
+                            ),
+                          ],
+                        ),
+                      ),
+                      HorizontalSpacing(10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CommonText(
+                              Strings.lastNameText,
+                              fontSize: 12,
+                              fontWeight: 400,
+                              color: AppColors.blackTwo,
+                            ),
+                            VerticalSpacing(5),
+                            CommonTextField(
+                              controller: emailController,
+                              labelText: Strings.lastNamePlaceholderText,
+                              labelSize: 15,
+                              labelColor: AppColors.greyTwo,
+                              hintText: Strings.lastNamePlaceholderText,
+                              hintSize: 15,
+                              hintColor: AppColors.greyTwo,
+                              borderColor: AppColors.greyOne,
+                              fontSize: 15,
+                              textColor: AppColors.greyTwo,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  VerticalSpacing(20),
                   CommonText(
                     Strings.emailText,
                     fontSize: 12,
@@ -85,13 +154,78 @@ class _SignInPageState extends State<SignInPage> {
                   CommonTextField(
                     controller: emailController,
                     labelText: Strings.emailPlaceholderText,
-                    labelSize: 16,
+                    labelSize: 15,
                     labelColor: AppColors.greyTwo,
                     hintText: Strings.emailPlaceholderText,
-                    hintSize: 16,
+                    hintSize: 15,
                     hintColor: AppColors.greyTwo,
                   ),
-                  VerticalSpacing(40),
+                  VerticalSpacing(20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CommonText(
+                              Strings.ageText,
+                              fontSize: 12,
+                              fontWeight: 400,
+                              color: AppColors.blackTwo,
+                            ),
+                            VerticalSpacing(5),
+                            CommonTextField(
+                              controller: ageController,
+                              labelText: Strings.agePlaceholderText,
+                              labelSize: 15,
+                              labelColor: AppColors.greyTwo,
+                              hintText: Strings.agePlaceholderText,
+                              hintSize: 15,
+                              hintColor: AppColors.greyTwo,
+                              borderColor: AppColors.greyOne,
+                              fontSize: 15,
+                              textColor: AppColors.greyTwo,
+                            ),
+                          ],
+                        ),
+                      ),
+                      HorizontalSpacing(10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CommonText(
+                              Strings.genderText,
+                              fontSize: 12,
+                              fontWeight: 400,
+                              color: AppColors.blackTwo,
+                            ),
+                            VerticalSpacing(5),
+                            CommonDropdownField(
+                              items: [
+                                Strings.otherText,
+                                Strings.maleText,
+                                Strings.femaleText
+                              ].map(
+                                (value) => DropdownMenuItem(
+                                  value: value,
+                                  child: CommonText(
+                                    value,
+                                    fontSize: 15,
+                                    color: AppColors.greyTwo,
+                                  ),
+                                )
+                              ).toList(),
+                              onChanged: (value) {
+                                genderController.text = value ?? '';
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  VerticalSpacing(20),
                   CommonText(
                     Strings.passwordText,
                     fontSize: 12,
@@ -108,33 +242,66 @@ class _SignInPageState extends State<SignInPage> {
                     hintSize: 16,
                     hintColor: AppColors.greyTwo,
                   ),
-                  VerticalSpacing(40),
+                  VerticalSpacing(20),
+                  CommonText(
+                    Strings.confirmPasswordText,
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: AppColors.blackTwo,
+                  ),
+                  VerticalSpacing(5),
+                  CommonTextField(
+                    controller: confirmPasswordController,
+                    labelText: Strings.passwordPlaceholderText,
+                    labelSize: 16,
+                    labelColor: AppColors.greyTwo,
+                    hintText: Strings.passwordPlaceholderText,
+                    hintSize: 16,
+                    hintColor: AppColors.greyTwo,
+                  ),
+                  VerticalSpacing(20),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Obx(
                         () => CommonCheckbox(
-                          label: Strings.rememberMeText,
+                          label: Strings.agreeToText,
                           spacing: 5,
-                          labelFontSize: 14,
+                          labelFontSize: 12,
                           labelFontWeight: 400,
                           inactiveColor: AppColors.whiteTwo,
                           activeColor: AppColors.pinkTwo,
-                          value: authController.rememberMe.value,
+                          value: authController.agreeToTermsAndCondition.value,
                           onChanged: (value) {
-                            authController.rememberMe.value = value ?? false;
+                            authController.agreeToTermsAndCondition.value = value ?? false;
                           },
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
-                          Get.toNamed(
-                            RouteNames.forgotPassword
-                          );
+                          LoggerService.info('Terms and Conditions tapped');
                         },
                         child: CommonText(
-                          Strings.forgotPasswordText,
-                          fontSize: 14,
+                          Strings.termsAndConditionsText,
+                          fontSize: 12,
+                          fontWeight: 400,
+                          color: AppColors.pinkTwo,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                      CommonText(
+                        Strings.andText,
+                        fontSize: 12,
+                        fontWeight: 400,
+                        color: AppColors.greyTwo,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          LoggerService.info('Privacy Policy tapped');
+                        },
+                        child: CommonText(
+                          Strings.privacyPolicyText,
+                          fontSize: 12,
                           fontWeight: 400,
                           color: AppColors.pinkTwo,
                           decoration: TextDecoration.underline,
@@ -142,18 +309,20 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ],
                   ),
-                  VerticalSpacing(30),
+                  VerticalSpacing(20),
                   CommonButton(
                     backgroundColor: AppColors.pinkTwo,
                     radius: 15,
                     child: CommonText(
-                      Strings.loginText,
+                      Strings.signUpText,
                       color: AppColors.whiteOne,
                       fontWeight: 600,
                       fontSize: 18,
                     ),
                     onPressed: () {
-                      LoggerService.info('Login button pressed');
+                      Get.toNamed(
+                        RouteNames.emailVerification
+                      );
                     },
                   ),
                   VerticalSpacing(30),
@@ -165,7 +334,7 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 CommonText(
-                  Strings.firstTimeHereText,
+                  Strings.alreadyHaveAccountText,
                   color: AppColors.whiteOne,
                   fontSize: 16,
                   fontWeight: 300,
@@ -173,14 +342,15 @@ class _SignInPageState extends State<SignInPage> {
                 GestureDetector(
                   onTap: () {
                     Get.toNamed(
-                      RouteNames.signUp
+                      RouteNames.signIn
                     );
                   },
                   child: const CommonText(
-                    Strings.signUpText,
+                    Strings.loginText,
                     color: AppColors.pinkTwo,
                     fontSize: 16,
                     fontWeight: 400,
+                    decoration: TextDecoration.underline,
                   ),
                 ),
               ],
@@ -265,7 +435,7 @@ class _SignInPageState extends State<SignInPage> {
                             width: 1,
                             height: 32,
                             decoration: BoxDecoration(
-                                color: AppColors.greyOne
+                              color: AppColors.greyOne
                             ),
                           ),
                           HorizontalSpacing(15),

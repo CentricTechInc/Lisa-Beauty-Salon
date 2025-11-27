@@ -22,7 +22,7 @@ class CommonTextField extends StatelessWidget {
     this.fontSize = 15.0,
     this.hintColor = AppColors.greyTwo,
     this.labelColor = AppColors.greyTwo,
-    this.borderColor = AppColors.neutral100,
+    this.borderColor = AppColors.greyOne,
     this.readOnly = false,
     this.iconColor,
     this.fontFamily = Strings.fontFamily,
@@ -53,7 +53,7 @@ class CommonTextField extends StatelessWidget {
     this.maxLength,
     this.labelIcon,
     this.fillColor = AppColors.whiteOne,
-    this.borderRadius = 12.0,
+    this.borderRadius = 15.0,
     this.textAlign,
     this.inputFormatter,
   });

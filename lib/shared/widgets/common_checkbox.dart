@@ -11,6 +11,7 @@ class CommonCheckbox extends StatelessWidget {
     this.label,
     this.labelFontSize = 15,
     this.labelFontWeight = 400,
+    this.labelColor = AppColors.greyTwo,
     this.activeColor = AppColors.secondary,
     this.inactiveColor = AppColors.neutral200,
     this.checkColor = AppColors.whiteOne,
@@ -30,6 +31,7 @@ class CommonCheckbox extends StatelessWidget {
   final double labelFontSize;
   final double labelFontWeight;
 
+  final Color labelColor;
   final Color activeColor;
   final Color inactiveColor;
   final Color checkColor;
@@ -82,7 +84,7 @@ class CommonCheckbox extends StatelessWidget {
                   label!,
                   fontSize: labelFontSize,
                   fontWeight: labelFontWeight,
-                  color: AppColors.blackOne,
+                  color: labelColor,
                 ),
               ),
           ],
