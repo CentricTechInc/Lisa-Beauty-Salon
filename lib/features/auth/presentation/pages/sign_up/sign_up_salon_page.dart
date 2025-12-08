@@ -16,25 +16,18 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class SignUpSalonPage extends StatefulWidget {
+  const SignUpSalonPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignUpSalonPage> createState() => _SignUpSalonPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpSalonPageState extends State<SignUpSalonPage> {
 
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
-  final ageController = TextEditingController();
-  final genderController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  final stateController = TextEditingController();
-  final cityController = TextEditingController();
-  final zipCodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -80,71 +73,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       horizontal: 20
                     ),
                     child: CommonText(
-                      Strings.signUpDescriptionText,
+                      Strings.signUpSalonDescriptionText,
                       fontSize: 16,
                       fontWeight: 400,
                       color: AppColors.greyTwo,
                       textOverflow: TextOverflow.visible,
                       textAlign: TextAlign.center,
                     ),
-                  ),
-                  VerticalSpacing(30),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              Strings.firstNameText,
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: AppColors.blackTwo,
-                            ),
-                            VerticalSpacing(5),
-                            CommonTextField(
-                              controller: firstNameController,
-                              labelText: Strings.firstNamePlaceholderText,
-                              labelSize: 15,
-                              labelColor: AppColors.greyTwo,
-                              hintText: Strings.firstNamePlaceholderText,
-                              hintSize: 15,
-                              hintColor: AppColors.greyTwo,
-                              borderColor: AppColors.greyOne,
-                              fontSize: 15,
-                              textColor: AppColors.greyTwo,
-                            ),
-                          ],
-                        ),
-                      ),
-                      HorizontalSpacing(10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              Strings.lastNameText,
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: AppColors.blackTwo,
-                            ),
-                            VerticalSpacing(5),
-                            CommonTextField(
-                              controller: emailController,
-                              labelText: Strings.lastNamePlaceholderText,
-                              labelSize: 15,
-                              labelColor: AppColors.greyTwo,
-                              hintText: Strings.lastNamePlaceholderText,
-                              hintSize: 15,
-                              hintColor: AppColors.greyTwo,
-                              borderColor: AppColors.greyOne,
-                              fontSize: 15,
-                              textColor: AppColors.greyTwo,
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
                   ),
                   VerticalSpacing(20),
                   CommonText(
@@ -195,152 +130,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelColor: AppColors.greyTwo,
                     hintText: Strings.passwordPlaceholderText,
                     hintSize: 16,
-                    hintColor: AppColors.greyTwo,
-                  ),
-                  VerticalSpacing(20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              Strings.ageText,
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: AppColors.blackTwo,
-                            ),
-                            VerticalSpacing(5),
-                            CommonTextField(
-                              controller: ageController,
-                              labelText: Strings.agePlaceholderText,
-                              labelSize: 15,
-                              labelColor: AppColors.greyTwo,
-                              hintText: Strings.agePlaceholderText,
-                              hintSize: 15,
-                              hintColor: AppColors.greyTwo,
-                              borderColor: AppColors.greyOne,
-                              fontSize: 15,
-                              textColor: AppColors.greyTwo,
-                            ),
-                          ],
-                        ),
-                      ),
-                      HorizontalSpacing(10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              Strings.genderText,
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: AppColors.blackTwo,
-                            ),
-                            VerticalSpacing(5),
-                            CommonDropdownField(
-                              items: [
-                                Strings.otherText,
-                                Strings.maleText,
-                                Strings.femaleText
-                              ].map((value) => DropdownMenuItem(
-                                value: value,
-                                child: CommonText(
-                                  value,
-                                  fontSize: 15,
-                                  color: AppColors.greyTwo,
-                                ),
-                              )
-                              ).toList(),
-                              onChanged: (value) {
-                                genderController.text = value ?? '';
-                              },
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  VerticalSpacing(20),
-                  CommonText(
-                    Strings.stateText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
-                  CommonDropdownField(
-                    items: (authController.countryDataOfUs?.states ?? []).map(
-                      (state) => DropdownMenuItem(
-                        value: state,
-                        child: CommonText(
-                          state.name,
-                          fontSize: 15,
-                          color: AppColors.greyTwo,
-                        ),
-                      )
-                    ).toList(),
-                    onChanged: (value) {
-                      stateController.text = value?.name ?? '';
-                      authController.setCitiesAccordingToState(
-                        stateController.text
-                      );
-                      cityController.text = '';
-                    },
-                  ),
-                  VerticalSpacing(20),
-                  CommonText(
-                    Strings.cityText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
-                  Obx(() {
-                    final cities = authController.citiesList;
-                    final isDisabled = cities.isEmpty;
-
-                    return CommonDropdownField<int>(
-                      value: cityController.text.isEmpty ? null :
-                      cities.indexWhere((c) => c.name == cityController.text) >= 0
-                          ? cities.indexWhere((c) => c.name == cityController.text)
-                          : null,
-                      items: isDisabled ? <DropdownMenuItem<int>>[]
-                          : cities.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final city = entry.value;
-                        return DropdownMenuItem(
-                          value: index, // Always unique
-                          child: CommonText(
-                            city.name,
-                            fontSize: 15,
-                            color: AppColors.greyTwo,
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        if (isDisabled == false && value != null && value >= 0 && value < cities.length) {
-                          cityController.text = cities[value].name;
-                        }
-                      },
-                      hintText: isDisabled ? 'No cities available' : 'Select City',
-                    );
-                  }),
-                  VerticalSpacing(20),
-                  CommonText(
-                    Strings.zipCodeText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
-                  CommonTextField(
-                    controller: zipCodeController,
-                    labelText: Strings.zipCodePlaceholderText,
-                    labelSize: 15,
-                    labelColor: AppColors.greyTwo,
-                    hintText: Strings.zipCodePlaceholderText,
-                    hintSize: 15,
                     hintColor: AppColors.greyTwo,
                   ),
                   VerticalSpacing(20),
@@ -405,7 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     onPressed: () {
                       Get.toNamed(
-                        RouteNames.emailVerification
+                          RouteNames.emailVerification
                       );
                     },
                   ),
@@ -426,7 +215,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 GestureDetector(
                   onTap: () {
                     Get.toNamed(
-                      RouteNames.signIn
+                        RouteNames.signIn
                     );
                   },
                   child: const CommonText(
@@ -442,7 +231,7 @@ class _SignUpPageState extends State<SignUpPage> {
             VerticalSpacing(40),
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 30
+                  horizontal: 30
               ),
               child: Row(
                 children: [
@@ -468,7 +257,7 @@ class _SignUpPageState extends State<SignUpPage> {
             VerticalSpacing(20),
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 20
+                  horizontal: 20
               ),
               child: Row(
                 children: [
@@ -480,14 +269,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SvgPicture.asset(
-                            Assets.googleIcon
+                              Assets.googleIcon
                           ),
                           HorizontalSpacing(15),
                           Container(
                             width: 1,
                             height: 32,
                             decoration: BoxDecoration(
-                              color: AppColors.greyOne
+                                color: AppColors.greyOne
                             ),
                           ),
                           HorizontalSpacing(15),
@@ -512,14 +301,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SvgPicture.asset(
-                            Assets.appleIcon
+                              Assets.appleIcon
                           ),
                           HorizontalSpacing(15),
                           Container(
                             width: 1,
                             height: 32,
                             decoration: BoxDecoration(
-                              color: AppColors.greyOne
+                                color: AppColors.greyOne
                             ),
                           ),
                           HorizontalSpacing(15),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -92,7 +93,12 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
     // ScaffoldMessenger.of(context).showSnackBar(
     //   SnackBar(content: Text('OTP submitted: $otp')),
     // );
-    Get.toNamed(RouteNames.createAccount);
+    final authController = Get.find<AuthController>();
+    if (authController.selectedCategory.value == Strings.salonsText) {
+      Get.toNamed(
+        RouteNames.buildYourProfile
+      );
+    }
   }
 
 

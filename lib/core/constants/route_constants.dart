@@ -6,9 +6,11 @@ class RouteNames {
   static const String forgotPassword = '/forgotPassword';
   static const String otpVerification = '/otpVerification';
   static const String resetPassword = '/resetPassword';
-  static const String signUp = '/signUp';
+  static const String signUpCustomer = '/signUpCustomer';
+  static const String signUpSalon = '/signUpSalon';
   static const String emailVerification = '/emailVerification';
   static const String createAccount = '/createAccount';
+  static const String buildYourProfile = '/buildYourProfile';
 
 
 }

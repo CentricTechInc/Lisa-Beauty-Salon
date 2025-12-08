@@ -18,7 +18,6 @@ class CreateAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accountCategories = [
-      Strings.individualServiceProvidersText,
       Strings.salonsText,
       Strings.customerText
     ];
@@ -172,11 +171,13 @@ class CreateAccountPage extends StatelessWidget {
                           Strings.customerText
                         ) {
                           Get.toNamed(
-                              RouteNames.signUp
+                            RouteNames.signUpCustomer
                           );
                         }
                         else{
-
+                          Get.toNamed(
+                            RouteNames.signUpSalon
+                          );
                         }
                       },
                     ),

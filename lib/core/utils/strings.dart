@@ -16,8 +16,10 @@ class Strings {
   static const String alreadyHaveAccountText = "Already Have Account? ";
   static const String imageNotAvailableText = "Image not available";
   static const String signUpText = "Sign up";
-  static const String signUpDescriptionText =
+  static const String signUpCustomerDescriptionText =
       "Enter your name, email & password to register account";
+  static const String signUpSalonDescriptionText =
+      "Enter your email & password to register account";
   static const String loginText = "Log in";
   static const String loginDescriptionText = "Enter your email and password to get access your account";
   static const String emailText = "Email*";
@@ -80,4 +82,48 @@ class Strings {
   static const String nextText = "Next";
 
   static const String unitedStatesStringText = "United States";
+
+  //build your profile page
+  static const String buildYourProfileText = "Build Your Profile";
+
+  static const String verifyYourProfessionalStatusText =
+      "Verify Your Professional Status";
+  static const String verifyYourProfessionalStatusDescriptionText =
+      "We need to verify your professional license for quality assurance. This information is secure.";
+
+  static const String licenseTypeText = "License Type*";
+  static const String licenseNumberText = "License Number*";
+  static const String issuanceStateOrCountryNumberText = "Issuing State/Country*";
+  static const String uploadLicensePhotoText = "Upload License Photo*";
+  static const String uploadLicensePhotoDescriptionText =
+      "Take a clear photo of your license card/certificate";
+  static const String filesStartToUploadingText =
+      "Your file(s) to start uploading";
+  static const String browseFilesText = "Browse files";
+  static const String createYourProfessionalProfileText =
+      "Create Your Professional Profile";
+  static const String howClientsWillFindAndBookYouText =
+      "This is how clients will find and book you.";
+  static const String uploadYourProfilePhotoText = "Upload Your Profile Photo";
+  static const String professionalAndBioOrHeadlineText = "Professional Bio/Headline";
+  static const String areaOfSpecializationText = "Areas of Specialization*";
+  static const String yearsOfExperienceText = "Years of Experience*";
+  static const String setUpYourServicesAndPricingText = "Set Up Your Services & Pricing";
+  static const String setUpYourServicesAndPricingDescriptionText =
+    "Yet not found any service. Please tab to “Add a Service” button to add service in app.";
+  static const String addAServiceText = "Add a Service";
+  static const String setUpYourServicesAndPricing =
+      "Set Up Your Services & Pricing";
+  static const String serviceCategoryText = "Service Category*";
+  static const String serviceForText = "Service For*";
+  static const String serviceNameText = "Service Name*";
+  static const String priceText = "Price*";
+  static const String uploadAPictureText = "Upload A Picture (Optional)";
+  static const String descriptionText = "Description (Optional)";
+  static const String descriptionPlaceholderText = "Tell clients about your style and expertise.";
+  static const String addText = "Add";
+  static const String hairWashText = "Hair Wash";
+  static const String addAServiceHelpText= 'Please tab to "Add a Service" button to add another service';
+  static const String yourDefaultWeeklyScheduleText = "Your Default Weekly Schedule";
+  static const String yourDefaultWeeklyScheduleDescriptionText = "Don't worry, you can always adjust this later and set time off";
 }
