@@ -56,6 +56,7 @@ class CommonTextField extends StatelessWidget {
     this.borderRadius = 15.0,
     this.textAlign,
     this.inputFormatter,
+    this.floatingLabelBehavior = FloatingLabelBehavior.never,
   });
 
   final double suffixPadding;
@@ -106,6 +107,7 @@ class CommonTextField extends StatelessWidget {
   final double borderRadius;
   final TextAlign? textAlign;
   final List<TextInputFormatter>? inputFormatter;
+  final FloatingLabelBehavior floatingLabelBehavior;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +139,7 @@ class CommonTextField extends StatelessWidget {
         onChanged: onChanged,
         decoration: InputDecoration(
           errorMaxLines: 6,
-          floatingLabelBehavior: FloatingLabelBehavior.never,
+          floatingLabelBehavior: floatingLabelBehavior,
           fillColor: fillColor,
           filled: true,
           hintText: hintText,

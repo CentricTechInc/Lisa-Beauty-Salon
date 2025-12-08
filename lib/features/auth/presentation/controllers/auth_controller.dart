@@ -1,14 +1,14 @@
-import 'dart:developer';
 
 
+import 'package:country_state_city_dropdown/country_state_city_dropdown.dart';
 import 'package:get/get.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/services/logger_service.dart';
+import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/user_dto.dart';
-import 'package:lisa_beauty_salon/features/auth/domain/repositories/auth_repository.dart';
-import '../../data/repositories/auth_repository_impl.dart';
+import 'package:lisa_beauty_salon/features/auth/domain/use_cases/auth_use_case.dart';
 
 class AuthController extends GetxController {
-  final AuthRepository _authRepository = Get.find<AuthRepository>();
+  final AuthUseCase _authUseCase = Get.find<AuthUseCase>();
 
   final Rx<UserDto?> _currentUser = Rx<UserDto?>(null);
   final RxBool isLoading = false.obs;
@@ -17,11 +17,17 @@ class AuthController extends GetxController {
   final RxString errorMessage = ''.obs;
   final RxString selectedCategory = ''.obs;
 
+  List<Country> countriesList = [];
+  RxList<City> citiesList = <City>[].obs;
+  final RxInt selectedCityIndex = (-1).obs;
+  Country? countryDataOfUs;
+
   UserDto? get currentUser => _currentUser.value;
 
   @override
   void onInit() {
     // checkAuthStatus();
+    loadCountries();
     super.onInit();
   }
 
@@ -99,4 +105,34 @@ class AuthController extends GetxController {
   //     errorMessage.value = ErrorUtils.getFriendlyErrorMessage(e);
   //   }
   // }
+
+  Future<void> loadCountries() async {
+    final result = await _authUseCase.loadCountries();
+
+    result.fold(
+      (failure) {
+        LoggerService.error(failure.message);
+      },
+      (data) {
+        countriesList = data ?? [];
+        countryDataOfUs = countriesList.firstWhereOrNull(
+          (country) {
+            if (country.name == Strings.unitedStatesStringText) {
+              return true;
+            }
+            return false;
+          }
+        );
+      },
+    );
+  }
+
+  void setCitiesAccordingToState(String stateName) {
+    final state = countryDataOfUs?.states.firstWhereOrNull((s) => s.name == stateName);
+    if (state != null) {
+      citiesList.assignAll(state.cities);
+    } else {
+      citiesList.clear();
+    }
+  }
 }

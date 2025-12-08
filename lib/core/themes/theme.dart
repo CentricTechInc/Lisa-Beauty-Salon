@@ -25,6 +25,7 @@ class AppColors {
   static const Color blackTwo = Color(0xFF40393A);
   static const Color blackThree = Color(0xFF13000A);
   static const Color transparent = Colors.transparent;
+  static const Color redOne = Colors.red;
 }
 
 class AppTextStyles {

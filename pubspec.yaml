@@ -46,6 +46,7 @@ dependencies:
   get: ^4.7.3
   dartz: ^0.10.1
   flutter_svg: ^2.2.3
+  country_state_city_dropdown: ^0.1.2
 
 dev_dependencies:
   flutter_test:

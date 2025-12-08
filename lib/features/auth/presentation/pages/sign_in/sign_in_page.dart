@@ -173,7 +173,7 @@ class _SignInPageState extends State<SignInPage> {
                 GestureDetector(
                   onTap: () {
                     Get.toNamed(
-                      RouteNames.signUp
+                      RouteNames.createAccount
                     );
                   },
                   child: const CommonText(

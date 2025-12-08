@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -165,7 +166,19 @@ class CreateAccountPage extends StatelessWidget {
                         textOverflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (
+                          authController.selectedCategory.value ==
+                          Strings.customerText
+                        ) {
+                          Get.toNamed(
+                              RouteNames.signUp
+                          );
+                        }
+                        else{
+
+                        }
+                      },
                     ),
                     VerticalSpacing(20),
                   ]

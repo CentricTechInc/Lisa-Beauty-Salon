@@ -4,6 +4,7 @@ import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
@@ -52,7 +53,7 @@ class _WelcomePageState extends State<WelcomePage> {
       );
     } else {
       Get.offNamed(
-        RouteNames.signIn
+        RouteNames.createAccount
       );
     }
   }
@@ -200,25 +201,17 @@ class _WelcomePageState extends State<WelcomePage> {
 
                       VerticalSpacing(32),
 
-                      SizedBox(
+                      CommonButton(
+                        text: currentPageData['buttonText'] ?? '',
                         width: double.infinity,
                         height: 56,
-                        child: ElevatedButton(
-                          onPressed: _nextPage,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.pinkOne,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            elevation: 5,
-                          ),
-                          child: CommonText(
-                            currentPageData['buttonText'] ?? '',
-                            fontSize: 18,
-                            fontWeight: 600,
-                            color: AppColors.whiteOne,
-                          ),
-                        ),
+                        onPressed: _nextPage,
+                        backgroundColor: AppColors.pinkOne,
+                        radius: 16,
+                        elevation: 5,
+                        textFontSize: 18,
+                        textFontWeight: 600,
+                        textColor: AppColors.whiteOne,
                       ),
 
                       VerticalSpacing(16),
@@ -234,7 +227,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           GestureDetector(
                             onTap: () {
                               Get.toNamed(
-                                RouteNames.signUp
+                                RouteNames.createAccount
                               );
                             },
                             child: const CommonText(

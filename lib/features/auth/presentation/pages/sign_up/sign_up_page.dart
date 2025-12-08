@@ -32,6 +32,9 @@ class _SignUpPageState extends State<SignUpPage> {
   final genderController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final stateController = TextEditingController();
+  final cityController = TextEditingController();
+  final zipCodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -161,6 +164,40 @@ class _SignUpPageState extends State<SignUpPage> {
                     hintColor: AppColors.greyTwo,
                   ),
                   VerticalSpacing(20),
+                  CommonText(
+                    Strings.passwordText,
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: AppColors.blackTwo,
+                  ),
+                  VerticalSpacing(5),
+                  CommonTextField(
+                    controller: passwordController,
+                    labelText: Strings.passwordPlaceholderText,
+                    labelSize: 16,
+                    labelColor: AppColors.greyTwo,
+                    hintText: Strings.passwordPlaceholderText,
+                    hintSize: 16,
+                    hintColor: AppColors.greyTwo,
+                  ),
+                  VerticalSpacing(20),
+                  CommonText(
+                    Strings.confirmPasswordText,
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: AppColors.blackTwo,
+                  ),
+                  VerticalSpacing(5),
+                  CommonTextField(
+                    controller: confirmPasswordController,
+                    labelText: Strings.passwordPlaceholderText,
+                    labelSize: 16,
+                    labelColor: AppColors.greyTwo,
+                    hintText: Strings.passwordPlaceholderText,
+                    hintSize: 16,
+                    hintColor: AppColors.greyTwo,
+                  ),
+                  VerticalSpacing(20),
                   Row(
                     children: [
                       Expanded(
@@ -206,15 +243,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                 Strings.otherText,
                                 Strings.maleText,
                                 Strings.femaleText
-                              ].map(
-                                (value) => DropdownMenuItem(
-                                  value: value,
-                                  child: CommonText(
-                                    value,
-                                    fontSize: 15,
-                                    color: AppColors.greyTwo,
-                                  ),
-                                )
+                              ].map((value) => DropdownMenuItem(
+                                value: value,
+                                child: CommonText(
+                                  value,
+                                  fontSize: 15,
+                                  color: AppColors.greyTwo,
+                                ),
+                              )
                               ).toList(),
                               onChanged: (value) {
                                 genderController.text = value ?? '';
@@ -227,36 +263,84 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   VerticalSpacing(20),
                   CommonText(
-                    Strings.passwordText,
+                    Strings.stateText,
                     fontSize: 12,
                     fontWeight: 400,
                     color: AppColors.blackTwo,
                   ),
                   VerticalSpacing(5),
-                  CommonTextField(
-                    controller: passwordController,
-                    labelText: Strings.passwordPlaceholderText,
-                    labelSize: 16,
-                    labelColor: AppColors.greyTwo,
-                    hintText: Strings.passwordPlaceholderText,
-                    hintSize: 16,
-                    hintColor: AppColors.greyTwo,
+                  CommonDropdownField(
+                    items: (authController.countryDataOfUs?.states ?? []).map(
+                      (state) => DropdownMenuItem(
+                        value: state,
+                        child: CommonText(
+                          state.name,
+                          fontSize: 15,
+                          color: AppColors.greyTwo,
+                        ),
+                      )
+                    ).toList(),
+                    onChanged: (value) {
+                      stateController.text = value?.name ?? '';
+                      authController.setCitiesAccordingToState(
+                        stateController.text
+                      );
+                      cityController.text = '';
+                    },
                   ),
                   VerticalSpacing(20),
                   CommonText(
-                    Strings.confirmPasswordText,
+                    Strings.cityText,
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: AppColors.blackTwo,
+                  ),
+                  VerticalSpacing(5),
+                  Obx(() {
+                    final cities = authController.citiesList;
+                    final isDisabled = cities.isEmpty;
+
+                    return CommonDropdownField<int>(
+                      value: cityController.text.isEmpty ? null :
+                      cities.indexWhere((c) => c.name == cityController.text) >= 0
+                          ? cities.indexWhere((c) => c.name == cityController.text)
+                          : null,
+                      items: isDisabled ? <DropdownMenuItem<int>>[]
+                          : cities.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final city = entry.value;
+                        return DropdownMenuItem(
+                          value: index, // Always unique
+                          child: CommonText(
+                            city.name,
+                            fontSize: 15,
+                            color: AppColors.greyTwo,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        if (isDisabled == false && value != null && value >= 0 && value < cities.length) {
+                          cityController.text = cities[value].name;
+                        }
+                      },
+                      hintText: isDisabled ? 'No cities available' : 'Select City',
+                    );
+                  }),
+                  VerticalSpacing(20),
+                  CommonText(
+                    Strings.zipCodeText,
                     fontSize: 12,
                     fontWeight: 400,
                     color: AppColors.blackTwo,
                   ),
                   VerticalSpacing(5),
                   CommonTextField(
-                    controller: confirmPasswordController,
-                    labelText: Strings.passwordPlaceholderText,
-                    labelSize: 16,
+                    controller: zipCodeController,
+                    labelText: Strings.zipCodePlaceholderText,
+                    labelSize: 15,
                     labelColor: AppColors.greyTwo,
-                    hintText: Strings.passwordPlaceholderText,
-                    hintSize: 16,
+                    hintText: Strings.zipCodePlaceholderText,
+                    hintSize: 15,
                     hintColor: AppColors.greyTwo,
                   ),
                   VerticalSpacing(20),

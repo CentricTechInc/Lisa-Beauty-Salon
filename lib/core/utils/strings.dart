@@ -69,5 +69,15 @@ class Strings {
   static const String customerText = "Customer";
   static const String categoryDescriptionText =
       "Once you are done selecting your profession, proceed by clicking on the next button";
+  static const String countryText = "Country*";
+  static const String countryPlaceholderText = "Country*";
+  static const String cityText = "City*";
+  static const String cityPlaceholderText = "Brentwood";
+  static const String stateText = "State*";
+  static const String statePlaceholderText = "New York";
+  static const String zipCodeText = "Zip Code*";
+  static const String zipCodePlaceholderText = "11717*";
   static const String nextText = "Next";
+
+  static const String unitedStatesStringText = "United States";
 }
