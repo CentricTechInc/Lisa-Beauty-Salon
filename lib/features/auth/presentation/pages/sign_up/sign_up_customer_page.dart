@@ -92,70 +92,42 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              Strings.firstNameText,
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: AppColors.blackTwo,
-                            ),
-                            VerticalSpacing(5),
-                            CommonTextField(
-                              controller: firstNameController,
-                              labelText: Strings.firstNamePlaceholderText,
-                              labelSize: 15,
-                              labelColor: AppColors.greyTwo,
-                              hintText: Strings.firstNamePlaceholderText,
-                              hintSize: 15,
-                              hintColor: AppColors.greyTwo,
-                              borderColor: AppColors.greyOne,
-                              fontSize: 15,
-                              textColor: AppColors.greyTwo,
-                            ),
-                          ],
+                        child: CommonTextField(
+                          controller: firstNameController,
+                          titleLabelText: Strings.firstNameText,
+                          labelText: Strings.firstNamePlaceholderText,
+                          labelSize: 15,
+                          labelColor: AppColors.greyTwo,
+                          hintText: Strings.firstNamePlaceholderText,
+                          hintSize: 15,
+                          hintColor: AppColors.greyTwo,
+                          borderColor: AppColors.greyOne,
+                          fontSize: 15,
+                          textColor: AppColors.greyTwo,
                         ),
                       ),
                       HorizontalSpacing(10),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              Strings.lastNameText,
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: AppColors.blackTwo,
-                            ),
-                            VerticalSpacing(5),
-                            CommonTextField(
-                              controller: emailController,
-                              labelText: Strings.lastNamePlaceholderText,
-                              labelSize: 15,
-                              labelColor: AppColors.greyTwo,
-                              hintText: Strings.lastNamePlaceholderText,
-                              hintSize: 15,
-                              hintColor: AppColors.greyTwo,
-                              borderColor: AppColors.greyOne,
-                              fontSize: 15,
-                              textColor: AppColors.greyTwo,
-                            ),
-                          ],
+                        child: CommonTextField(
+                          controller: emailController,
+                          titleLabelText: Strings.lastNameText,
+                          labelText: Strings.lastNamePlaceholderText,
+                          labelSize: 15,
+                          labelColor: AppColors.greyTwo,
+                          hintText: Strings.lastNamePlaceholderText,
+                          hintSize: 15,
+                          hintColor: AppColors.greyTwo,
+                          borderColor: AppColors.greyOne,
+                          fontSize: 15,
+                          textColor: AppColors.greyTwo,
                         ),
                       )
                     ],
                   ),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.emailText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   CommonTextField(
                     controller: emailController,
+                    titleLabelText: Strings.emailText,
                     labelText: Strings.emailPlaceholderText,
                     labelSize: 15,
                     labelColor: AppColors.greyTwo,
@@ -164,15 +136,9 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                     hintColor: AppColors.greyTwo,
                   ),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.passwordText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   CommonTextField(
                     controller: passwordController,
+                    titleLabelText: Strings.passwordText,
                     labelText: Strings.passwordPlaceholderText,
                     labelSize: 16,
                     labelColor: AppColors.greyTwo,
@@ -181,15 +147,9 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                     hintColor: AppColors.greyTwo,
                   ),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.confirmPasswordText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   CommonTextField(
                     controller: confirmPasswordController,
+                    titleLabelText: Strings.confirmPasswordText,
                     labelText: Strings.passwordPlaceholderText,
                     labelSize: 16,
                     labelColor: AppColors.greyTwo,
@@ -201,75 +161,47 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              Strings.ageText,
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: AppColors.blackTwo,
-                            ),
-                            VerticalSpacing(5),
-                            CommonTextField(
-                              controller: ageController,
-                              labelText: Strings.agePlaceholderText,
-                              labelSize: 15,
-                              labelColor: AppColors.greyTwo,
-                              hintText: Strings.agePlaceholderText,
-                              hintSize: 15,
-                              hintColor: AppColors.greyTwo,
-                              borderColor: AppColors.greyOne,
-                              fontSize: 15,
-                              textColor: AppColors.greyTwo,
-                            ),
-                          ],
+                        child: CommonTextField(
+                          controller: ageController,
+                          titleLabelText: Strings.ageText,
+                          labelText: Strings.agePlaceholderText,
+                          labelSize: 15,
+                          labelColor: AppColors.greyTwo,
+                          hintText: Strings.agePlaceholderText,
+                          hintSize: 15,
+                          hintColor: AppColors.greyTwo,
+                          borderColor: AppColors.greyOne,
+                          fontSize: 15,
+                          textColor: AppColors.greyTwo,
                         ),
                       ),
                       HorizontalSpacing(10),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              Strings.genderText,
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: AppColors.blackTwo,
+                        child: CommonDropdownField(
+                          titleLabelText: Strings.genderText,
+                          items: [
+                            Strings.otherText,
+                            Strings.maleText,
+                            Strings.femaleText
+                          ].map((value) => DropdownMenuItem(
+                            value: value,
+                            child: CommonText(
+                              value,
+                              fontSize: 15,
+                              color: AppColors.greyTwo,
                             ),
-                            VerticalSpacing(5),
-                            CommonDropdownField(
-                              items: [
-                                Strings.otherText,
-                                Strings.maleText,
-                                Strings.femaleText
-                              ].map((value) => DropdownMenuItem(
-                                value: value,
-                                child: CommonText(
-                                  value,
-                                  fontSize: 15,
-                                  color: AppColors.greyTwo,
-                                ),
-                              )
-                              ).toList(),
-                              onChanged: (value) {
-                                genderController.text = value ?? '';
-                              },
-                            ),
-                          ],
+                          )
+                          ).toList(),
+                          onChanged: (value) {
+                            genderController.text = value ?? '';
+                          },
                         ),
                       )
                     ],
                   ),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.stateText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   CommonDropdownField(
+                    titleLabelText: Strings.stateText,
                     items: (authController.countryDataOfUs?.states ?? []).map(
                       (state) => DropdownMenuItem(
                         value: state,
@@ -289,18 +221,12 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                     },
                   ),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.cityText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   Obx(() {
                     final cities = authController.citiesList;
                     final isDisabled = cities.isEmpty;
 
                     return CommonDropdownField<int>(
+                      titleLabelText: Strings.cityText,
                       value: cityController.text.isEmpty ? null :
                       cities.indexWhere((c) => c.name == cityController.text) >= 0
                           ? cities.indexWhere((c) => c.name == cityController.text)
@@ -327,14 +253,8 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                     );
                   }),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.zipCodeText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   CommonTextField(
+                    titleLabelText: Strings.zipCodeText,
                     controller: zipCodeController,
                     labelText: Strings.zipCodePlaceholderText,
                     labelSize: 15,

@@ -85,14 +85,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ),
                         ),
                         VerticalSpacing(50),
-                        CommonText(
-                          Strings.emailText,
-                          fontSize: 12,
-                          fontWeight: 400,
-                          color: AppColors.greyTwo,
-                        ),
-                        VerticalSpacing(20),
                         CommonTextField(
+                          titleLabelText: Strings.emailText,
                           controller: emailController,
                           labelText: Strings.emailPlaceholderText,
                           labelSize: 16,

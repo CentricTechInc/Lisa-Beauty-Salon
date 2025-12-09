@@ -50,7 +50,11 @@ class CommonText extends StatelessWidget {
         height: lineHeight,
         letterSpacing: letterSpacing,
         shadows: shadows,
-        fontVariations: [FontVariation.weight(fontWeight)],
+        fontVariations: [
+          FontVariation.weight(
+            fontWeight
+          )
+        ],
         fontStyle: fontStyle
       ),
     );

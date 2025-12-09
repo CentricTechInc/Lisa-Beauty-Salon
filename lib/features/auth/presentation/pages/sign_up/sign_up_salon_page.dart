@@ -82,14 +82,8 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> {
                     ),
                   ),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.emailText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   CommonTextField(
+                    titleLabelText: Strings.emailText,
                     controller: emailController,
                     labelText: Strings.emailPlaceholderText,
                     labelSize: 15,
@@ -99,14 +93,8 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> {
                     hintColor: AppColors.greyTwo,
                   ),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.passwordText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   CommonTextField(
+                    titleLabelText: Strings.passwordText,
                     controller: passwordController,
                     labelText: Strings.passwordPlaceholderText,
                     labelSize: 16,
@@ -116,14 +104,8 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> {
                     hintColor: AppColors.greyTwo,
                   ),
                   VerticalSpacing(20),
-                  CommonText(
-                    Strings.confirmPasswordText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
                   CommonTextField(
+                    titleLabelText: Strings.confirmPasswordText,
                     controller: confirmPasswordController,
                     labelText: Strings.passwordPlaceholderText,
                     labelSize: 16,

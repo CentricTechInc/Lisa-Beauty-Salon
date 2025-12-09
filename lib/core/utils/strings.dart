@@ -78,10 +78,10 @@ class Strings {
   static const String stateText = "State*";
   static const String statePlaceholderText = "New York";
   static const String zipCodeText = "Zip Code*";
-  static const String zipCodePlaceholderText = "11717*";
+  static const String zipCodePlaceholderText = "11717";
   static const String nextText = "Next";
 
-  static const String unitedStatesStringText = "United States";
+  static const String southAfricaStringText = "South Africa";
 
   //build your profile page
   static const String buildYourProfileText = "Build Your Profile";
@@ -91,33 +91,50 @@ class Strings {
   static const String verifyYourProfessionalStatusDescriptionText =
       "We need to verify your professional license for quality assurance. This information is secure.";
 
+  static const String businessNameText = "Business Name";
+  static const String businessNamePlaceholderText = "Bloom & Blade";
+  static const String streetAddressText = "Street Address*";
+  static const String streetAddressPlaceholderText = "1158 Suffolk Ave #3";
+  static const String mobileNumberText = "Mobile Number*";
+  static const String mobileNumberPlaceholderText = "27 82 123 4567";
+
   static const String licenseTypeText = "License Type*";
   static const String licenseNumberText = "License Number*";
+  static const String licenseNumberPlaceholderText = "251167";
   static const String issuanceStateOrCountryNumberText = "Issuing State/Country*";
   static const String uploadLicensePhotoText = "Upload License Photo*";
   static const String uploadLicensePhotoDescriptionText =
       "Take a clear photo of your license card/certificate";
-  static const String filesStartToUploadingText =
-      "Your file(s) to start uploading";
   static const String browseFilesText = "Browse files";
   static const String createYourProfessionalProfileText =
       "Create Your Professional Profile";
-  static const String howClientsWillFindAndBookYouText =
+  static const String createYourProfessionalProfileDescriptionText =
       "This is how clients will find and book you.";
   static const String uploadYourProfilePhotoText = "Upload Your Profile Photo";
   static const String professionalAndBioOrHeadlineText = "Professional Bio/Headline";
   static const String areaOfSpecializationText = "Areas of Specialization*";
   static const String yearsOfExperienceText = "Years of Experience*";
+  static const String yearsOfExperiencePlaceholderText = "05";
   static const String setUpYourServicesAndPricingText = "Set Up Your Services & Pricing";
-  static const String setUpYourServicesAndPricingDescriptionText =
-    "Yet not found any service. Please tab to “Add a Service” button to add service in app.";
+  static const String setUpYourServicesAndPricingDescriptionOneText =
+    "Yet not found any service. Please tap to ";
+  static const String setUpYourServicesAndPricingDescriptionTwoText = '"Add a Service"';
+  static const String setUpYourServicesAndPricingDescriptionThreeText =
+    " button to add service in app.";
+  static const String setUpYourServicesAndPricingAlternateDescriptionOneText =
+    "Please tap to ";
+  static const String setUpYourServicesAndPricingAlternateDescriptionTwoText = '"Add a Service"';
+  static const String setUpYourServicesAndPricingAlternateDescriptionThreeText =
+    " button to add service.";
   static const String addAServiceText = "Add a Service";
   static const String setUpYourServicesAndPricing =
       "Set Up Your Services & Pricing";
   static const String serviceCategoryText = "Service Category*";
   static const String serviceForText = "Service For*";
   static const String serviceNameText = "Service Name*";
+  static const String serviceNamePlaceholderText = "Wash & Blow-Dry/Styling";
   static const String priceText = "Price*";
+  static const String pricePlaceholderText = "\$25";
   static const String uploadAPictureText = "Upload A Picture (Optional)";
   static const String descriptionText = "Description (Optional)";
   static const String descriptionPlaceholderText = "Tell clients about your style and expertise.";
@@ -126,4 +143,45 @@ class Strings {
   static const String addAServiceHelpText= 'Please tab to "Add a Service" button to add another service';
   static const String yourDefaultWeeklyScheduleText = "Your Default Weekly Schedule";
   static const String yourDefaultWeeklyScheduleDescriptionText = "Don't worry, you can always adjust this later and set time off";
+
+  // --- License Type Categories ---
+  static const String barberLicenseType = "Barber";
+  static const String cosmetologistLicenseType = "Cosmetologist";
+  static const String estheticianLicenseType = "Esthetician";
+  static const String nailTechnicianLicenseType = "Nail Technician";
+  static const String makeupArtistLicenseType = "Makeup Artist";
+  static const String hairStylistLicenseType = "Hair Stylist";
+  static const String massageTherapistLicenseType = "Massage Therapist";
+  static const String skinCareSpecialistLicenseType = "Skin Care Specialist";
+  static const String beautyConsultantLicenseType = "Beauty Consultant";
+  static const String permanentMakeupArtistLicenseType = "Permanent Makeup Artist";
+  static const String eyebrowSpecialistLicenseType = "Eyebrow Specialist";
+  static const String lashTechnicianLicenseType = "Lash Technician";
+  static const String pedicuristLicenseType = "Pedicurist";
+  static const String manicuristLicenseType = "Manicurist";
+  static const String tanningSpecialistLicenseType = "Tanning Specialist";
+
+  // --- Service Categories ---
+  static const String hairCategoryText = "Hair";
+  static const String nailsCategoryText = "Nails";
+  static const String makeupCategoryText = "Makeup";
+  static const String massageCategoryText = "Massage";
+  static const String skinCareCategoryText = "Skin Care";
+  static const String tanningCategoryText = "Tanning";
+  static const String waxingCategoryText = "Waxing";
+  static const String spaTreatmentsCategoryText = "Spa Treatments";
+  static const String lashesAndBrowsCategoryText = "Lashes & Brows";
+  static const String permanentMakeupCategoryText = "Permanent Makeup";
+
+  // --- Service For ---
+  static const String menText = "Men";
+  static const String womenText = "Women";
+  static const String bothText = "Both";
+
+  static const String businessAddressText = "Business Name & Address";
+  static const String continueText =
+      'Continue';
+  static const String browserFilesText = "Browse files";
+  static const String customizeText = "Customize";
+
 }

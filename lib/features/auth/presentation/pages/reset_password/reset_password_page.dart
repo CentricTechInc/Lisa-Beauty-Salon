@@ -90,14 +90,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         ),
                       ),
                       VerticalSpacing(50),
-                      CommonText(
-                        Strings.passwordText,
-                        fontSize: 12,
-                        fontWeight: 400,
-                        color: AppColors.blackTwo,
-                      ),
-                      VerticalSpacing(5),
                       CommonTextField(
+                        titleLabelText:  Strings.passwordText,
                         controller: passwordController,
                         labelText: Strings.passwordPlaceholderText,
                         labelSize: 16,
@@ -107,14 +101,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         hintColor: AppColors.greyTwo,
                       ),
                       VerticalSpacing(20),
-                      CommonText(
-                        Strings.confirmPasswordText,
-                        fontSize: 12,
-                        fontWeight: 400,
-                        color: AppColors.blackTwo,
-                      ),
-                      VerticalSpacing(5),
                       CommonTextField(
+                        titleLabelText: Strings.confirmPasswordText,
                         controller: confirmPasswordController,
                         labelText: Strings.confirmPasswordPlaceholderText,
                         labelSize: 16,

@@ -75,6 +75,9 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
         cursorColor: AppColors.greyOne,
         fontSize: 20,
         textWeight: FontWeight.w600,
+        titleLabelText: '',
+        labelText: '',
+        hintText: '',
         inputFormatter: [
           LengthLimitingTextInputFormatter(1),
           FilteringTextInputFormatter.digitsOnly

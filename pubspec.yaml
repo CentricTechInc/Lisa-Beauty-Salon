@@ -47,6 +47,10 @@ dependencies:
   dartz: ^0.10.1
   flutter_svg: ^2.2.3
   country_state_city_dropdown: ^0.1.2
+  intl_phone_number_input: ^0.7.5
+  image_picker: ^1.2.1
+  file_picker: ^10.3.7
+  mobkit_dashed_border: ^0.0.8
 
 dev_dependencies:
   flutter_test:

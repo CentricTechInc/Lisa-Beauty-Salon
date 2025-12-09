@@ -21,11 +21,13 @@ class AppColors {
   static const Color greyOne = Color(0xFFD0D0D0);
   static const Color greyTwo = Color(0xFFA7A2A3);
   static const Color greyThree = Color(0xFF42343C);
+  static const Color greyFour = Color(0xFFF0F0F0);
   static const Color blackOne = Color(0xFF000000);
   static const Color blackTwo = Color(0xFF40393A);
   static const Color blackThree = Color(0xFF13000A);
   static const Color transparent = Colors.transparent;
   static const Color redOne = Colors.red;
+  static const Color greenOne = Color(0xFF00C950);
 }
 
 class AppTextStyles {
