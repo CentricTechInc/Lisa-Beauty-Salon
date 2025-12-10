@@ -19,6 +19,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_file_upload_component.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_switch_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/custom_slider_thumb_circle.dart';
@@ -437,11 +438,13 @@ class _BuildYourProfilePageTwoState extends State<_BuildYourProfilePageTwo> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             VerticalSpacing(20),
-            CommonText(
-              Strings.verifyYourProfessionalStatusText,
-              fontSize: 20,
-              fontWeight: 700,
-              color: AppColors.blackTwo,
+            Center(
+              child: CommonText(
+                Strings.verifyYourProfessionalStatusText,
+                fontSize: 20,
+                fontWeight: 700,
+                color: AppColors.blackTwo,
+              ),
             ),
             VerticalSpacing(10),
             CommonText(
@@ -449,6 +452,8 @@ class _BuildYourProfilePageTwoState extends State<_BuildYourProfilePageTwo> {
               fontSize: 16,
               fontWeight: 400,
               color: AppColors.greyTwo,
+              textOverflow: TextOverflow.visible,
+              textAlign: TextAlign.center,
             ),
             VerticalSpacing(30),
             CommonDropdownField(
@@ -683,7 +688,7 @@ class _BuildYourProfilePageThreeState extends State<_BuildYourProfilePageThree> 
   }
 }
 
-class _BuildYourProfilePageFour extends StatefulWidget {
+class _BuildYourProfilePageFour extends StatelessWidget {
   const _BuildYourProfilePageFour({
     required this.pageController
   });
@@ -691,15 +696,8 @@ class _BuildYourProfilePageFour extends StatefulWidget {
   final PageController pageController;
 
   @override
-  State<_BuildYourProfilePageFour> createState() => _BuildYourProfilePageFourState();
-}
-
-class _BuildYourProfilePageFourState extends State<_BuildYourProfilePageFour> {
-
-  @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
-
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 20
@@ -722,21 +720,11 @@ class _BuildYourProfilePageFourState extends State<_BuildYourProfilePageFour> {
                 return _ShowAddServiceForm();
               }
               else {
-                return _ShowServiceWidget();
+                return _ShowServicesWidget(
+                  pageController: pageController,
+                );
               }
             }),
-            VerticalSpacing(80),
-            CommonButton(
-              onPressed: () {
-                widget.pageController.animateToPage(
-                  5,
-                  duration: Duration(milliseconds: 50),
-                  curve: Curves.easeInOut
-                );
-              },
-              text: Strings.continueText,
-              textColor: AppColors.whiteOne,
-            )
           ],
         ),
       ),
@@ -744,8 +732,12 @@ class _BuildYourProfilePageFourState extends State<_BuildYourProfilePageFour> {
   }
 }
 
-class _ShowServiceWidget extends StatelessWidget {
-  const _ShowServiceWidget();
+class _ShowServicesWidget extends StatelessWidget {
+  const _ShowServicesWidget({
+    required this.pageController,
+  });
+
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -884,6 +876,18 @@ class _ShowServiceWidget extends StatelessWidget {
             ],
           ),
         ),
+        VerticalSpacing(80),
+        CommonButton(
+          onPressed: () {
+            pageController.animateToPage(
+              5,
+              duration: Duration(milliseconds: 50),
+              curve: Curves.easeInOut
+            );
+          },
+          text: Strings.continueText,
+          textColor: AppColors.whiteOne,
+        )
       ],
     );
   }
@@ -1066,25 +1070,18 @@ class _ShowAddServiceForm extends StatelessWidget {
   }
 }
 
-class _BuildYourProfilePageFive extends StatefulWidget {
+class _BuildYourProfilePageFive extends StatelessWidget {
+  final PageController pageController;
+
   const _BuildYourProfilePageFive({
     required this.pageController,
   });
 
-  final PageController pageController;
-
-  @override
-  State<_BuildYourProfilePageFive> createState() => _BuildYourProfilePageFiveState();
-}
-
-class _BuildYourProfilePageFiveState extends State<_BuildYourProfilePageFive> {
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 20
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -1112,156 +1109,413 @@ class _BuildYourProfilePageFiveState extends State<_BuildYourProfilePageFive> {
                   color: AppColors.blackTwo,
                 ),
                 HorizontalSpacing(8),
-                SwitchTheme(
-                  data: SwitchThemeData(
-                    trackOutlineColor: WidgetStateProperty.resolveWith<Color?>(
-                          (states) => Colors.transparent,
-                    ),
-                  ),
-                  child: Obx(() => Switch(
-                    value: authController.isCustomScheduleEnabled.value,
-                    onChanged: authController.toggleCustomSchedule,
-                    activeThumbColor: AppColors.whiteOne,
-                    activeTrackColor: AppColors.greenOne,
-                    inactiveThumbColor: AppColors.whiteOne,
-                    inactiveTrackColor: AppColors.greyFour,
-                  )),
-                ),
+                CommonSwitchComponentReactive(
+                  value: authController.isCustomScheduleEnabled,
+                  onChanged: authController.toggleCustomSchedule,
+                )
               ],
             ),
             VerticalSpacing(20),
             Obx(() {
-              if (authController.isCustomScheduleEnabled.value) {
-                // RENDER CUSTOM DAY-BY-DAY SCHEDULE
-                return _buildCustomScheduleUI(authController);
-              } else {
-                // RENDER DEFAULT SCHEDULE FOR ALL DAYS
-                return _buildDefaultScheduleUI(authController);
-              }
+              return authController.isCustomScheduleEnabled.value
+                  ? CustomScheduleUI(controller: authController)
+                  : DefaultScheduleUI(controller: authController);
             }),
-        
             VerticalSpacing(30),
             CommonButton(
-              onPressed: () {
-                // Navigate to the next screen
-              },
-              child: const CommonText("Almost Done!"),
+              onPressed: () {},
+              text: Strings.almostDoneText,
+              textFontSize: 18,
+              textFontWeight: 600,
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildDefaultScheduleUI(AuthController controller) {
+class DefaultScheduleUI extends StatelessWidget {
+  final AuthController controller;
+
+  const DefaultScheduleUI({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
     final defaultSchedule = controller.defaultSchedule.value;
+    final defaultBreakSchedule = controller.defaultBreakSchedule.value;
 
-    // UI that looks like the first screenshot (Mon, Tue, Wed, Thu, Fri, Sat, Sun buttons)
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Time Slots (From/To) for Work
-        _buildTimeSlotEditor(
-          title: "From",
-          timeSlot: defaultSchedule.workSlots.isNotEmpty ? defaultSchedule.workSlots.first : null,
-          onTimeSelected: (time) { /* Logic to update work slot time */ },
-        ),
+        TimeSlotEditor(
+          fromTitle: Strings.fromText,
+          toTitle: Strings.toText,
+          timeSlot: defaultSchedule.workSlots.isNotEmpty ?
+            defaultSchedule.workSlots.first : null,
+          onTimeSelected: (_) {
 
+          },
+        ),
         VerticalSpacing(20),
-
-        // Add Break Time
-        const CommonText("Add Break Time (Optional)"),
-        _buildTimeSlotEditor(
-          title: "Break From",
-          timeSlot: defaultSchedule.breakSlots.isNotEmpty ? defaultSchedule.breakSlots.first : null,
-          onTimeSelected: (time) { /* Logic to update break slot time */ },
-        ),
-        // ... more complex UI elements for time/AMPM selection
-      ],
-    );
-  }
-
-  Widget _buildCustomScheduleUI(AuthController controller) {
-    // The list of all days
-    final List<String> days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
-    return Column(
-      children: days.map((day) {
-        // Fetch the schedule for the current day from the main DTO
-        final DayScheduleDto daySchedule = controller.buildProfileData?.weeklySchedule[day] ?? DayScheduleDto();
-
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 15.0),
-          child: _buildDayToggleAndSchedule(
-            day: day,
-            schedule: daySchedule,
-            controller: controller,
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  // Helper widget to build the individual day's toggle and time slots (as seen in the second screenshot)
-  Widget _buildDayToggleAndSchedule({
-    required String day,
-    required DayScheduleDto schedule,
-    required AuthController controller,
-  }) {
-    return Column(
-      children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CommonText(day, fontWeight: 700),
-            Switch(
-              value: schedule.isEnabled,
-              onChanged: (isEnabled) {
-                // Update the state for THIS specific day
-                controller.setDailySchedule(
-                    day,
-                    DayScheduleDto(
-                        isEnabled: isEnabled,
-                        workSlots: schedule.workSlots,
-                        breakSlots: schedule.breakSlots
-                    )
-                );
-              },
-              activeColor: AppColors.pinkTwo,
+            CommonText(
+              Strings.addBreakTimeText,
+              fontSize: 20,
+              fontWeight: 700,
+              color: AppColors.blackTwo,
             ),
+            CommonText(
+              " (${Strings.optionalText})",
+              fontSize: 16,
+              fontWeight: 400,
+              color: AppColors.blackTwo,
+            )
           ],
         ),
-        // Renders time slots only if the day is enabled
-        if (schedule.isEnabled) ...[
-          // Time slots editor (like in the screenshot)
-          _buildTimeSlotEditor(
-            title: "From/To",
-            timeSlot: schedule.workSlots.isNotEmpty ? schedule.workSlots.first : null,
-            onTimeSelected: (time) {
-              // Logic to update time slot for THIS specific day
-            },
-          ),
-          // ... Add Break Time editor for the day
-        ]
+        VerticalSpacing(20),
+        TimeSlotEditor(
+          fromTitle: Strings.fromText,
+          toTitle: Strings.toText,
+          timeSlot: defaultBreakSchedule,
+          onTimeSelected: (_) {},
+        ),
       ],
     );
   }
+}
 
-  // Dummy widget for time editing (Replace with your actual time picker widget)
-  Widget _buildTimeSlotEditor({String? title, TimeSlotDto? timeSlot, required Function(TimeSlotDto) onTimeSelected}) {
+class CustomScheduleUI extends StatelessWidget {
+  final AuthController controller;
+
+  const CustomScheduleUI({
+    required this.controller,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final defaultBreakSchedule = controller.defaultBreakSchedule;
+    return Column(
+      children: [
+        ...AppConstants.fullWeekDaysNames.map((day) {
+          final DayScheduleDto daySchedule = controller
+            .buildProfileData?.weeklySchedule[day] ?? DayScheduleDto();
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: DayScheduleRow(
+              day: day,
+              schedule: daySchedule,
+              controller: controller,
+            ),
+          );
+        }),
+        VerticalSpacing(10),
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.whiteOne,
+            border: Border.all(
+              color: AppColors.greyOne,
+            ),
+            borderRadius: BorderRadius.circular(16)
+          ),
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  CommonText(
+                    Strings.addBreakTimeText,
+                    fontSize: 20,
+                    fontWeight: 700,
+                    color: AppColors.blackTwo,
+                  ),
+                  CommonText(
+                    " (${Strings.optionalText})",
+                    fontSize: 16,
+                    fontWeight: 400,
+                    color: AppColors.blackTwo,
+                  )
+                ],
+              ),
+              VerticalSpacing(20),
+              TimeSlotEditor(
+                fromTitle: Strings.fromText,
+                toTitle: Strings.toText,
+                timeSlot: defaultBreakSchedule.value,
+                onTimeSelected: (_) {},
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class DayScheduleRow extends StatelessWidget {
+  final String day;
+  final DayScheduleDto schedule;
+  final AuthController controller;
+
+  const DayScheduleRow({
+    super.key,
+    required this.day,
+    required this.schedule,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.greyOne),
-        borderRadius: BorderRadius.circular(10),
+        color: AppColors.whiteOne,
+        border: Border.all(
+          color: AppColors.greyOne,
+        ),
+        borderRadius: BorderRadius.circular(16)
       ),
+      padding: EdgeInsets.all(8),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(title ?? ''),
-          // Implement your actual Time picker widgets here
-          // Example: Text(timeSlot?.fromTime ?? 'Select Time'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonText(
+                day,
+                fontSize: 16,
+                fontWeight: 700,
+                color: AppColors.blackTwo,
+              ),
+              CommonSwitchComponentNonReactive(
+                value: schedule.isEnabled,
+                onChanged: (enabled) {
+                  final scheduleData = schedule.copyWith(
+                    isEnabled: enabled
+                  );
+                  controller.setDailySchedule(
+                    day,
+                    scheduleData,
+                  );
+                },
+              )
+            ],
+          ),
+
+          if (schedule.isEnabled)
+            TimeSlotEditor(
+              fromTitle: Strings.fromText,
+              toTitle: Strings.toText,
+              timeSlot: schedule.workSlots.isNotEmpty
+                  ? schedule.workSlots.first
+                  : null,
+              onTimeSelected: (time) {},
+            ),
         ],
+      ),
+    );
+  }
+}
+
+class TimeSlotEditor extends StatelessWidget {
+  final String? fromTitle;
+  final String? toTitle;
+  final TimeSlotDto? timeSlot;
+  final Function(TimeSlotDto) onTimeSelected;
+
+  const TimeSlotEditor({
+    super.key,
+    required this.onTimeSelected,
+    this.fromTitle,
+    this.toTitle,
+    this.timeSlot,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final fromController = TextEditingController(
+      text: timeSlot?.fromTime ?? ""
+    );
+    final toController = TextEditingController(
+      text: timeSlot?.toTime ?? ""
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CommonText(
+          fromTitle ?? '',
+          fontSize: 14,
+          fontWeight: 400,
+          color: AppColors.blackTwo,
+        ),
+        VerticalSpacing(10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: context.width / 2.5,
+              height: 50,
+              child: CommonTextField(
+                controller: fromController,
+                fillColor: AppColors.greyFour,
+                borderRadius: 12,
+                textColor: AppColors.blackTwo,
+                labelText: null,
+                hintText: Strings.fromPlaceholderText,
+                cursorColor: AppColors.blackTwo,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            HorizontalSpacing(20),
+            SizedBox(
+              width: context.width / 3,
+              child: AmPmToggleButtons(
+                onPeriodSelected: (period) {
+
+                },
+              ),
+            )
+          ],
+        ),
+        VerticalSpacing(20),
+        CommonText(
+          toTitle ?? '',
+          fontSize: 14,
+          fontWeight: 400,
+          color: AppColors.blackTwo,
+        ),
+        VerticalSpacing(10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: context.width / 2.5,
+              height: 50,
+              child: CommonTextField(
+                controller: toController,
+                fillColor: AppColors.greyFour,
+                borderRadius: 12,
+                textColor: AppColors.blackTwo,
+                labelText: null,
+                hintText: Strings.toPlaceholderText,
+                cursorColor: AppColors.blackTwo,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            HorizontalSpacing(20),
+            SizedBox(
+              width: context.width / 3,
+              child: AmPmToggleButtons(
+                onPeriodSelected: (period) {
+
+                },
+              ),
+            )
+          ],
+        ),
+        VerticalSpacing(20),
+      ],
+    );
+  }
+}
+
+class AmPmToggleButtons extends StatelessWidget {
+  final String? initialPeriod;
+  final Function(String selectedPeriod) onPeriodSelected;
+
+  final ValueNotifier<int> _selectedIndexNotifier;
+
+  AmPmToggleButtons({
+    super.key,
+    this.initialPeriod,
+    required this.onPeriodSelected,
+  }) : _selectedIndexNotifier = ValueNotifier<int>(initialPeriod == "PM" ? 1 : 0) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      onPeriodSelected(_selectedIndexNotifier.value == 0 ? Strings.amText : Strings.pmText);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const activeColor = AppColors.pinkTwo;
+    const inactiveColor = AppColors.greyFour;
+
+    return ValueListenableBuilder<int>(
+      valueListenable: _selectedIndexNotifier,
+      builder: (context, selectedIndex, child) {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildToggleButton(
+              context: context,
+              index: 0,
+              label: Strings.amText,
+              activeColor: activeColor,
+              inactiveColor: inactiveColor,
+              selectedIndex: selectedIndex
+            ),
+            _buildToggleButton(
+              context: context,
+              index: 1,
+              label: Strings.pmText,
+              activeColor: activeColor,
+              inactiveColor: inactiveColor,
+              selectedIndex: selectedIndex
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildToggleButton({
+    required BuildContext context,
+    required int index,
+    required String label,
+    required Color activeColor,
+    required Color inactiveColor,
+    required int selectedIndex,
+  }) {
+    final bool isSelected = selectedIndex == index;
+
+    return GestureDetector(
+      onTap: () {
+        _selectedIndexNotifier.value = index;
+        onPeriodSelected(label);
+      },
+      child: Container(
+        // width: 90,
+        height: 50,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: isSelected ? activeColor : inactiveColor,
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(
+              index == 1 ? 12 : 0
+            ),
+            topLeft: Radius.circular(
+              index == 0 ? 12 : 0
+            ),
+            bottomLeft: Radius.circular(
+              index == 0 ? 12 : 0
+            ),
+            bottomRight: Radius.circular(
+              index == 1 ? 12 : 0
+            ),
+          ),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 20
+        ),
+        child: CommonText(
+          label,
+          fontSize: 16,
+          fontWeight: 600,
+          color: isSelected ? Colors.white : Colors.grey,
+        ),
       ),
     );
   }

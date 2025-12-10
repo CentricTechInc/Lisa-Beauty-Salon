@@ -31,7 +31,12 @@ class AuthController extends GetxController {
         toAMPM: "PM"
       )
     ],
-    breakSlots: [],
+  ).obs;
+  final Rx<TimeSlotDto> defaultBreakSchedule = TimeSlotDto(
+    fromTime: "08:30",
+    toTime: "09:30",
+      fromAMPM: "AM",
+    toAMPM: "PM"
   ).obs;
 
   final Rx<BuildProfileDto?> _buildProfileData = Rx<BuildProfileDto?>(null);
@@ -181,10 +186,9 @@ class AuthController extends GetxController {
   }
 
   // New method to set the Default schedule when in the non-custom mode
-  void setDefaultWorkSchedule(List<TimeSlotDto> workSlots, List<TimeSlotDto> breakSlots) {
+  void setDefaultWorkSchedule(List<TimeSlotDto> workSlots, TimeSlotDto breakSlots) {
     defaultSchedule.value = DayScheduleDto(
       workSlots: workSlots,
-      breakSlots: breakSlots,
     );
     // If custom schedule is NOT enabled, apply this new default to all days
     if (!isCustomScheduleEnabled.value) {

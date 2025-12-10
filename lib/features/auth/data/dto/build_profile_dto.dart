@@ -32,7 +32,6 @@ class DayScheduleDto extends DayScheduleModel {
   DayScheduleDto({
     super.isEnabled = true,
     super.workSlots = const [],
-    super.breakSlots = const [],
   });
 
   factory DayScheduleDto.fromJson(DataMap json) {
@@ -42,10 +41,16 @@ class DayScheduleDto extends DayScheduleModel {
       workSlots: (json['workSlots'] as List<dynamic>)
           .map((slotJson) => TimeSlotDto.fromJson(slotJson as DataMap))
           .toList(),
-      // Map JSON list to list of TimeSlotDto
-      breakSlots: (json['breakSlots'] as List<dynamic>)
-          .map((slotJson) => TimeSlotDto.fromJson(slotJson as DataMap))
-          .toList(),
+    );
+  }
+
+  DayScheduleDto copyWith({
+    bool? isEnabled,
+    List<TimeSlotDto>? workSlots,
+  }) {
+    return DayScheduleDto(
+      isEnabled: isEnabled ?? this.isEnabled,
+      workSlots: workSlots ?? this.workSlots
     );
   }
 
@@ -53,8 +58,7 @@ class DayScheduleDto extends DayScheduleModel {
     return {
       "isEnabled": isEnabled,
       // Convert list of Model/Dto back to list of JSON maps
-      "workSlots": workSlots.map((slot) => (slot as TimeSlotDto).toJson()).toList(),
-      "breakSlots": breakSlots.map((slot) => (slot as TimeSlotDto).toJson()).toList(),
+      "workSlots": workSlots.map((slot) => (slot).toJson()).toList(),
     };
   }
 }
@@ -143,6 +147,7 @@ class BuildProfileDto extends BuildProfileModel {
     super.services = const [],
     super.weeklySchedule = const {},
     super.bankAccounts = const [],
+    super.breakTimeSchedule
   });
 
 
@@ -181,6 +186,7 @@ class BuildProfileDto extends BuildProfileModel {
           .toList(),
 
       weeklySchedule: scheduleMap,
+      breakTimeSchedule: json['breakTimeSchedul']
     );
   }
 

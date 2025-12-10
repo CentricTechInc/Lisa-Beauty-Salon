@@ -184,4 +184,32 @@ class Strings {
   static const String browserFilesText = "Browse files";
   static const String customizeText = "Customize";
 
+  static const String addBreakTimeText = "Add Break Time";
+  static const String optionalText = "optional";
+
+  static const String amText = "AM";
+  static const String pmText = "PM";
+  static const String fromText = "From";
+  static const String fromPlaceholderText = "08:30";
+  static const String toText = "To";
+  static const String toPlaceholderText = "05:00";
+
+  static const String monText = "Mon";
+  static const String tueText = "Tue";
+  static const String wedText = "Wed";
+  static const String thurText = "Thu";
+  static const String friText = "Fri";
+  static const String satText = "Sat";
+  static const String sunText = "Sun";
+
+  static const String mondayText = "Monday";
+  static const String tuesdayText = "Tuesday";
+  static const String wednesdayText = "Wednesday";
+  static const String thursdayText = "Thursday";
+  static const String fridayText = "Friday";
+  static const String saturdayText = "Saturday";
+  static const String sundayText = "Sunday";
+
+  static const String almostDoneText = "Almost Done!";
+
 }

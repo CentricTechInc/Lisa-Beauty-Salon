@@ -22,6 +22,7 @@ class BuildProfileModel {
     this.services = const [],
     this.weeklySchedule = const {},
     this.bankAccounts = const [],
+    this.breakTimeSchedule
   });
 
   // User/Business/License Info (No Change)
@@ -46,6 +47,7 @@ class BuildProfileModel {
   List<BankAccountInfoDto> bankAccounts;
 
   // Weekly Schedule Info (No Change)
+  TimeSlotDto? breakTimeSchedule;
   Map<String, DayScheduleDto> weeklySchedule;
 
 }
@@ -54,12 +56,10 @@ class DayScheduleModel {
   DayScheduleModel({
     this.isEnabled = true,
     this.workSlots = const [],
-    this.breakSlots = const [],
   });
 
   bool isEnabled;
   List<TimeSlotDto> workSlots;
-  List<TimeSlotDto> breakSlots;
 }
 
 class TimeSlotModel {
