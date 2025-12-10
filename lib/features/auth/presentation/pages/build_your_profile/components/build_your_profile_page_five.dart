@@ -68,9 +68,9 @@ class BuildYourProfilePageFive extends StatelessWidget {
             CommonButton(
               onPressed: () {
                 pageController.animateToPage(
-                    6,
-                    duration: Duration(milliseconds: 50),
-                    curve: Curves.easeInOut
+                  5,
+                  duration: Duration(milliseconds: 50),
+                  curve: Curves.easeInOut
                 );
               },
               text: Strings.almostDoneText,
@@ -164,8 +164,8 @@ class CustomScheduleUI extends StatelessWidget {
         VerticalSpacing(10),
         Container(
           decoration: BoxDecoration(
-              color: AppColors.whiteOne,
-              border: Border.all(
+            color: AppColors.whiteOne,
+            border: Border.all(
                 color: AppColors.greyOne,
               ),
               borderRadius: BorderRadius.circular(16)
@@ -218,52 +218,55 @@ class DayScheduleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: AppColors.whiteOne,
-          border: Border.all(
-            color: AppColors.greyOne,
-          ),
-          borderRadius: BorderRadius.circular(16)
-      ),
-      padding: EdgeInsets.all(8),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CommonText(
-                day,
-                fontSize: 16,
-                fontWeight: 700,
-                color: AppColors.blackTwo,
-              ),
-              CommonSwitchComponentNonReactive(
-                value: schedule.isEnabled,
-                onChanged: (enabled) {
-                  final scheduleData = schedule.copyWith(
-                      isEnabled: enabled
-                  );
-                  controller.setDailySchedule(
-                    day,
-                    scheduleData,
-                  );
-                },
-              )
-            ],
-          ),
 
-          if (schedule.isEnabled)
-            TimeSlotEditor(
-              fromTitle: Strings.fromText,
-              toTitle: Strings.toText,
-              timeSlot: schedule.workSlots.isNotEmpty
-                  ? schedule.workSlots.first
-                  : null,
-              onTimeSelected: (time) {},
+    final RxBool isEnabled = (schedule.isEnabled.obs);
+
+    return Column(
+      children: [
+        Obx(() {
+          return Container(
+            decoration: BoxDecoration(
+              color: AppColors.whiteOne,
+              border: Border.all(color: AppColors.greyOne),
+              borderRadius: BorderRadius.circular(16),
             ),
-        ],
-      ),
+            padding: EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonText(
+                      day,
+                      fontSize: 16,
+                      fontWeight: 700,
+                      color: AppColors.blackTwo,
+                    ),
+                    CommonSwitchComponentReactive(
+                      value: isEnabled,
+                      onChanged: (enabled) {
+                        final updatedSchedule = schedule.copyWith(isEnabled: enabled);
+                        controller.setDailySchedule(day, updatedSchedule);
+                      },
+                    )
+                  ],
+                ),
+
+                // Collapse content if disabled
+                if (isEnabled.value)
+                  TimeSlotEditor(
+                    fromTitle: "From",
+                    toTitle: "To",
+                    timeSlot: schedule.workSlots.isNotEmpty
+                        ? schedule.workSlots.first
+                        : null,
+                    onTimeSelected: (time) {},
+                  ),
+              ],
+            ),
+          );
+        }),
+      ],
     );
   }
 }

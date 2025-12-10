@@ -240,17 +240,17 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> {
               backgroundColor: AppColors.pinkTwo,
               onPressed: () {
                 authController.setBasicProfileData(
-                    firstName: firstNameController.text,
-                    lastName: lastNameController.text,
-                    age: ageController.text,
-                    gender: genderController.text,
-                    phoneNumber: mobileNumberController.text
+                  firstName: firstNameController.text,
+                  lastName: lastNameController.text,
+                  age: ageController.text,
+                  gender: genderController.text,
+                  phoneNumber: mobileNumberController.text
                 );
 
                 widget.pageController.animateToPage(
-                    1,
-                    duration: Duration(milliseconds: 50),
-                    curve: Curves.easeInOut
+                  1,
+                  duration: Duration(milliseconds: 50),
+                  curve: Curves.easeInOut
                 );
               },
             )

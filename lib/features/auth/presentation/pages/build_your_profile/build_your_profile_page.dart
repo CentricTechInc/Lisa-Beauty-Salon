@@ -60,8 +60,24 @@ class _BuildYourProfilePageState extends State<BuildYourProfilePage> {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: CommonBackButton(
-                        iconColor: AppColors.blackTwo,
+                      child: GestureDetector(
+                        onTap: () {
+                          final currentPage = _currentPageNotifier.value;
+
+                          if (currentPage == 0) {
+                            Get.back();
+                          } else {
+                            // Go back one page
+                            _pageController.previousPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        },
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: AppColors.blackOne,
+                        ),
                       ),
                     ),
                     CommonText(

@@ -140,17 +140,16 @@ class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> {
               text: Strings.continueText,
               textColor: AppColors.whiteOne,
               onPressed: () {
-
                 authController.setProfessionalData(
-                    professionalBio: professionalBioController.text,
-                    yearsOfExperience: int.tryParse(yearsOfExperienceController.text) ?? 0,
-                    profilePhotoFile: photoNotifier.value.toString()
+                  professionalBio: professionalBioController.text,
+                  yearsOfExperience: int.tryParse(yearsOfExperienceController.text) ?? 0,
+                  profilePhotoFile: photoNotifier.value.toString()
                 );
 
                 widget.pageController.animateToPage(
-                    4,
-                    duration: Duration(milliseconds: 50),
-                    curve: Curves.easeInOut
+                  3,
+                  duration: Duration(milliseconds: 50),
+                  curve: Curves.easeInOut
                 );
               },
             )

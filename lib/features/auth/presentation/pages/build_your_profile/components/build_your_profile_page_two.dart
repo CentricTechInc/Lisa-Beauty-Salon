@@ -148,16 +148,16 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> {
               text: Strings.continueText,
               onPressed: () {
                 authController.setLicenseData(
-                    licenseType: licenseTypeController.text,
-                    licenseNumber: licenseNumberController.text,
-                    licenseIssuanceStateOrCountry: issuanceStateOrCountryController.text,
-                    licenseFile: ''
+                  licenseType: licenseTypeController.text,
+                  licenseNumber: licenseNumberController.text,
+                  licenseIssuanceStateOrCountry: issuanceStateOrCountryController.text,
+                  licenseFile: ''
                 );
 
                 widget.pageController.animateToPage(
-                    3,
-                    duration: Duration(milliseconds: 50),
-                    curve: Curves.easeInOut
+                  2,
+                  duration: Duration(milliseconds: 50),
+                  curve: Curves.easeInOut
                 );
               },
             )

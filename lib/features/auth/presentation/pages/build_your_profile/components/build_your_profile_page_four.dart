@@ -212,9 +212,9 @@ class _ShowServicesWidget extends StatelessWidget {
         CommonButton(
           onPressed: () {
             pageController.animateToPage(
-                5,
-                duration: Duration(milliseconds: 50),
-                curve: Curves.easeInOut
+              4,
+              duration: Duration(milliseconds: 50),
+              curve: Curves.easeInOut
             );
           },
           text: Strings.continueText,
