@@ -173,6 +173,23 @@ class Strings {
   static const String lashesAndBrowsCategoryText = "Lashes & Brows";
   static const String permanentMakeupCategoryText = "Permanent Makeup";
 
+  // --- Bank Accounts Name ---
+  static const String africanBankText = "African Bank";
+  static const String sasfinBankText = "Sasfin Bank";
+  static const String bidvestBankText = "Bidvest Bank";
+  static const String tymeBankText = "TymeBank";
+  static const String discoveryBankText = "Discovery Bank";
+  static const String investecBankText = "Investec Bank";
+  static const String grindrodBankText = "Grindrod Bank";
+  static const String ubankText = "Ubank";
+  static const String bankOfAthensText = "Bank of Athens";
+  static const String alBarakaBankText = "Al Baraka Bank";
+  static const String habibOverseasBankText = "Habib Overseas Bank";
+  static const String habibBankZurichText = "Habib Bank Zurich";
+  static const String mercantileBankText = "Mercantile Bank";
+  static const String bidvestBankLimitedText = "Bidvest Bank Limited";
+
+
   // --- Service For ---
   static const String menText = "Men";
   static const String womenText = "Women";
@@ -212,4 +229,27 @@ class Strings {
 
   static const String almostDoneText = "Almost Done!";
 
+  static const String yourBankAccountInfoText = "Your Bank Account Info";
+  static const String yourBankAccountInfoDescriptionText =
+      "The platform takes a 15% service fee per payment. You’ll receive the remaining 85% .";
+  static const String addNewText = "Add New";
+
+  static const accountHolderNameText = "Account Holder Name";
+  static const accountHolderPlaceholderNameText = "Account Holder Name";
+  static const bankAccountNameText = "Bank Name";
+  static const bankAccountPlaceholderNameText = "Select Bank";
+  static const accountNumberNameText = "Account Number";
+  static const confirmAccountNumberText = "Re-enter Account Number";
+  static const confirmAccountPlaceholderNameText = "Confirm Account Number";
+  static const confirmAndConsentToAccountText = "I confirm and consent to link this account.";
+
+  static const String bankAccountText = "Bank Account";
+
+  static const String addAccountText = "Add Account";
+  static const String changeAccountText = "Change Account";
+  static const String doneText = "Done";
+
+  static const String onboardingCompleteTitleText = "You're All Set! Well, Almost...";
+  static const String onboardingCompleteSubTitleOneText = "Your application is being reviewed.";
+  static const String onboardingCompleteSubTitleTwoText = "We'll notify you via email once your license verification is complete (usually within 24-48 hours). In the meantime, you can finish setting up your profile.";
 }

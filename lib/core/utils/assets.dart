@@ -13,5 +13,6 @@ class Assets {
       "assets/svgs/create_account.svg";
   static const String uploadLicenseSvgIcon = "assets/svgs/upload_license.svg";
   static const String placeholderSvgIcon = "assets/svgs/placeholder_svg.svg";
-
+  static const String addBankAccountSvgIcon = "assets/svgs/add_bank_account_svg.svg";
+  static const String bankAccountSvgIcon = "assets/svgs/bank_account.svg";
 }

@@ -78,13 +78,13 @@ class TimeSlotModel {
 
 class BankAccountInfoModel {
   BankAccountInfoModel({
-    this.bankFullName = "",
+    this.accountHolderFullName = "",
     this.bankName = "",
     this.accountNumber = "",
     this.areTermsAndConditionsAccepted = false,
   });
 
-  String bankFullName;
+  String accountHolderFullName;
   String bankName;
   String accountNumber;
   bool areTermsAndConditionsAccepted;

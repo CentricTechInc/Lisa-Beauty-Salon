@@ -15,11 +15,14 @@ class AuthController extends GetxController {
   final Rx<UserDto?> _currentUser = Rx<UserDto?>(null);
   final RxBool isLoading = false.obs;
   final RxBool agreeToTermsAndCondition = false.obs;
+  final RxBool confirmAndConsentToThisAccount = false.obs;
   final RxBool rememberMe = false.obs;
   final RxString errorMessage = ''.obs;
   final RxString selectedCategory = Strings.salonsText.obs;
 
   final RxBool showAddServiceForm = false.obs;
+  final RxBool showAddBankAccountsForm = false.obs;
+  var selectedBankAccountIndex = Rx<int?>(null);
 
   final RxBool isCustomScheduleEnabled = false.obs;
   final Rx<DayScheduleDto> defaultSchedule = DayScheduleDto(
@@ -163,6 +166,10 @@ class AuthController extends GetxController {
 
   void toggleAddServiceForm() {
     showAddServiceForm.toggle();
+  }
+
+  void toggleAddBankAccountsForm() {
+    showAddBankAccountsForm.toggle();
   }
 
   void toggleCustomSchedule(bool value) {
@@ -324,5 +331,9 @@ class AuthController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void selectBankAccount(int index) {
+    selectedBankAccountIndex.value = index;
   }
 }

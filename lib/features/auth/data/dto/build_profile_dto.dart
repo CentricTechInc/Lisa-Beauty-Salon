@@ -67,7 +67,7 @@ class DayScheduleDto extends DayScheduleModel {
 
 class BankAccountInfoDto extends BankAccountInfoModel {
   BankAccountInfoDto({
-    super.bankFullName = "",
+    super.accountHolderFullName = "",
     super.bankName = "",
     super.accountNumber = "",
     super.areTermsAndConditionsAccepted = false,
@@ -75,7 +75,7 @@ class BankAccountInfoDto extends BankAccountInfoModel {
 
   factory BankAccountInfoDto.fromJson(DataMap json) {
     return BankAccountInfoDto(
-      bankFullName: json['bankFullName'] as String,
+      accountHolderFullName: json['accountHolderFullName'] as String,
       bankName: json['bankName'] as String,
       accountNumber: json['accountNumber'] as String,
       areTermsAndConditionsAccepted: json['areTermsAndConditionsAccepted'] as bool,
@@ -84,7 +84,7 @@ class BankAccountInfoDto extends BankAccountInfoModel {
 
   DataMap toJson() {
     return {
-      "bankFullName": bankFullName,
+      "bankFullName": accountHolderFullName,
       "bankName": bankName,
       "accountNumber": accountNumber,
       "areTermsAndConditionsAccepted": areTermsAndConditionsAccepted,
