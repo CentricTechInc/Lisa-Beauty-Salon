@@ -33,7 +33,6 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final stateController = TextEditingController();
-  final cityController = TextEditingController();
   final zipCodeController = TextEditingController();
 
   @override
@@ -215,28 +214,27 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                     onChanged: (value) {
                       stateController.text = value?.name ?? '';
                       authController.setCitiesAccordingToState(
-                        stateController.text
+                        stateController.text,
+                        Strings.signUpDropdownScenario
                       );
-                      cityController.text = '';
                     },
                   ),
                   VerticalSpacing(20),
                   Obx(() {
                     final cities = authController.citiesList;
-                    final isDisabled = cities.isEmpty;
+                    final selectedIndex = cities.indexWhere(
+                      (c) => c.name == authController.selectedCityForSignUp.value,
+                    );
+                    final int? safeIndex = selectedIndex >= 0 ? selectedIndex : null;
 
                     return CommonDropdownField<int>(
                       titleLabelText: Strings.cityText,
-                      value: cityController.text.isEmpty ? null :
-                      cities.indexWhere((c) => c.name == cityController.text) >= 0
-                          ? cities.indexWhere((c) => c.name == cityController.text)
-                          : null,
-                      items: isDisabled ? <DropdownMenuItem<int>>[]
-                          : cities.asMap().entries.map((entry) {
+                      value: safeIndex,
+                      items: cities.asMap().entries.map((entry) {
                         final index = entry.key;
                         final city = entry.value;
                         return DropdownMenuItem(
-                          value: index, // Always unique
+                          value: index,
                           child: CommonText(
                             city.name,
                             fontSize: 15,
@@ -245,11 +243,13 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                         );
                       }).toList(),
                       onChanged: (value) {
-                        if (isDisabled == false && value != null && value >= 0 && value < cities.length) {
-                          cityController.text = cities[value].name;
+                        if (value != null && value >= 0 && value < cities.length) {
+                          authController.selectedCityForSignUp.value = cities[value].name;
+                        } else {
+                          authController.selectedCityForSignUp.value = '';
                         }
                       },
-                      hintText: isDisabled ? 'No cities available' : 'Select City',
+                      hintText: cities.isEmpty ? 'No cities available' : 'Select City',
                     );
                   }),
                   VerticalSpacing(20),

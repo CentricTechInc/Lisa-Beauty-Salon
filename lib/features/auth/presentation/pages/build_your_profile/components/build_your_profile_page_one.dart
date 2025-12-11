@@ -173,8 +173,9 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> {
             VerticalSpacing(20),
             CommonDropdownField(
               titleLabelText: Strings.stateText,
-              items: (authController.countryDataOfUs?.states ?? []).map(
-                      (state) => DropdownMenuItem(
+              items: (authController.countryDataOfUs?.states ??
+                []).map(
+                  (state) => DropdownMenuItem(
                     value: state,
                     child: CommonText(
                       state.name,
@@ -186,28 +187,27 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> {
               onChanged: (value) {
                 stateController.text = value?.name ?? '';
                 authController.setCitiesAccordingToState(
-                    stateController.text
+                  stateController.text,
+                  Strings.buildYourProfileDropdownScenario,
                 );
-                cityController.text = '';
               },
             ),
             VerticalSpacing(20),
             Obx(() {
               final cities = authController.citiesList;
-              final isDisabled = cities.isEmpty;
+              final selectedIndex = cities.indexWhere(
+                (c) => c.name == authController.selectedCityForBuildYourProfile.value,
+              );
+              final int? safeIndex = selectedIndex >= 0 ? selectedIndex : null;
 
               return CommonDropdownField<int>(
                 titleLabelText: Strings.cityText,
-                value: cityController.text.isEmpty ? null :
-                cities.indexWhere((c) => c.name == cityController.text) >= 0
-                    ? cities.indexWhere((c) => c.name == cityController.text)
-                    : null,
-                items: isDisabled ? <DropdownMenuItem<int>>[]
-                    : cities.asMap().entries.map((entry) {
+                value: safeIndex,
+                items: cities.asMap().entries.map((entry) {
                   final index = entry.key;
                   final city = entry.value;
                   return DropdownMenuItem(
-                    value: index, // Always unique
+                    value: index,
                     child: CommonText(
                       city.name,
                       fontSize: 15,
@@ -216,11 +216,13 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> {
                   );
                 }).toList(),
                 onChanged: (value) {
-                  if (isDisabled == false && value != null && value >= 0 && value < cities.length) {
-                    cityController.text = cities[value].name;
+                  if (value != null && value >= 0 && value < cities.length) {
+                    authController.selectedCityForBuildYourProfile.value = cities[value].name;
+                  } else {
+                    authController.selectedCityForBuildYourProfile.value = '';
                   }
                 },
-                hintText: isDisabled ? 'No cities available' : 'Select City',
+                hintText: cities.isEmpty ? 'No cities available' : 'Select City',
               );
             }),
             VerticalSpacing(20),

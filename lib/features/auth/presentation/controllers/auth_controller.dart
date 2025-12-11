@@ -19,7 +19,8 @@ class AuthController extends GetxController {
   final RxBool rememberMe = false.obs;
   final RxString errorMessage = ''.obs;
   final RxString selectedCategory = Strings.salonsText.obs;
-
+  RxString selectedCityForSignUp = ''.obs;
+  RxString selectedCityForBuildYourProfile = ''.obs;
   final RxBool showAddServiceForm = false.obs;
   final RxBool showAddBankAccountsForm = false.obs;
   var selectedBankAccountIndex = Rx<int?>(null);
@@ -155,13 +156,21 @@ class AuthController extends GetxController {
     );
   }
 
-  void setCitiesAccordingToState(String stateName) {
+  void setCitiesAccordingToState(String stateName, String scenario) {
     final state = countryDataOfUs?.states.firstWhereOrNull((s) => s.name == stateName);
     if (state != null) {
       citiesList.assignAll(state.cities);
     } else {
       citiesList.clear();
     }
+
+    if (scenario == Strings.signUpDropdownScenario) {
+      selectedCityForSignUp.value = '';
+    }
+    else{
+      selectedCityForBuildYourProfile.value = '';
+    }
+
   }
 
   void toggleAddServiceForm() {

@@ -1,6 +1,8 @@
 class Strings {
 
   static const String fontFamily = "Onest";
+  static const String signUpDropdownScenario = "signUp";
+  static const String buildYourProfileDropdownScenario = "buildYourProfile";
 
   static const String welcomeOneTitle = "Best Stylist For You";
   static const String welcomeOneSubTitle = "Styling your appearance according to your lifestyle";
