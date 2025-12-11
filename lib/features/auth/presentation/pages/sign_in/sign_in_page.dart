@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
@@ -22,7 +23,9 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInPageState extends State<SignInPage> with FieldsValidation {
+
+  final _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -53,111 +56,122 @@ class _SignInPageState extends State<SignInPage> {
               padding: EdgeInsets.symmetric(
                 horizontal: 20
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  VerticalSpacing(30),
-                  Center(
-                    child: CommonText(
-                      Strings.loginText,
-                      fontSize: 24,
-                      fontWeight: 600,
-                      color: AppColors.blackTwo,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    VerticalSpacing(30),
+                    Center(
+                      child: CommonText(
+                        Strings.loginText,
+                        fontSize: 24,
+                        fontWeight: 600,
+                        color: AppColors.blackTwo,
+                      ),
                     ),
-                  ),
-                  VerticalSpacing(30),
-                  CommonText(
-                    Strings.loginDescriptionText,
-                    fontSize: 16,
-                    fontWeight: 400,
-                    color: AppColors.greyTwo,
-                    textOverflow: TextOverflow.visible,
-                    textAlign: TextAlign.center,
-                  ),
-                  VerticalSpacing(30),
-                  CommonText(
-                    Strings.emailText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
-                  CommonTextField(
-                    controller: emailController,
-                    labelText: Strings.emailPlaceholderText,
-                    labelSize: 16,
-                    labelColor: AppColors.greyTwo,
-                    hintText: Strings.emailPlaceholderText,
-                    hintSize: 16,
-                    hintColor: AppColors.greyTwo,
-                  ),
-                  VerticalSpacing(40),
-                  CommonText(
-                    Strings.passwordText,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                  VerticalSpacing(5),
-                  CommonTextField(
-                    controller: passwordController,
-                    labelText: Strings.passwordPlaceholderText,
-                    labelSize: 16,
-                    labelColor: AppColors.greyTwo,
-                    hintText: Strings.passwordPlaceholderText,
-                    hintSize: 16,
-                    hintColor: AppColors.greyTwo,
-                  ),
-                  VerticalSpacing(40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () => CommonCheckbox(
-                          label: Strings.rememberMeText,
-                          spacing: 5,
-                          labelFontSize: 14,
-                          labelFontWeight: 400,
-                          inactiveColor: AppColors.whiteTwo,
-                          activeColor: AppColors.pinkTwo,
-                          value: authController.rememberMe.value,
-                          onChanged: (value) {
-                            authController.rememberMe.value = value ?? false;
+                    VerticalSpacing(30),
+                    CommonText(
+                      Strings.loginDescriptionText,
+                      fontSize: 16,
+                      fontWeight: 400,
+                      color: AppColors.greyTwo,
+                      textOverflow: TextOverflow.visible,
+                      textAlign: TextAlign.center,
+                    ),
+                    VerticalSpacing(30),
+                    CommonTextField(
+                      controller: emailController,
+                      titleLabelText: Strings.emailText,
+                      labelText: Strings.emailPlaceholderText,
+                      hintText: Strings.emailPlaceholderText,
+                      labelSize: 16,
+                      hintSize: 16,
+                      labelColor: AppColors.greyTwo,
+                      hintColor: AppColors.greyTwo,
+                      textColor: AppColors.blackTwo,
+                      cursorColor: AppColors.blackTwo,
+                      validator: validateEmailSimple,
+                    ),
+                    VerticalSpacing(40),
+                    CommonTextField(
+                      titleLabelText: Strings.passwordText,
+                      controller: passwordController,
+                      labelText: Strings.passwordPlaceholderText,
+                      hintText: Strings.passwordPlaceholderText,
+                      labelSize: 16,
+                      hintSize: 16,
+                      labelColor: AppColors.greyTwo,
+                      hintColor: AppColors.greyTwo,
+                      textColor: AppColors.blackTwo,
+                      cursorColor: AppColors.blackTwo,
+                      validator: validatePasswordSimple,
+                    ),
+                    VerticalSpacing(40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(
+                          () => CommonCheckbox(
+                            label: Strings.rememberMeText,
+                            spacing: 5,
+                            labelFontSize: 14,
+                            labelFontWeight: 400,
+                            inactiveColor: AppColors.whiteTwo,
+                            activeColor: AppColors.pinkTwo,
+                            value: authController.rememberMe.value,
+                            onChanged: (value) {
+                              authController.rememberMe.value = value ?? false;
+                            },
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(
+                              RouteNames.forgotPassword
+                            );
                           },
+                          child: CommonText(
+                            Strings.forgotPasswordText,
+                            fontSize: 14,
+                            fontWeight: 400,
+                            color: AppColors.pinkTwo,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed(
-                            RouteNames.forgotPassword
-                          );
-                        },
-                        child: CommonText(
-                          Strings.forgotPasswordText,
-                          fontSize: 14,
-                          fontWeight: 400,
-                          color: AppColors.pinkTwo,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
-                  ),
-                  VerticalSpacing(30),
-                  CommonButton(
-                    backgroundColor: AppColors.pinkTwo,
-                    radius: 15,
-                    child: CommonText(
-                      Strings.loginText,
-                      color: AppColors.whiteOne,
-                      fontWeight: 600,
-                      fontSize: 18,
+                      ],
                     ),
-                    onPressed: () {
-                      LoggerService.info('Login button pressed');
-                    },
-                  ),
-                  VerticalSpacing(30),
-                ],
+                    VerticalSpacing(30),
+                    CommonButton(
+                      backgroundColor: AppColors.pinkTwo,
+                      radius: 15,
+                      child: CommonText(
+                        Strings.loginText,
+                        color: AppColors.whiteOne,
+                        fontWeight: 600,
+                        fontSize: 18,
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Get.snackbar(
+                            "Error",
+                            "Login Fields Validation Completed",
+                            snackPosition: SnackPosition.BOTTOM
+                          );
+                          LoggerService.info('Login button pressed');
+                        }
+                        else {
+                          Get.snackbar(
+                            "Error",
+                            "Please make sure to fill all these fields",
+                            snackPosition: SnackPosition.BOTTOM
+                          );
+                        }
+                      },
+                    ),
+                    VerticalSpacing(30),
+                  ],
+                ),
               ),
             ),
             VerticalSpacing(40),

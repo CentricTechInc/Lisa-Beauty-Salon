@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -17,7 +18,7 @@ class OtpVerificationPage extends StatefulWidget {
   State<OtpVerificationPage> createState() => _OtpVerificationPageState();
 }
 
-class _OtpVerificationPageState extends State<OtpVerificationPage> {
+class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsValidation {
 
   final int _otpLength = 4;
   late final List<TextEditingController> _controllers;
@@ -61,6 +62,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     }
   }
 
+  String? validateOtp(String otp, int length) {
+    return validateOtpCode(otp);
+  }
+
   Widget _buildOtpField(int index) {
     return SizedBox(
       width: 60,
@@ -89,12 +94,17 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
 
   void _submitOtp() {
     final otp = _controllers.map((c) => c.text).join();
-    // Replace with your actual handling (API call / navigation)
-    debugPrint('Entered OTP: $otp');
-    // Example: show a simple snackbar feedback
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(content: Text('OTP submitted: $otp')),
-    // );
+    final error = validateOtpCode(otp);
+
+    if (error != null) {
+      Get.snackbar(
+        'Error',
+        error,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
     Get.toNamed(RouteNames.resetPassword);
   }
 

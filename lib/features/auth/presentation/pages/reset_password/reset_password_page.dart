@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_back_button.dart';
@@ -16,7 +18,9 @@ class ResetPasswordPage extends StatefulWidget {
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> with FieldsValidation {
+
+  final _formKey = GlobalKey<FormState>();
 
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -55,64 +59,76 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   padding: EdgeInsets.symmetric(
                     horizontal: 20
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      VerticalSpacing(25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CommonBackButton(),
-                          Expanded(
-                            child: Center(
-                              child: CommonText(
-                                Strings.resetPasswordText,
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: AppColors.blackOne,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        VerticalSpacing(25),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CommonBackButton(),
+                            Expanded(
+                              child: Center(
+                                child: CommonText(
+                                  Strings.resetPasswordText,
+                                  fontSize: 24,
+                                  fontWeight: 600,
+                                  color: AppColors.blackOne,
+                                ),
                               ),
                             ),
+                          ],
+                        ),
+                        VerticalSpacing(25),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 40
                           ),
-                        ],
-                      ),
-                      VerticalSpacing(25),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40
+                          child: CommonText(
+                            Strings.resetPasswordDescriptionText,
+                            fontSize: 16,
+                            fontWeight: 400,
+                            color: AppColors.greyTwo,
+                            textOverflow: TextOverflow.visible,
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        child: CommonText(
-                          Strings.resetPasswordDescriptionText,
-                          fontSize: 16,
-                          fontWeight: 400,
-                          color: AppColors.greyTwo,
-                          textOverflow: TextOverflow.visible,
-                          textAlign: TextAlign.center,
+                        VerticalSpacing(50),
+                        CommonTextField(
+                          titleLabelText:  Strings.passwordText,
+                          controller: passwordController,
+                          labelText: Strings.passwordPlaceholderText,
+                          hintText: Strings.passwordPlaceholderText,
+                          labelSize: 16,
+                          hintSize: 16,
+                          labelColor: AppColors.greyTwo,
+                          hintColor: AppColors.greyTwo,
+                          textColor: AppColors.blackTwo,
+                          cursorColor: AppColors.blackTwo,
+                          validator: validatePassword,
                         ),
-                      ),
-                      VerticalSpacing(50),
-                      CommonTextField(
-                        titleLabelText:  Strings.passwordText,
-                        controller: passwordController,
-                        labelText: Strings.passwordPlaceholderText,
-                        labelSize: 16,
-                        labelColor: AppColors.greyTwo,
-                        hintText: Strings.passwordPlaceholderText,
-                        hintSize: 16,
-                        hintColor: AppColors.greyTwo,
-                      ),
-                      VerticalSpacing(20),
-                      CommonTextField(
-                        titleLabelText: Strings.confirmPasswordText,
-                        controller: confirmPasswordController,
-                        labelText: Strings.confirmPasswordPlaceholderText,
-                        labelSize: 16,
-                        labelColor: AppColors.greyTwo,
-                        hintText: Strings.confirmPasswordPlaceholderText,
-                        hintSize: 16,
-                        hintColor: AppColors.greyTwo,
-                      ),
-                      VerticalSpacing(150),
-                    ],
+                        VerticalSpacing(20),
+                        CommonTextField(
+                          titleLabelText: Strings.confirmPasswordText,
+                          controller: confirmPasswordController,
+                          labelText: Strings.confirmPasswordPlaceholderText,
+                          hintText: Strings.confirmPasswordPlaceholderText,
+                          labelSize: 16,
+                          hintSize: 16,
+                          labelColor: AppColors.greyTwo,
+                          hintColor: AppColors.greyTwo,
+                          textColor: AppColors.blackTwo,
+                          cursorColor: AppColors.blackTwo,
+                          validator: (value) => validateConfirmPassword(
+                            passwordController.text,
+                            value,
+                          ),
+                        ),
+                        VerticalSpacing(150),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -131,7 +147,18 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     fontSize: 16,
                     fontWeight: 600,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+
+                    }
+                    else {
+                      Get.snackbar(
+                        "Error",
+                        "Please make sure to enter password and confirm password",
+                        snackPosition: SnackPosition.BOTTOM
+                      );
+                    }
+                  },
                 ),
               ),
             )
