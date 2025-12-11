@@ -1,243 +1,296 @@
 import 'package:intl/intl.dart';
+import 'package:lisa_beauty_salon/core/utils/regex.dart';
+import 'package:lisa_beauty_salon/core/utils/strings.dart';
 
 mixin FieldsValidation {
-  String? validateEmail(email) {
-    final bool emailValid = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(email);
-    if (email.isEmpty) {
-      return "Required*";
-    } else if (email.length > 64) {
-      return "Email can not be more than 64 characters long";
-    } else if (!emailValid) {
-      return "Invalid email adress";
-    } else {
-      return null;
-    }
-  }
-
   String? dateValidation(String startDateString, DateTime endDate) {
+    final parts = startDateString.split('-');
     DateTime startDate = DateTime(
-        int.parse(startDateString.split('-')[2]),
-        int.parse(startDateString.split('-')[1]),
-        int.parse(startDateString.split('-')[0]));
+      int.parse(parts[2]),
+      int.parse(parts[1]),
+      int.parse(parts[0]),
+    );
     if (endDate.isAfter(startDate)) {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(endDate);
-      return formattedDate;
+      return DateFormat('yyyy-MM-dd').format(endDate);
     } else {
       return "To date should be greater than or equal to from date.";
     }
   }
 
   String? dateReminderValidation(String startDateString, DateTime endDate) {
+    final parts = startDateString.split('-');
     DateTime startDate = DateTime(
-        int.parse(startDateString.split('-')[2]),
-        int.parse(startDateString.split('-')[1]),
-        int.parse(startDateString.split('-')[0]));
+      int.parse(parts[2]),
+      int.parse(parts[1]),
+      int.parse(parts[0]),
+    );
     if (endDate.isAfter(startDate)) {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(endDate);
-      return formattedDate;
+      return DateFormat('yyyy-MM-dd').format(endDate);
     } else {
       return "End date should be greater than start date";
     }
   }
 
-  String? validateTextWithNumber(value) {
-    String pattern = r'^(([a-zA-Z])+(-||_)?(([0-9])*((.)([0-9]))?))$';
-    RegExp regex = RegExp(pattern);
-    if (value.isEmpty) {
+  String? validateTextWithNumber(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (!regex.hasMatch(value!)) {
-      return "Invalid Input";
-    } else {
-      return null;
     }
+    if (!RegularExpressions.textWithNumberRegex.hasMatch(value)) {
+      return "Invalid Input";
+    }
+    return null;
   }
 
-  String? validateTextOnly(value) {
-    String pattern = r'^([a-zA-Z ])+$';
-    RegExp regex = RegExp(pattern);
-    if (value.isEmpty) {
+  String? validateTextOnly(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (!regex.hasMatch(value!)) {
-      return "Invalid Input";
-    } else {
-      return null;
     }
+    if (!RegularExpressions.textOnlyRegex.hasMatch(value)) {
+      return "Invalid Input";
+    }
+    return null;
   }
 
-  String? validateNonMandatoryTextOnly(value) {
-    String pattern = r'^([a-zA-Z ])+$';
-    RegExp regex = RegExp(pattern);
-    if (value.isEmpty) {
-      return null;
+  String? validateTextWithDashes(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Required*";
     }
-    if (!regex.hasMatch(value!)) {
+    if (!RegularExpressions.textWithDashesAndSpaceRegex.hasMatch(value)) {
       return "Invalid Input";
-    } else {
+    }
+    return null;
+  }
+
+  String? validateEmailSimple(String? email) {
+    if (email == null || email.isEmpty) {
+      return Strings.pleaseEnterYourEmailText;
+    }
+    return null;
+  }
+
+  String? validateEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      return Strings.pleaseEnterYourEmailText;
+    }
+    if (!RegularExpressions.emailRegex.hasMatch(email)) {
+      return Strings.pleaseMakeSureYourEmailIsInCorrectFormat;
+    }
+    return null;
+  }
+
+  String? validatePasswordSimple(String? password) {
+    if (password == null || password.isEmpty) {
+      return Strings.pleaseEnterYourPasswordText;
+    }
+    return null;
+  }
+
+  String? validatePassword(String? password) {
+    if (password == null || password.isEmpty) {
+      return Strings.pleaseEnterYourPasswordText;
+    }
+    if (!RegularExpressions.passwordRegex.hasMatch(password)) {
+      return Strings.passwordRequirementsText;
+    }
+    return null;
+  }
+
+  String? validateConfirmPassword(String? password, String? confirmPassword) {
+    if (password == null || password.isEmpty) {
+      return Strings.pleaseEnterYourPasswordText;
+    }
+    if (!RegularExpressions.passwordRegex.hasMatch(password)) {
+      return Strings.passwordRequirementsText;
+    }
+    if (password != confirmPassword) {
+      return Strings.passwordAndConfirmPasswordNotText;
+    }
+    return null;
+  }
+
+  String? validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return Strings.pleaseEnterYourName;
+    }
+    return null;
+  }
+
+  String? validateDateOfBirth(String? value) {
+    if (value == null || value.isEmpty) {
+      return Strings.pleaseEnterYourDateOfBirth;
+    }
+    return null;
+  }
+
+  String? validateNonMandatoryTextOnly(String? value) {
+    if (value == null || value.isEmpty) {
       return null;
     }
+    if (!RegularExpressions.textOnlyRegex.hasMatch(value)) {
+      return "Invalid Input";
+    }
+    return null;
   }
 
   String? validateNonMandatoryNumberOnly(String? value) {
-    String pattern = r'^([0-9])+$';
-    RegExp regex = RegExp(pattern);
-    if (value!.isEmpty) {
-      return null;
-    } else if (!regex.hasMatch(value)) {
-      return "Invalid Input please enter numbers only";
-    } else {
+    if (value == null || value.isEmpty) {
       return null;
     }
+    if (!RegularExpressions.onlyNumbersRegex.hasMatch(value)) {
+      return "Invalid Input please enter numbers only";
+    }
+    return null;
   }
 
   String? validateOnlyIntNumber(String? value) {
-    String pattern = r'^([0-9])+$';
-    RegExp regex = RegExp(pattern);
-    if (value!.isEmpty) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (!regex.hasMatch(value)) {
-      return "Invalid Input";
-    } else {
-      return null;
     }
+    if (!RegularExpressions.onlyNumbersRegex.hasMatch(value)) {
+      return "Invalid Input";
+    }
+    return null;
   }
 
-  String? salaryLimit(value) {
-    String pattern = r'^([0-9])+$';
-    RegExp regex = RegExp(pattern);
-    if (value.isEmpty) {
+  String? salaryLimit(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (!regex.hasMatch(value!)) {
+    }
+    if (!RegularExpressions.salaryNumberRegex.hasMatch(value)) {
       return "Invalid Input";
-    } else if ((int.parse(value) < 5000)) {
+    }
+    if (int.parse(value) < 5000) {
       return "value should be greater than starting range ";
-    } else {
-      return null;
     }
+    return null;
   }
 
-  String? validateOnlyNumberWithDecimal(value) {
-    String pattern = r'^([0-9])+(.)+([0-9])$';
-    RegExp regex = RegExp(pattern);
-    if (value.isEmpty) {
+  String? validateOnlyNumberWithDecimal(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (!regex.hasMatch(value!)) {
-      return "Invalid Input";
-    } else {
-      return null;
     }
+    if (!RegularExpressions.numberWithDecimalRegex.hasMatch(value)) {
+      return "Invalid Input";
+    }
+    return null;
   }
 
   String? validateNumberWithDashes(String? value) {
-    String pattern = r'^(([0-9])+?(-)?)+?$';
-    RegExp regex = RegExp(pattern);
-    if (value!.isEmpty) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (value[value.length - 1] == '-') {
-      return "Invalid Input";
-    } else if (!regex.hasMatch(value)) {
-      return "Invalid Input";
-    } else {
-      return null;
     }
+    // avoid trailing dash
+    if (value.endsWith('-')) {
+      return "Invalid Input";
+    }
+    if (!RegularExpressions.numberWithDashesRegex.hasMatch(value)) {
+      return "Invalid Input";
+    }
+    return null;
   }
 
-  String? passwordValidation(value) {
-    String pattern = r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)";
-    RegExp regex = RegExp(pattern);
-    if (value.isEmpty) {
+  String? passwordValidation(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (!regex.hasMatch(value!)) {
+    }
+    if (!RegularExpressions.strongPasswordRegex.hasMatch(value)) {
       return "Hint: Aabc@123";
-    } else if (value.length < 8) {
-      return "Password must be at least 8 characters long";
-    } else if (value.length > 12) {
-      return "Password must be at most 12 characters long";
-    } else {
-      return null;
     }
+    if (value.length < 8) {
+      return "Password must be at least 8 characters long";
+    }
+    if (value.length > 12) {
+      return "Password must be at most 12 characters long";
+    }
+    return null;
   }
 
-  String? validatePhone(value) {
-    // String pattern = r'^\+?1?[-\.\s]?\(?\d{3}\)?[-\.\s]?\d{3}[-\.\s]?\d{4}$';
-    String pattern =
-        r'^\+?(1|971|92)?[-.\s]?\(?\d{2,3}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}$';
-    RegExp regex = RegExp(pattern);
-    if (value.isEmpty) {
+  String? validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (!regex.hasMatch(value!)) {
-      return "Invalid Phone Number";
-    } else {
-      return null;
     }
+    if (!RegularExpressions.phoneRegex.hasMatch(value)) {
+      return "Invalid Phone Number";
+    }
+    return null;
   }
 
   String? emptyFieldValidation(String? value) {
-    String text = value!.trim();
-    if (text.startsWith(' ')) {
+    if (value == null) {
       return "Required*";
-    } else if (text.isEmpty) {
-      return "Required*";
-    } else {
-      return null;
     }
+    final text = value.trim();
+    if (text.isEmpty || value.startsWith(' ')) {
+      return "Required*";
+    }
+    return null;
   }
 
-  String? matchPass(value, value2) {
-    if (value.isEmpty) {
+  String? matchPass(String? value, String? value2) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (value != value2) {
-      return "*password does not match";
-    } else {
-      return null;
     }
+    if (value != value2) {
+      return "*password does not match";
+    }
+    return null;
   }
 
   String? validateNumberAndAlphabetsOnly(String? value) {
-    String pattern = r'^([0-9])*([A-Za-z])\w+$';
-    RegExp regex = RegExp(pattern);
-    if (value!.isEmpty) {
+    if (value == null || value.isEmpty) {
       return "Required*";
-    } else if (!regex.hasMatch(value)) {
-      return "Invalid Input";
-    } else {
-      return null;
     }
+    if (!RegularExpressions.numberAndAlphabetRegex.hasMatch(value)) {
+      return "Invalid Input";
+    }
+    return null;
   }
 
   String? validateTextOnlyDropdown<T>(T? value) {
     if (value == null || value.toString().isEmpty) {
       return "Required*";
-    } else if (value == '') {
+    }
+    if (value == '') {
       return "is Empty*";
     }
     return null;
   }
 
   String? validateVin(String? vin) {
-    String pattern = r"^[A-HJ-NPR-Z0-9]{17}$";
-    RegExp regex = RegExp(pattern, caseSensitive: false);
-    if (vin!.isEmpty) {
+    if (vin == null || vin.isEmpty) {
       return "Required*";
-    } else if (vin.length != 17) {
-      return "VIN must be exactly 17 characters";
-    } else if (!regex.hasMatch(vin)) {
-      return "Invalid Input";
-    } else {
-      return null;
     }
+    if (vin.length != 17) {
+      return "VIN must be exactly 17 characters";
+    }
+    if (!RegularExpressions.vinRegex.hasMatch(vin)) {
+      return "Invalid Input";
+    }
+    return null;
   }
 
   String? zipCodeOptionalValidation(String? zipCode) {
-    bool isZipValid = RegExp(
-        r'^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$|^\d{5}(-\d{4})?$',
-        caseSensitive: false)
-        .hasMatch(zipCode!);
-    if (!isZipValid) {
-      return "Zip/Postal code invalid!";
-    } else {
+    if (zipCode == null || zipCode.isEmpty) {
       return null;
     }
+    if (!RegularExpressions.zipCodeRegex.hasMatch(zipCode)) {
+      return "Zip/Postal code invalid!";
+    }
+    return null;
   }
+
+  String? validateZipCode(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Zip code is required';
+    }
+
+    final zipRegex = RegularExpressions.zipCodeRegex;
+
+    if (!zipRegex.hasMatch(value.trim())) {
+      return 'Enter a valid zip/postal code';
+    }
+
+    return null;
+  }
+
 }

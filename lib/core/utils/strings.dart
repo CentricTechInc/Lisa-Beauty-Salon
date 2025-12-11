@@ -80,7 +80,7 @@ class Strings {
   static const String stateText = "State*";
   static const String statePlaceholderText = "New York";
   static const String zipCodeText = "Zip Code*";
-  static const String zipCodePlaceholderText = "11717";
+  static const String zipCodePlaceholderText = "1171";
   static const String nextText = "Next";
 
   static const String southAfricaStringText = "South Africa";
@@ -254,4 +254,30 @@ class Strings {
   static const String onboardingCompleteTitleText = "You're All Set! Well, Almost...";
   static const String onboardingCompleteSubTitleOneText = "Your application is being reviewed.";
   static const String onboardingCompleteSubTitleTwoText = "We'll notify you via email once your license verification is complete (usually within 24-48 hours). In the meantime, you can finish setting up your profile.";
+
+
+  /// Validations Messages
+
+  //// Name Validation Messages
+  static const String pleaseEnterYourName = "Please enter your name";
+  static const String pleaseEnterYourDateOfBirth =
+      'Please enter your date of birth';
+
+  // Email Validation Messages
+  static const String pleaseEnterYourEmailText = 'Please enter your email';
+  static const String pleaseMakeSureYourEmailIsInCorrectFormat =
+      'Please enter a valid email address';
+
+  // Confirm Password Validation Messags
+  static const String pleaseEnterYourPasswordText =
+      'Please enter your password';
+  static const String passwordRequirementsText =
+      'Password must be at least 8 characters, include letters and numbers';
+  static const String passwordAndConfirmPasswordNotText =
+      'Password and confirm password needs to be matched';
+
+  // Terms And Condition SignUp Validation Message
+  static const String termsAndConditionValidationText =
+      'Please make sure that terms and condition and privacy policy checkbox is checked';
+
 }
