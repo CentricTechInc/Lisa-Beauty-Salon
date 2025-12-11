@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/app_constants.dart';
+import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
@@ -219,11 +220,12 @@ class DayScheduleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final RxBool isEnabled = (schedule.isEnabled.obs);
-
     return Column(
       children: [
         Obx(() {
+          final schedule = controller.buildProfileData!.weeklySchedule[day];
+          final bool isEnabled = schedule?.isEnabled ?? false;
+
           return Container(
             decoration: BoxDecoration(
               color: AppColors.whiteOne,
@@ -242,23 +244,25 @@ class DayScheduleRow extends StatelessWidget {
                       fontWeight: 700,
                       color: AppColors.blackTwo,
                     ),
-                    CommonSwitchComponentReactive(
+                    CommonSwitchComponentNonReactive(
                       value: isEnabled,
                       onChanged: (enabled) {
-                        final updatedSchedule = schedule.copyWith(isEnabled: enabled);
-                        controller.setDailySchedule(day, updatedSchedule);
+                        final updatedSchedule = schedule?.copyWith(isEnabled: enabled);
+                        if (updatedSchedule != null) {
+                          controller.setDailySchedule(day, updatedSchedule);
+                        }
                       },
                     )
                   ],
                 ),
 
                 // Collapse content if disabled
-                if (isEnabled.value)
+                if (isEnabled)
                   TimeSlotEditor(
                     fromTitle: "From",
                     toTitle: "To",
-                    timeSlot: schedule.workSlots.isNotEmpty
-                        ? schedule.workSlots.first
+                    timeSlot: (schedule?.workSlots ?? []).isNotEmpty
+                        ? (schedule?.workSlots ?? []).first
                         : null,
                     onTimeSelected: (time) {},
                   ),
