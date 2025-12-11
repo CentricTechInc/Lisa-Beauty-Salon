@@ -85,6 +85,8 @@ class CommonCheckbox extends StatelessWidget {
                   fontSize: labelFontSize,
                   fontWeight: labelFontWeight,
                   color: labelColor,
+                  textOverflow: TextOverflow.visible,
+                  maxLines: 2,
                 ),
               ),
           ],

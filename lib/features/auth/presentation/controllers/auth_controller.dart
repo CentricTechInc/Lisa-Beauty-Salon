@@ -207,6 +207,20 @@ class AuthController extends GetxController {
   void _ensureDtoInitialized() {
     if (_buildProfileData.value == null) {
       _buildProfileData.value = BuildProfileDto();
+
+      final defaultDaySchedule = defaultSchedule.value;
+
+      _buildProfileData.value = BuildProfileDto(
+          weeklySchedule: {
+            "Monday": defaultDaySchedule,
+            "Tuesday": defaultDaySchedule,
+            "Wednesday": defaultDaySchedule,
+            "Thursday": defaultDaySchedule,
+            "Friday": defaultDaySchedule,
+            "Saturday": defaultDaySchedule,
+            "Sunday": defaultDaySchedule,
+          }
+      );
     }
   }
 

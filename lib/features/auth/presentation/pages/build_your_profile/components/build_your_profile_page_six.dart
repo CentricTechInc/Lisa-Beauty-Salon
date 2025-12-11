@@ -675,7 +675,13 @@ class _EmptyBankAccountState extends StatelessWidget {
   }
 }
 
-class _ShowAddBankAccountsForm extends StatelessWidget {
+class _ShowAddBankAccountsForm extends StatefulWidget {
+  @override
+  State<_ShowAddBankAccountsForm> createState() => _ShowAddBankAccountsFormState();
+}
+
+class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> {
+
   final accountHolderNameController = TextEditingController();
   final bankNameController = TextEditingController();
   final accountNumberController = TextEditingController();
