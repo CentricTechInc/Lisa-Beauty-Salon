@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -26,7 +27,9 @@ class BuildYourProfilePageThree extends StatefulWidget {
   State<BuildYourProfilePageThree> createState() => BuildYourProfilePageThreeState();
 }
 
-class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> {
+class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> with FieldsValidation {
+
+  final _formKey = GlobalKey<FormState>();
 
   final professionalBioController = TextEditingController();
   final yearsOfExperienceController = TextEditingController();
@@ -61,99 +64,112 @@ class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: 20
+          horizontal: 20
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            VerticalSpacing(20),
-            Center(
-              child: CommonText(
-                Strings.createYourProfessionalProfileText,
-                fontSize: 20,
-                fontWeight: 700,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              VerticalSpacing(20),
+              Center(
+                child: CommonText(
+                  Strings.createYourProfessionalProfileText,
+                  fontSize: 20,
+                  fontWeight: 700,
+                  color: AppColors.blackTwo,
+                ),
+              ),
+              VerticalSpacing(10),
+              Center(
+                child: CommonText(
+                  Strings.createYourProfessionalProfileDescriptionText,
+                  fontSize: 16,
+                  fontWeight: 400,
+                  color: AppColors.greyTwo,
+                ),
+              ),
+              VerticalSpacing(30),
+              CommonText(
+                Strings.uploadYourProfilePhotoText,
+                fontSize: 12,
+                fontWeight: 400,
                 color: AppColors.blackTwo,
               ),
-            ),
-            VerticalSpacing(10),
-            Center(
-              child: CommonText(
-                Strings.createYourProfessionalProfileDescriptionText,
-                fontSize: 16,
-                fontWeight: 400,
-                color: AppColors.greyTwo,
+              VerticalSpacing(10),
+              ValueListenableBuilder(
+                valueListenable: photoNotifier,
+                builder: (context, path, _) {
+                  return PhotoPickerComponent(
+                    imagePath: path,
+                    onTap: () async {
+                      final file = await pickImageFromGallery();
+                      if (file != null) {
+                        photoNotifier.value = file.path;
+                      }
+                    },
+                  );
+                },
               ),
-            ),
-            VerticalSpacing(30),
-            CommonText(
-              Strings.uploadYourProfilePhotoText,
-              fontSize: 12,
-              fontWeight: 400,
-              color: AppColors.blackTwo,
-            ),
-            VerticalSpacing(10),
-            ValueListenableBuilder(
-              valueListenable: photoNotifier,
-              builder: (context, path, _) {
-                return PhotoPickerComponent(
-                  imagePath: path,
-                  onTap: () async {
-                    final file = await pickImageFromGallery();
-                    if (file != null) {
-                      photoNotifier.value = file.path;
-                    }
-                  },
-                );
-              },
-            ),
-            VerticalSpacing(20),
-            CommonTextField(
-              titleLabelText: Strings.professionalAndBioOrHeadlineText,
-              controller: professionalBioController,
-              labelText: null,
-              hintText: Strings.descriptionPlaceholderText,
-              labelSize: 15,
-              hintSize: 15,
-              labelColor: AppColors.greyTwo,
-              hintColor: AppColors.greyTwo,
-              cursorColor: AppColors.blackTwo,
-              minLines: 6,
-              maxLines: 8,
-              fillColor: AppColors.greyFour,
-              borderColor: AppColors.transparent,
-            ),
-            VerticalSpacing(20),
-            CommonTextField(
-              titleLabelText: Strings.yearsOfExperienceText,
-              controller: yearsOfExperienceController,
-              labelText: Strings.yearsOfExperiencePlaceholderText,
-              hintText: Strings.yearsOfExperiencePlaceholderText,
-              labelSize: 15,
-              hintSize: 15,
-              labelColor: AppColors.greyTwo,
-              hintColor: AppColors.greyTwo,
-              cursorColor: AppColors.blackTwo,
-              inputType: TextInputType.number,
-            ),
-            VerticalSpacing(60),
-            CommonButton(
-              text: Strings.continueText,
-              textColor: AppColors.whiteOne,
-              onPressed: () {
-                authController.setProfessionalData(
-                  professionalBio: professionalBioController.text,
-                  yearsOfExperience: int.tryParse(yearsOfExperienceController.text) ?? 0,
-                  profilePhotoFile: photoNotifier.value.toString()
-                );
+              VerticalSpacing(20),
+              CommonTextField(
+                titleLabelText: Strings.professionalAndBioOrHeadlineText,
+                controller: professionalBioController,
+                hintText: Strings.descriptionPlaceholderText,
+                labelText: null,
+                labelSize: 15,
+                hintSize: 15,
+                minLines: 6,
+                maxLines: 8,
+                labelColor: AppColors.greyTwo,
+                hintColor: AppColors.greyTwo,
+                cursorColor: AppColors.blackTwo,
+                textColor: AppColors.blackTwo,
+                fillColor: AppColors.greyFour,
+                borderColor: AppColors.transparent,
+              ),
+              VerticalSpacing(20),
+              CommonTextField(
+                titleLabelText: Strings.yearsOfExperienceText,
+                controller: yearsOfExperienceController,
+                labelText: Strings.yearsOfExperiencePlaceholderText,
+                hintText: Strings.yearsOfExperiencePlaceholderText,
+                labelSize: 15,
+                hintSize: 15,
+                labelColor: AppColors.greyTwo,
+                hintColor: AppColors.greyTwo,
+                cursorColor: AppColors.blackTwo,
+                inputType: TextInputType.number,
+                validator: validateOnlyIntNumber,
+              ),
+              VerticalSpacing(60),
+              CommonButton(
+                text: Strings.continueText,
+                textColor: AppColors.whiteOne,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    authController.setProfessionalData(
+                      professionalBio: professionalBioController.text,
+                      yearsOfExperience: int.tryParse(yearsOfExperienceController.text) ?? 0,
+                      profilePhotoFile: photoNotifier.value.toString()
+                    );
 
-                widget.pageController.animateToPage(
-                  3,
-                  duration: Duration(milliseconds: 50),
-                  curve: Curves.easeInOut
-                );
-              },
-            )
-          ],
+                    widget.pageController.animateToPage(
+                      3,
+                      duration: Duration(milliseconds: 50),
+                      curve: Curves.easeInOut
+                    );
+                  }
+                  else {
+                   Get.snackbar(
+                     "Error",
+                     "Please make sure sure to enter the age"
+                   );
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

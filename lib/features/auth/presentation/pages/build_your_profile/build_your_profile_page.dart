@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/build_your_profile/components/build_your_profile_page_five.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/build_your_profile/components/build_your_profile_page_four.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/build_your_profile/components/build_your_profile_page_one.dart';
@@ -36,11 +37,17 @@ class _BuildYourProfilePageState extends State<BuildYourProfilePage> {
   }
 
   void _handleBackNavigation() {
+    final authController = Get.find<AuthController>();
     final currentPage = _currentPageNotifier.value;
-
     if (currentPage == 0) {
       Get.back();
     } else {
+      if (currentPage == 5 && authController.showAddBankAccountsForm.value == true) {
+        authController.toggleAddBankAccountsForm();
+      }
+      else if (currentPage == 3 && authController.showAddServiceForm.value == true) {
+        authController.toggleAddServiceForm();
+      }
       _pageController.previousPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,

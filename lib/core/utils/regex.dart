@@ -16,7 +16,7 @@ class RegularExpressions {
 
   /// Text with number (your existing one)
   static RegExp textWithNumberRegex = RegExp(
-    r'^([a-zA-Z]+(-|_)?([0-9]+(\.[0-9]+)?))$',
+    r'^([a-zA-Z]+(-|_)?([0-9]+(\.[0-9]+) ?))$',
   );
 
   /// Text only (alphabets + spaces)
@@ -77,5 +77,8 @@ class RegularExpressions {
     caseSensitive: false,
   );
 
-
+  /// Validate Business Name
+  static RegExp businessNameRegex = RegExp(
+    r"^[A-Za-z0-9 .&'+-]{2,50}$",
+  );
 }

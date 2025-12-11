@@ -41,6 +41,16 @@ mixin FieldsValidation {
     return null;
   }
 
+  String? validateBusinessName(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Required*";
+    }
+    if (!RegularExpressions.businessNameRegex.hasMatch(value.trim())) {
+      return "Invalid business name";
+    }
+    return null;
+  }
+
   String? validateTextOnly(String? value) {
     if (value == null || value.isEmpty) {
       return "Required*";
@@ -49,6 +59,12 @@ mixin FieldsValidation {
       return "Invalid Input";
     }
     return null;
+  }
+
+  String? validateTextNotEmpty(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Required*";
+    }
   }
 
   String? validateTextWithDashes(String? value) {
@@ -306,5 +322,40 @@ mixin FieldsValidation {
 
     return null;
   }
+
+  String? validatePrice(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Price is required';
+    }
+    final sanitized = value.replaceAll(' ', '').replaceAll('R', '');
+    if (double.tryParse(sanitized) == null) {
+      return 'Enter a valid price';
+    }
+    return null;
+  }
+
+  String? validateAccountNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Required*";
+    }
+    if (!RegularExpressions.onlyNumbersRegex.hasMatch(value)) {
+      return "Invalid Input";
+    }
+    return null;
+  }
+
+  String? validateConfirmAccountNumber(String? accountNumber, confirmAccountNumber) {
+    if (accountNumber == null || accountNumber.isEmpty) {
+      return "Required*";
+    }
+    if (!RegularExpressions.onlyNumbersRegex.hasMatch(accountNumber)) {
+      return "Invalid Input";
+    }
+    if (accountNumber != confirmAccountNumber) {
+      return 'Account Number and Confirm Account Number not matched';
+    }
+    return null;
+  }
+
 
 }
