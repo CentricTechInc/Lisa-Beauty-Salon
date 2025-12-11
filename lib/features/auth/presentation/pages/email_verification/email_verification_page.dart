@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -18,7 +19,7 @@ class EmailVerificationPage extends StatefulWidget {
   State<EmailVerificationPage> createState() => _EmailVerificationPageState();
 }
 
-class _EmailVerificationPageState extends State<EmailVerificationPage> {
+class _EmailVerificationPageState extends State<EmailVerificationPage> with FieldsValidation {
 
   final int _otpLength = 4;
   late final List<TextEditingController> _controllers;
@@ -70,12 +71,12 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
         controller: _controllers[index],
         focusNode: _focusNodes[index],
         textAlign: TextAlign.center,
-        borderColor: AppColors.greyOne,
-        inputType: TextInputType.number,
-        textColor: AppColors.blackTwo,
-        cursorColor: AppColors.greyOne,
         fontSize: 20,
         textWeight: FontWeight.w600,
+        inputType: TextInputType.number,
+        borderColor: AppColors.greyOne,
+        textColor: AppColors.blackTwo,
+        cursorColor: AppColors.blackTwo,
         inputFormatter: [
           LengthLimitingTextInputFormatter(1),
           FilteringTextInputFormatter.digitsOnly
@@ -85,14 +86,23 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
     );
   }
 
+  String? validateOtp(String otp, int length) {
+    return validateOtpCode(otp);
+  }
+
   void _submitOtp() {
     final otp = _controllers.map((c) => c.text).join();
-    // Replace with your actual handling (API call / navigation)
-    debugPrint('Entered OTP: $otp');
-    // Example: show a simple snackbar feedback
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(content: Text('OTP submitted: $otp')),
-    // );
+    final error = validateOtpCode(otp);
+
+    if (error != null) {
+      Get.snackbar(
+        'Error',
+        error,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
     final authController = Get.find<AuthController>();
     if (authController.selectedCategory.value == Strings.salonsText) {
       Get.toNamed(

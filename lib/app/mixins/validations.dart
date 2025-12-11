@@ -273,7 +273,7 @@ mixin FieldsValidation {
     if (zipCode == null || zipCode.isEmpty) {
       return null;
     }
-    if (!RegularExpressions.zipCodeRegex.hasMatch(zipCode)) {
+    if (!RegularExpressions.fourDigitCodeRegex.hasMatch(zipCode)) {
       return "Zip/Postal code invalid!";
     }
     return null;
@@ -284,10 +284,24 @@ mixin FieldsValidation {
       return 'Zip code is required';
     }
 
-    final zipRegex = RegularExpressions.zipCodeRegex;
+    final zipRegex = RegularExpressions.fourDigitCodeRegex;
 
     if (!zipRegex.hasMatch(value.trim())) {
       return 'Enter a valid zip/postal code';
+    }
+
+    return null;
+  }
+
+  String? validateOtpCode(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Otp Code is required';
+    }
+
+    final otpCode = RegularExpressions.fourDigitCodeRegex;
+
+    if (!otpCode.hasMatch(value.trim())) {
+      return 'Enter a valid OTP code';
     }
 
     return null;

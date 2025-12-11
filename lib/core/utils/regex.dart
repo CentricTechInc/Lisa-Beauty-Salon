@@ -71,8 +71,8 @@ class RegularExpressions {
     caseSensitive: false,
   );
 
-  /// ZIP/Postal validation (US ZIP + Canada postal)
-  static RegExp zipCodeRegex = RegExp(
+  /// 4 Digits Code Verification
+  static RegExp fourDigitCodeRegex = RegExp(
     r'^\d{4}$',
     caseSensitive: false,
   );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
@@ -23,7 +24,9 @@ class SignUpSalonPage extends StatefulWidget {
   State<SignUpSalonPage> createState() => _SignUpSalonPageState();
 }
 
-class _SignUpSalonPageState extends State<SignUpSalonPage> {
+class _SignUpSalonPageState extends State<SignUpSalonPage> with FieldsValidation {
+
+  final _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -55,133 +58,170 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> {
               padding: EdgeInsets.symmetric(
                 horizontal: 20
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  VerticalSpacing(30),
-                  Center(
-                    child: CommonText(
-                      Strings.signUpText,
-                      fontSize: 24,
-                      fontWeight: 600,
-                      color: AppColors.blackTwo,
-                    ),
-                  ),
-                  VerticalSpacing(15),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20
-                    ),
-                    child: CommonText(
-                      Strings.signUpSalonDescriptionText,
-                      fontSize: 16,
-                      fontWeight: 400,
-                      color: AppColors.greyTwo,
-                      textOverflow: TextOverflow.visible,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  VerticalSpacing(20),
-                  CommonTextField(
-                    titleLabelText: Strings.emailText,
-                    controller: emailController,
-                    labelText: Strings.emailPlaceholderText,
-                    labelSize: 15,
-                    labelColor: AppColors.greyTwo,
-                    hintText: Strings.emailPlaceholderText,
-                    hintSize: 15,
-                    hintColor: AppColors.greyTwo,
-                  ),
-                  VerticalSpacing(20),
-                  CommonTextField(
-                    titleLabelText: Strings.passwordText,
-                    controller: passwordController,
-                    labelText: Strings.passwordPlaceholderText,
-                    labelSize: 16,
-                    labelColor: AppColors.greyTwo,
-                    hintText: Strings.passwordPlaceholderText,
-                    hintSize: 16,
-                    hintColor: AppColors.greyTwo,
-                  ),
-                  VerticalSpacing(20),
-                  CommonTextField(
-                    titleLabelText: Strings.confirmPasswordText,
-                    controller: confirmPasswordController,
-                    labelText: Strings.passwordPlaceholderText,
-                    labelSize: 16,
-                    labelColor: AppColors.greyTwo,
-                    hintText: Strings.passwordPlaceholderText,
-                    hintSize: 16,
-                    hintColor: AppColors.greyTwo,
-                  ),
-                  VerticalSpacing(20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Obx(
-                        () => CommonCheckbox(
-                          label: Strings.agreeToText,
-                          spacing: 5,
-                          labelFontSize: 12,
-                          labelFontWeight: 400,
-                          inactiveColor: AppColors.whiteTwo,
-                          activeColor: AppColors.pinkTwo,
-                          value: authController.agreeToTermsAndCondition.value,
-                          onChanged: (value) {
-                            authController.agreeToTermsAndCondition.value = value ?? false;
-                          },
-                        ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    VerticalSpacing(30),
+                    Center(
+                      child: CommonText(
+                        Strings.signUpText,
+                        fontSize: 24,
+                        fontWeight: 600,
+                        color: AppColors.blackTwo,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          LoggerService.info('Terms and Conditions tapped');
-                        },
-                        child: CommonText(
-                          Strings.termsAndConditionsText,
-                          fontSize: 12,
-                          fontWeight: 400,
-                          color: AppColors.pinkTwo,
-                          decoration: TextDecoration.underline,
-                        ),
+                    ),
+                    VerticalSpacing(15),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20
                       ),
-                      CommonText(
-                        Strings.andText,
-                        fontSize: 12,
+                      child: CommonText(
+                        Strings.signUpSalonDescriptionText,
+                        fontSize: 16,
                         fontWeight: 400,
                         color: AppColors.greyTwo,
+                        textOverflow: TextOverflow.visible,
+                        textAlign: TextAlign.center,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          LoggerService.info('Privacy Policy tapped');
-                        },
-                        child: CommonText(
-                          Strings.privacyPolicyText,
+                    ),
+                    VerticalSpacing(20),
+                    CommonTextField(
+                      titleLabelText: Strings.emailText,
+                      controller: emailController,
+                      labelText: Strings.emailPlaceholderText,
+                      hintText: Strings.emailPlaceholderText,
+                      labelSize: 15,
+                      hintSize: 15,
+                      labelColor: AppColors.greyTwo,
+                      hintColor: AppColors.greyTwo,
+                      textColor: AppColors.blackTwo,
+                      cursorColor: AppColors.blackTwo,
+                      validator: validateEmail,
+                    ),
+                    VerticalSpacing(20),
+                    CommonTextField(
+                      titleLabelText: Strings.passwordText,
+                      controller: passwordController,
+                      labelText: Strings.passwordPlaceholderText,
+                      hintText: Strings.passwordPlaceholderText,
+                      hintSize: 16,
+                      labelSize: 16,
+                      labelColor: AppColors.greyTwo,
+                      hintColor: AppColors.greyTwo,
+                      textColor: AppColors.blackTwo,
+                      cursorColor: AppColors.blackTwo,
+                      validator: validatePassword,
+                    ),
+                    VerticalSpacing(20),
+                    CommonTextField(
+                      titleLabelText: Strings.confirmPasswordText,
+                      controller: confirmPasswordController,
+                      labelText: Strings.passwordPlaceholderText,
+                      hintText: Strings.passwordPlaceholderText,
+                      labelSize: 16,
+                      hintSize: 16,
+                      labelColor: AppColors.greyTwo,
+                      hintColor: AppColors.greyTwo,
+                      textColor: AppColors.blackTwo,
+                      cursorColor: AppColors.blackTwo,
+                      validator: (value) => validateConfirmPassword(
+                        passwordController.text,
+                        value
+                      ),
+                    ),
+                    VerticalSpacing(20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Obx(
+                          () => CommonCheckbox(
+                            label: Strings.agreeToText,
+                            spacing: 5,
+                            labelFontSize: 12,
+                            labelFontWeight: 400,
+                            inactiveColor: AppColors.whiteTwo,
+                            activeColor: AppColors.pinkTwo,
+                            value: authController.agreeToTermsAndCondition.value,
+                            onChanged: (value) {
+                              authController.agreeToTermsAndCondition.value = value ?? false;
+                            },
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            LoggerService.info('Terms and Conditions tapped');
+                          },
+                          child: CommonText(
+                            Strings.termsAndConditionsText,
+                            fontSize: 12,
+                            fontWeight: 400,
+                            color: AppColors.pinkTwo,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        CommonText(
+                          Strings.andText,
                           fontSize: 12,
                           fontWeight: 400,
-                          color: AppColors.pinkTwo,
-                          decoration: TextDecoration.underline,
+                          color: AppColors.greyTwo,
                         ),
-                      ),
-                    ],
-                  ),
-                  VerticalSpacing(20),
-                  CommonButton(
-                    backgroundColor: AppColors.pinkTwo,
-                    radius: 15,
-                    child: CommonText(
-                      Strings.signUpText,
-                      color: AppColors.whiteOne,
-                      fontWeight: 600,
-                      fontSize: 18,
+                        GestureDetector(
+                          onTap: () {
+                            LoggerService.info('Privacy Policy tapped');
+                          },
+                          child: CommonText(
+                            Strings.privacyPolicyText,
+                            fontSize: 12,
+                            fontWeight: 400,
+                            color: AppColors.pinkTwo,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      Get.toNamed(
-                          RouteNames.emailVerification
-                      );
-                    },
-                  ),
-                  VerticalSpacing(30),
-                ],
+                    VerticalSpacing(20),
+                    CommonButton(
+                      backgroundColor: AppColors.pinkTwo,
+                      radius: 15,
+                      child: CommonText(
+                        Strings.signUpText,
+                        color: AppColors.whiteOne,
+                        fontWeight: 600,
+                        fontSize: 18,
+                      ),
+                      onPressed: () {
+                        final isFormStateValid = _formKey.currentState!
+                            .validate();
+                        final isAgreedToTermsAndCondition = authController
+                            .agreeToTermsAndCondition.value;
+                        if (isFormStateValid && isAgreedToTermsAndCondition) {
+                          Get.toNamed(
+                              RouteNames.emailVerification
+                          );
+                        }
+                        else{
+                          if (!authController.agreeToTermsAndCondition.value) {
+                            Get.snackbar(
+                              'Error',
+                              'You must agree to the Terms and Conditions and Privacy Policy.',
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          }
+                          else{
+                            Get.snackbar(
+                              'Error',
+                              'Please make sure that all fields have been filled.',
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          }
+                        }
+                      },
+                    ),
+                    VerticalSpacing(30),
+                  ],
+                ),
               ),
             ),
             VerticalSpacing(40),
