@@ -51,6 +51,7 @@ dependencies:
   image_picker: ^1.2.1
   file_picker: ^10.3.7
   mobkit_dashed_border: ^0.0.8
+  flutter_html: ^3.0.0
 
 dev_dependencies:
   flutter_test:

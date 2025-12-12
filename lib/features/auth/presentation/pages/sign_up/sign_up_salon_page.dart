@@ -151,7 +151,9 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> with FieldsValidation
                         ),
                         GestureDetector(
                           onTap: () {
-                            LoggerService.info('Terms and Conditions tapped');
+                            Get.toNamed(
+                              RouteNames.termsAndConditions
+                            );
                           },
                           child: CommonText(
                             Strings.termsAndConditionsText,
@@ -169,7 +171,9 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> with FieldsValidation
                         ),
                         GestureDetector(
                           onTap: () {
-                            LoggerService.info('Privacy Policy tapped');
+                            Get.toNamed(
+                              RouteNames.privacyPolicy
+                            );
                           },
                           child: CommonText(
                             Strings.privacyPolicyText,

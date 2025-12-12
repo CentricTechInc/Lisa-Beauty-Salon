@@ -11,6 +11,8 @@ class RouteNames {
   static const String emailVerification = '/emailVerification';
   static const String createAccount = '/createAccount';
   static const String buildYourProfile = '/buildYourProfile';
+  static const String privacyPolicy = '/privacyPolicy';
+  static const String termsAndConditions = '/termsAndConditions';
 
 
 }

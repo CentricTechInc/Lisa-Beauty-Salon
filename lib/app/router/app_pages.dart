@@ -5,11 +5,13 @@ import 'package:lisa_beauty_salon/features/auth/presentation/pages/create_accoun
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/email_verification/email_verification_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/forgot_password/forgot_password_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/otp_verification/otp_verification_page.dart';
+import 'package:lisa_beauty_salon/features/auth/presentation/pages/privacy_policy/privacy_policy_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/reset_password/reset_password_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/sign_up/sign_up_customer_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/sign_up/sign_up_salon_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/splash/splash_page.dart';
+import 'package:lisa_beauty_salon/features/auth/presentation/pages/terms_and_conditions/terms_and_conditions_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/welcome/welcome_page.dart';
 
 class AppPages {
@@ -59,6 +61,14 @@ class AppPages {
     GetPage(
       name: RouteNames.buildYourProfile,
       page: () => BuildYourProfilePage(),
+    ),
+    GetPage(
+      name: RouteNames.privacyPolicy,
+      page: () => PrivacyPolicyPage(),
+    ),
+    GetPage(
+      name: RouteNames.termsAndConditions,
+      page: () => TermsAndConditionsPage(),
     ),
   ];
 }

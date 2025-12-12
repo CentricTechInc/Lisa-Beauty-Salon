@@ -280,4 +280,5 @@ class Strings {
   static const String termsAndConditionValidationText =
       'Please make sure that terms and condition and privacy policy checkbox is checked';
 
+  static const String lastUpdateText = "last Update: 31-12-2025";
 }

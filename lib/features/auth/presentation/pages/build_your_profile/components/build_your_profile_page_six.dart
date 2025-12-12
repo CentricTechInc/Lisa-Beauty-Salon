@@ -431,8 +431,8 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
           Obx(() => CommonCheckbox(
             label: Strings.confirmAndConsentToAccountText,
             spacing: 5,
-            labelFontSize: 16,
-            labelFontWeight: 500,
+            labelFontSize: 12,
+            labelFontWeight: 400,
             inactiveColor: AppColors.whiteTwo,
             activeColor: AppColors.pinkTwo,
             value: authController.confirmAndConsentToThisAccount.value,

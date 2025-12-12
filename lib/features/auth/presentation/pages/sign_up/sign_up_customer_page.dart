@@ -321,7 +321,9 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
                         ),
                         GestureDetector(
                           onTap: () {
-                            LoggerService.info('Terms and Conditions tapped');
+                            Get.toNamed(
+                              RouteNames.termsAndConditions
+                            );
                           },
                           child: CommonText(
                             Strings.termsAndConditionsText,
@@ -339,7 +341,9 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
                         ),
                         GestureDetector(
                           onTap: () {
-                            LoggerService.info('Privacy Policy tapped');
+                            Get.toNamed(
+                              RouteNames.privacyPolicy
+                            );
                           },
                           child: CommonText(
                             Strings.privacyPolicyText,
