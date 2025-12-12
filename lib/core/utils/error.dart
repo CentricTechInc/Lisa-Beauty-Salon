@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/themes/theme.dart';
 
 class ErrorUtils {
   static String getFriendlyErrorMessage(dynamic error) {
@@ -57,7 +58,9 @@ class ErrorUtils {
       getFriendlyErrorMessage(error),
       snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 4),
-      backgroundColor: Colors.red,
+      backgroundColor: AppColors.redOne.withValues(
+        alpha: 0.8
+      ),
       colorText: Colors.white,
     );
   }

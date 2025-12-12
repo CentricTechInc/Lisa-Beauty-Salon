@@ -1,13 +1,18 @@
 class Assets {
 
-  static const String logo = 'assets/images/logo.png';
-  static const String background = 'assets/images/background.png';
-  static const String feature = 'assets/images/feature.png';
-  static const String skingBg = 'assets/images/sking.png';
-  static const String trailBg = 'assets/images/trailing.png';
-  static const String huntingBg = 'assets/images/hunting.png';
-  static const String rallyBg = 'assets/images/rally.png';
-  static const String boatingBg = 'assets/images/boating.png';
+  static const String logo = 'assets/svgs/logo.svg';
+  static const String googleIcon = "assets/svgs/google_icon.svg";
+  static const String appleIcon = "assets/svgs/apple_icon.svg";
+  static const String splashBackground = 'assets/images/splash_background.png';
 
+  static const String welcomeOne = 'assets/images/welcome_one.png';
+  static const String welcomeTwo = 'assets/images/welcome_two.png';
+  static const String welcomeThree = 'assets/images/welcome_three.png';
 
+  static const String createAccountIllustration =
+      "assets/svgs/create_account.svg";
+  static const String uploadLicenseSvgIcon = "assets/svgs/upload_license.svg";
+  static const String placeholderSvgIcon = "assets/svgs/placeholder_svg.svg";
+  static const String addBankAccountSvgIcon = "assets/svgs/add_bank_account_svg.svg";
+  static const String bankAccountSvgIcon = "assets/svgs/bank_account.svg";
 }

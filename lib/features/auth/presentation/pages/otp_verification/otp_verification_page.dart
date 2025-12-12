@@ -1,0 +1,241 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
+import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
+
+class OtpVerificationPage extends StatefulWidget {
+  const OtpVerificationPage({super.key});
+
+  @override
+  State<OtpVerificationPage> createState() => _OtpVerificationPageState();
+}
+
+class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsValidation {
+
+  final int _otpLength = 4;
+  late final List<TextEditingController> _controllers;
+  late final List<FocusNode> _focusNodes;
+
+  @override
+  void initState() {
+    super.initState();
+    _controllers = List.generate(
+      _otpLength,
+      (_) => TextEditingController()
+    );
+    _focusNodes = List.generate(
+      _otpLength,
+      (_) => FocusNode()
+    );
+  }
+
+  @override
+  void dispose() {
+    for (final c in _controllers) {
+      c.dispose();
+    }
+    for (final f in _focusNodes) {
+      f.dispose();
+    }
+    super.dispose();
+  }
+
+  void _onOtpChanged(String value, int index) {
+    if (value.length == 1) {
+      if (index + 1 != _otpLength) {
+        _focusNodes[index + 1].requestFocus();
+      } else {
+        _focusNodes[index].unfocus();
+      }
+    } else if (value.isEmpty) {
+      if (index - 1 >= 0) {
+        _focusNodes[index - 1].requestFocus();
+      }
+    }
+  }
+
+  String? validateOtp(String otp, int length) {
+    return validateOtpCode(otp);
+  }
+
+  Widget _buildOtpField(int index) {
+    return SizedBox(
+      width: 60,
+      height: 60,
+      child: CommonTextField(
+        controller: _controllers[index],
+        focusNode: _focusNodes[index],
+        textAlign: TextAlign.center,
+        borderColor: AppColors.greyOne,
+        inputType: TextInputType.number,
+        textColor: AppColors.blackTwo,
+        cursorColor: AppColors.greyOne,
+        fontSize: 20,
+        textWeight: FontWeight.w600,
+        titleLabelText: '',
+        labelText: '',
+        hintText: '',
+        inputFormatter: [
+          LengthLimitingTextInputFormatter(1),
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        onChanged: (value) => _onOtpChanged(value, index),
+      ),
+    );
+  }
+
+  void _submitOtp() {
+    final otp = _controllers.map((c) => c.text).join();
+    final error = validateOtpCode(otp);
+
+    if (error != null) {
+      ErrorUtils.showErrorSnackbar(
+        error,
+      );
+      return;
+    }
+
+    Get.toNamed(RouteNames.resetPassword);
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return CommonScaffoldWidget(
+      padding: EdgeInsets.zero,
+      systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: AppColors.whiteTwo,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      bgColor: AppColors.blackThree,
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteTwo,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40)
+                      )
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        VerticalSpacing(25),
+                        Center(
+                          child: CommonText(
+                            Strings.otpVerificationText,
+                            fontSize: 24,
+                            fontWeight: 600,
+                            color: AppColors.blackTwo,
+                          ),
+                        ),
+                        VerticalSpacing(25),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 40
+                          ),
+                          child: Center(
+                            child: CommonText(
+                              Strings.otpVerificationDescriptionText,
+                              fontSize: 16,
+                              fontWeight: 400,
+                              color: AppColors.greyTwo,
+                              textOverflow: TextOverflow.visible,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        VerticalSpacing(120),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                              _otpLength,
+                              (index) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 15
+                                ),
+                                child: _buildOtpField(index),
+                              ),
+                            ),
+                          ),
+                        ),
+                        VerticalSpacing(250),
+                      ],
+                    ),
+                  ),
+                  VerticalSpacing(30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CommonText(
+                        Strings.didNotReceiveTheOtpText,
+                        fontSize: 16,
+                        fontWeight: 700,
+                        color: AppColors.whiteTwo,
+                      ),
+                      CommonText(
+                        Strings.resendText,
+                        fontSize: 16,
+                        fontWeight: 700,
+                        color: AppColors.pinkOne,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ],
+                  ),
+                  VerticalSpacing(10),
+                ],
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 20,
+            ),
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20
+                ),
+                child: CommonButton(
+                  backgroundColor: AppColors.pinkTwo,
+                  radius: 15,
+                  child: CommonText(
+                    Strings.verifyText,
+                    color: AppColors.whiteOne,
+                    fontWeight: 600,
+                    fontSize: 18,
+                  ),
+                  onPressed: () {
+                    _submitOtp();
+                  },
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
