@@ -20,8 +20,8 @@ class EmailVerificationPage extends StatefulWidget {
   State<EmailVerificationPage> createState() => _EmailVerificationPageState();
 }
 
-class _EmailVerificationPageState extends State<EmailVerificationPage> with FieldsValidation {
-
+class _EmailVerificationPageState extends State<EmailVerificationPage>
+    with FieldsValidation {
   final int _otpLength = 4;
   late final List<TextEditingController> _controllers;
   late final List<FocusNode> _focusNodes;
@@ -29,14 +29,8 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
   @override
   void initState() {
     super.initState();
-    _controllers = List.generate(
-        _otpLength,
-            (_) => TextEditingController()
-    );
-    _focusNodes = List.generate(
-        _otpLength,
-            (_) => FocusNode()
-    );
+    _controllers = List.generate(_otpLength, (_) => TextEditingController());
+    _focusNodes = List.generate(_otpLength, (_) => FocusNode());
   }
 
   @override
@@ -80,7 +74,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
         cursorColor: AppColors.blackTwo,
         inputFormatter: [
           LengthLimitingTextInputFormatter(1),
-          FilteringTextInputFormatter.digitsOnly
+          FilteringTextInputFormatter.digitsOnly,
         ],
         onChanged: (value) => _onOtpChanged(value, index),
       ),
@@ -96,25 +90,17 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
     final error = validateOtpCode(otp);
 
     if (error != null) {
-      MessageUtils.showErrorSnackBar(
-        error,
-      );
+      MessageUtils.showErrorSnackBar(error);
       return;
     }
 
     final authController = Get.find<AuthController>();
     if (authController.selectedCategory.value == Strings.salonsText) {
-      Get.toNamed(
-        RouteNames.buildYourProfile
-      );
-    }
-    else {
-      Get.offAllNamed(
-        RouteNames.main
-      );
+      Get.toNamed(RouteNames.buildYourProfile);
+    } else {
+      Get.offAllNamed(RouteNames.main);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,12 +123,10 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
                       color: AppColors.whiteTwo,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40)
-                      )
+                        bottomRight: Radius.circular(40),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -157,9 +141,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
                         ),
                         VerticalSpacing(20),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 40
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
                           child: Center(
                             child: CommonText(
                               Strings.verifyEmailDescriptionText,
@@ -177,9 +159,9 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: List.generate(
                               _otpLength,
-                                  (index) => Padding(
+                              (index) => Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 15
+                                  horizontal: 05,
                                 ),
                                 child: _buildOtpField(index),
                               ),
@@ -187,8 +169,8 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
                           ),
                         ),
                         VerticalSpacing(250),
-                      ]
-                    )
+                      ],
+                    ),
                   ),
                   VerticalSpacing(30),
                   Row(
@@ -214,10 +196,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 20,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: SafeArea(
               top: false,
               child: CommonButton(
@@ -234,7 +213,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
                 },
               ),
             ),
-          )
+          ),
         ],
       ),
     );

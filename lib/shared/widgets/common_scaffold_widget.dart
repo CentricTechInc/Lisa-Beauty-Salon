@@ -46,7 +46,6 @@ class CommonScaffoldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final defaultStyle = SystemUiOverlayStyle.light.copyWith(
       statusBarColor: AppColors.transparent,
     );
@@ -62,47 +61,54 @@ class CommonScaffoldWidget extends StatelessWidget {
       drawer: drawer,
       extendBodyBehindAppBar: extendBodyBehindAppBar,
       extendBody: extendBody,
-      appBar: top ? null : PreferredSize(
-        preferredSize: const Size.fromHeight(0),
-        child: AppBar(
-          backgroundColor: AppColors.primary,
-        ),
-      ),
+      appBar: top
+          ? null
+          : PreferredSize(
+              preferredSize: const Size.fromHeight(0),
+              child: AppBar(backgroundColor: AppColors.primary),
+            ),
 
-      body: useSafeArea ? SafeArea(
-        top: image != null ? false : top,
-        bottom: Platform.isIOS ? false : true,
-        child: image != null ? Container(
-          height: context.height,
-          padding: padding ?? AppConstants.kScreenPadding,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                image ?? '',
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // Dismiss keyboard on tap
+        },
+        child: useSafeArea
+            ? SafeArea(
+                top: image != null ? false : top,
+                bottom: Platform.isIOS ? false : true,
+                child: image != null
+                    ? Container(
+                        height: context.height,
+                        padding: padding ?? AppConstants.kScreenPadding,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(image ?? ''),
+                            fit: fit ?? BoxFit.cover,
+                          ),
+                        ),
+                        child: child,
+                      )
+                    : Padding(
+                        padding: padding ?? AppConstants.kScreenPadding,
+                        child: child,
+                      ),
+              )
+            : image != null
+            ? Container(
+                height: context.height,
+                padding: padding ?? AppConstants.kScreenPadding,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(image ?? ''),
+                    fit: fit ?? BoxFit.cover,
+                  ),
+                ),
+                child: child,
+              )
+            : Padding(
+                padding: padding ?? AppConstants.kScreenPadding,
+                child: child,
               ),
-              fit: fit ?? BoxFit.cover,
-            ),
-          ),
-            child: child
-        ) : Padding(
-          padding: padding ?? AppConstants.kScreenPadding,
-          child: child,
-        ),
-      ) : image != null ? Container(
-          height: context.height,
-          padding: padding ?? AppConstants.kScreenPadding,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                image ?? '',
-              ),
-              fit: fit ?? BoxFit.cover,
-            ),
-          ),
-          child: child
-      ) : Padding(
-        padding: padding ?? AppConstants.kScreenPadding,
-        child: child,
       ),
     );
 
