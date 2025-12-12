@@ -13,6 +13,7 @@ import 'package:lisa_beauty_salon/features/auth/presentation/pages/sign_up/sign_
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/splash/splash_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/terms_and_conditions/terms_and_conditions_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/welcome/welcome_page.dart';
+import 'package:lisa_beauty_salon/features/main/presentation/pages/main_page.dart';
 
 class AppPages {
 
@@ -69,6 +70,10 @@ class AppPages {
     GetPage(
       name: RouteNames.termsAndConditions,
       page: () => TermsAndConditionsPage(),
+    ),
+    GetPage(
+      name: RouteNames.main,
+      page: () => MainPage(),
     ),
   ];
 }

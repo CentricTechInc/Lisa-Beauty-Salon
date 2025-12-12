@@ -15,4 +15,12 @@ class Assets {
   static const String placeholderSvgIcon = "assets/svgs/placeholder_svg.svg";
   static const String addBankAccountSvgIcon = "assets/svgs/add_bank_account_svg.svg";
   static const String bankAccountSvgIcon = "assets/svgs/bank_account.svg";
+  static const String appointmentSvgIcon = "assets/svgs/appointment_icon.svg";
+
+  static const String hairIcon = "assets/images/hair_icon.png";
+  static const String makeupIcon = "assets/images/makeup_icon.png";
+  static const String manicureIcon = "assets/images/manicure_icon.png";
+  static const String skincareIcon = "assets/images/skincare_icon.png";
+
+  static const String discountImage = "assets/images/discount_image.png";
 }

@@ -5,7 +5,7 @@ import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_back_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -134,7 +134,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> with FieldsVali
                   Get.toNamed(RouteNames.otpVerification);
                 }
                 else{
-                  ErrorUtils.showErrorSnackbar(
+                  MessageUtils.showErrorSnackBar(
                     "Please make sure to enter the email to receive OTP code",
                   );
                 }

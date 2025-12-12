@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_back_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -150,10 +151,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> with FieldsValida
                   ),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-
+                      MessageUtils.showSuccessSnackBar(
+                        "Password has been reset, please login again",
+                      );
+                      Get.offAllNamed(
+                        RouteNames.signIn
+                      );
                     }
                     else {
-                      ErrorUtils.showErrorSnackbar(
+                      MessageUtils.showErrorSnackBar(
                         "Please make sure to enter password and confirm password",
                       );
                     }

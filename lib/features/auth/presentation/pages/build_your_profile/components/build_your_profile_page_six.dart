@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
@@ -105,7 +106,7 @@ class _ShowBankAccountsWidget extends StatelessWidget {
             children: [
               ...List.generate(
                 bankAccounts.length,
-                    (index) => Column(
+                  (index) => Column(
                   children: [
                     Obx(() => _BankAccountTile(
                       bankAccount: bankAccounts[index],
@@ -195,6 +196,16 @@ class _ShowBankAccountsWidget extends StatelessWidget {
           VerticalSpacing(40),
         ],
       ),
+    );
+    Future.delayed(
+      Duration(
+        seconds: 2
+      ),
+      () {
+        Get.offAllNamed(
+          RouteNames.main
+        );
+      }
     );
   }
 }
@@ -389,6 +400,11 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
                 color: AppColors.greyTwo
               ),
             )).toList(),
+            selectedItemBuilder: (context) => _bankNames.map((value) => CommonText(
+              value,
+              fontSize: 15,
+              color: AppColors.blackTwo
+            )).toList(),
             validator: validateTextNotEmpty,
             onChanged: (value) => bankNameController.text = value ?? '',
           ),
@@ -470,7 +486,7 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
                 authController.toggleAddBankAccountsForm();
               }
               else {
-                ErrorUtils.showErrorSnackbar(
+                MessageUtils.showErrorSnackBar(
                   "Please check the confirmation to consent to link bank accounts",
                 );
               }

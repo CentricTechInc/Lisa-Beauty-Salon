@@ -282,4 +282,16 @@ class Strings {
       'Please make sure that terms and condition and privacy policy checkbox is checked';
 
   static const String lastUpdateText = "last Update: 31-12-2025";
+
+  static const String searchText = "Search";
+  static const String appointmentText = "Appointment";
+  static const String todayOrMorningText = "Today, Morning";
+  static const String bloomAndBladeText = "At The Bloom & Blade";
+  static const String nineAmText = "09:00 AM";
+  static const String nearestSalonText = "Nearest Salon";
+  static const String viewAllText = "View All";
+
+  static const String featureUnderDevelopment =
+      "This feature isn't quite ready yet, but we're working hard to bring it to you soon.";
+
 }

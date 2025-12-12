@@ -118,6 +118,15 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                     color: AppColors.greyTwo,
                   ),
                 )).toList(),
+                selectedItemBuilder: (context) => [
+                  Strings.otherText,
+                  Strings.maleText,
+                  Strings.femaleText
+                ].map((value) => CommonText(
+                  value,
+                  fontSize: 15,
+                  color: AppColors.blackTwo,
+                )).toList(),
                 onChanged: (value) {
                   genderController.text = value ?? '';
                 },
@@ -208,6 +217,14 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                       ),
                     )
                 ).toList(),
+                selectedItemBuilder: (context) => (authController.countryDataOfUs?.states ??
+                  []).map(
+                    (state) => CommonText(
+                      state.name,
+                      fontSize: 15,
+                      color: AppColors.blackTwo,
+                    )
+                ).toList(),
                 validator: (value) => validateTextWithDashes(value?.name),
                 onChanged: (value) {
                   stateController.text = value?.name ?? '';
@@ -238,6 +255,14 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                         fontSize: 15,
                         color: AppColors.greyTwo,
                       ),
+                    );
+                  }).toList(),
+                  selectedItemBuilder: (context) => cities.asMap().entries.map((entry) {
+                    final city = entry.value;
+                    return CommonText(
+                      city.name,
+                      fontSize: 15,
+                      color: AppColors.blackTwo,
                     );
                   }).toList(),
                   validator: (value) {

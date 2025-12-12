@@ -7,7 +7,7 @@ import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -216,6 +216,17 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
                                 color: AppColors.greyTwo,
                               ),
                             )).toList(),
+                            selectedItemBuilder: (context) {
+                              return [
+                                Strings.otherText,
+                                Strings.maleText,
+                                Strings.femaleText
+                              ].map((value) => CommonText(
+                                value,
+                                fontSize: 15,
+                                color: AppColors.blackTwo,
+                              )).toList();
+                            },
                             onChanged: (value) {
                               genderController.text = value ?? '';
                             },
@@ -236,6 +247,15 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
                           ),
                         )
                       ).toList(),
+                      selectedItemBuilder: (context) {
+                        return (authController.countryDataOfUs?.states ?? []).map(
+                          (state) => CommonText(
+                            state.name,
+                            fontSize: 15,
+                            color: AppColors.blackTwo,
+                          ),
+                        ).toList();
+                      },
                       validator: (value) => validateTextWithDashes(value?.name),
                       onChanged: (value) {
                         stateController.text = value?.name ?? '';
@@ -268,6 +288,18 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
                             ),
                           );
                         }).toList(),
+                        selectedItemBuilder: (context) {
+                          return cities.asMap().entries.map(
+                            (entry) {
+                             final city = entry.value;
+                             return CommonText(
+                               city.name,
+                               fontSize: 15,
+                               color: AppColors.blackTwo,
+                              );
+                             }
+                          ).toList();
+                        },
                         validator: (value) {
                           String cityName = '';
                           if ((value != null && value >= 0 && value < cities.length)) {
@@ -378,12 +410,12 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
                           );
                         } else {
                           if (!authController.agreeToTermsAndCondition.value) {
-                            ErrorUtils.showErrorSnackbar(
+                            MessageUtils.showErrorSnackBar(
                               'You must agree to the Terms and Conditions and Privacy Policy.',
                             );
                           }
                           else {
-                            ErrorUtils.showErrorSnackbar(
+                            MessageUtils.showErrorSnackBar(
                               'Please make sure that all fields have been filled.',
                             );
                           }

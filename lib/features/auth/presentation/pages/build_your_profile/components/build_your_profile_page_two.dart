@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -110,6 +110,13 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
                     color: AppColors.greyTwo,
                   ),
                 )).toList(),
+                selectedItemBuilder: (context) => licenseTypesList.map(
+                  (value) => CommonText(
+                    value,
+                    fontSize: 15,
+                    color: AppColors.blackTwo,
+                  )
+                ).toList(),
                 validator: validateTextNotEmpty,
                 onChanged: (value) {
                   licenseTypeController.text = value ?? '';
@@ -139,6 +146,12 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
                     fontSize: 15,
                     color: AppColors.greyTwo,
                   ),
+                )).toList(),
+                selectedItemBuilder: (context) => authController
+                  .countriesList.map((value) => CommonText(
+                    value.name,
+                    fontSize: 15,
+                    color: AppColors.blackTwo,
                 )).toList(),
                 validator: (value) => validateTextWithDashes(value?.name),
                 onChanged: (value) {
@@ -188,7 +201,7 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
                     );
                   }
                   else{
-                    ErrorUtils.showErrorSnackbar(
+                    MessageUtils.showErrorSnackBar(
                       fileError ?? "Please make sure to fill all fields",
                     );
                   }
