@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
@@ -360,6 +361,7 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
     return Form(
       key: _formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CommonTextField(
             titleLabelText: Strings.accountHolderNameText,
@@ -435,6 +437,7 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
             labelFontWeight: 400,
             inactiveColor: AppColors.whiteTwo,
             activeColor: AppColors.pinkTwo,
+            padding: EdgeInsets.zero,
             value: authController.confirmAndConsentToThisAccount.value,
             onChanged: (value) => authController
                 .confirmAndConsentToThisAccount
@@ -467,10 +470,8 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
                 authController.toggleAddBankAccountsForm();
               }
               else {
-                Get.snackbar(
-                  "Error",
+                ErrorUtils.showErrorSnackbar(
                   "Please check the confirmation to consent to link bank accounts",
-                  snackPosition: SnackPosition.BOTTOM
                 );
               }
             },

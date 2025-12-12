@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/build_your_profile/components/profile_photo_picker_component.dart';
@@ -19,6 +20,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 class BuildYourProfilePageThree extends StatefulWidget {
   const BuildYourProfilePageThree({
     required this.pageController,
+    super.key,
   });
 
   final PageController pageController;
@@ -161,9 +163,8 @@ class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> wi
                     );
                   }
                   else {
-                   Get.snackbar(
-                     "Error",
-                     "Please make sure sure to enter the age"
+                    ErrorUtils.showErrorSnackbar(
+                     "Please make sure sure to enter the age",
                    );
                   }
                 },

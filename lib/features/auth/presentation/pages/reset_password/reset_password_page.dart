@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_back_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -152,10 +153,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> with FieldsValida
 
                     }
                     else {
-                      Get.snackbar(
-                        "Error",
+                      ErrorUtils.showErrorSnackbar(
                         "Please make sure to enter password and confirm password",
-                        snackPosition: SnackPosition.BOTTOM
                       );
                     }
                   },

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -95,10 +96,8 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> with Fiel
     final error = validateOtpCode(otp);
 
     if (error != null) {
-      Get.snackbar(
-        'Error',
+      ErrorUtils.showErrorSnackbar(
         error,
-        snackPosition: SnackPosition.BOTTOM,
       );
       return;
     }

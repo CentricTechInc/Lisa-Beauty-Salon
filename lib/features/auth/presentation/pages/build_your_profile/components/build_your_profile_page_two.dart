@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -19,6 +20,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 class BuildYourProfilePageTwo extends StatefulWidget {
   const BuildYourProfilePageTwo({
     required this.pageController,
+    super.key,
   });
 
   final PageController pageController;
@@ -186,9 +188,8 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
                     );
                   }
                   else{
-                    Get.snackbar(
-                      "Error",
-                        fileError ?? "Please make sure to fill all fields"
+                    ErrorUtils.showErrorSnackbar(
+                      fileError ?? "Please make sure to fill all fields",
                     );
                   }
                 },

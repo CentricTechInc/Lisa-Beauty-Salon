@@ -7,6 +7,7 @@ import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -153,18 +154,14 @@ class _SignInPageState extends State<SignInPage> with FieldsValidation {
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          Get.snackbar(
-                            "Error",
+                          ErrorUtils.showErrorSnackbar(
                             "Login Fields Validation Completed",
-                            snackPosition: SnackPosition.BOTTOM
                           );
                           LoggerService.info('Login button pressed');
                         }
                         else {
-                          Get.snackbar(
-                            "Error",
+                          ErrorUtils.showErrorSnackbar(
                             "Please make sure to fill all these fields",
-                            snackPosition: SnackPosition.BOTTOM
                           );
                         }
                       },

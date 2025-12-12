@@ -93,7 +93,7 @@ class Strings {
   static const String verifyYourProfessionalStatusDescriptionText =
       "We need to verify your professional license for quality assurance. This information is secure.";
 
-  static const String businessNameText = "Business Name";
+  static const String businessNameText = "Business Name*";
   static const String businessNamePlaceholderText = "Bloom & Blade";
   static const String streetAddressText = "Street Address*";
   static const String streetAddressPlaceholderText = "1158 Suffolk Ave #3";
@@ -131,15 +131,16 @@ class Strings {
   static const String addAServiceText = "Add a Service";
   static const String setUpYourServicesAndPricing =
       "Set Up Your Services & Pricing";
-  static const String serviceCategoryText = "Service Category*";
-  static const String serviceForText = "Service For*";
+  static const String serviceCategoryText = "Service Category";
+  static const String serviceForText = "Service For";
   static const String serviceNameText = "Service Name*";
   static const String serviceNamePlaceholderText = "Wash & Blow-Dry/Styling";
-  static const String priceText = "Price*";
+  static const String priceText = "Price";
   static const String pricePlaceholderText = "\$25";
   static const String uploadAPictureText = "Upload A Picture (Optional)";
-  static const String descriptionText = "Description (Optional)";
+  static const String descriptionText = "Description";
   static const String descriptionPlaceholderText = "Tell clients about your style and expertise.";
+  static const String photoText = "Photo";
   static const String addText = "Add";
   static const String hairWashText = "Hair Wash";
   static const String addAServiceHelpText= 'Please tab to "Add a Service" button to add another service';

@@ -7,6 +7,7 @@ import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -207,17 +208,13 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> with FieldsValidation
                         }
                         else{
                           if (!authController.agreeToTermsAndCondition.value) {
-                            Get.snackbar(
-                              'Error',
+                            ErrorUtils.showErrorSnackbar(
                               'You must agree to the Terms and Conditions and Privacy Policy.',
-                              snackPosition: SnackPosition.BOTTOM,
                             );
                           }
                           else{
-                            Get.snackbar(
-                              'Error',
+                            ErrorUtils.showErrorSnackbar(
                               'Please make sure that all fields have been filled.',
-                              snackPosition: SnackPosition.BOTTOM,
                             );
                           }
                         }

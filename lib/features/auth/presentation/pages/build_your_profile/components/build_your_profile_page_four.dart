@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/input_formatters.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
@@ -114,7 +115,8 @@ class _ShowServicesWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: _ServiceCard(service: service),
                   )),
-                ] else ...[
+                ]
+                else ...[
                   Center(
                     child: Wrap(
                       alignment: WrapAlignment.center,
@@ -257,7 +259,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
       child: Column(
         children: [
           CommonDropdownField(
-            titleLabelText: Strings.serviceCategoryText,
+            titleLabelText: "${Strings.serviceCategoryText}*",
             items: serviceCategories.map((value) => DropdownMenuItem(
               value: value,
               child: CommonText(
@@ -273,7 +275,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
           ),
           VerticalSpacing(20),
           CommonDropdownField(
-            titleLabelText: Strings.serviceForText,
+            titleLabelText: "${Strings.serviceForText}*",
             items: serviceFor.map((value) => DropdownMenuItem(
               value: value,
               child: CommonText(
@@ -303,7 +305,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
           ),
           VerticalSpacing(20),
           CommonTextField(
-            titleLabelText: Strings.priceText,
+            titleLabelText: "${Strings.priceText}*",
             controller: servicePriceController,
             labelText: Strings.pricePlaceholderText,
             hintText: Strings.pricePlaceholderText,
@@ -348,7 +350,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
           ),
           VerticalSpacing(20),
           CommonTextField(
-            titleLabelText: Strings.descriptionText,
+            titleLabelText: "${Strings.descriptionText} (${Strings.optionalText})",
             controller: serviceDescription,
             labelText: null,
             hintText: Strings.descriptionPlaceholderText,
@@ -384,9 +386,8 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
                 authController.toggleAddServiceForm();
               }
               else{
-                Get.snackbar(
-                  "Error",
-                  "Please make sure to fill the required fields"
+                ErrorUtils.showErrorSnackbar(
+                  "Please make sure to fill the required fields",
                 );
               }
             },
@@ -397,7 +398,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
   }
 }
 
-class _ServiceCard extends StatelessWidget {
+class _ServiceCard extends StatefulWidget {
   final ServiceDto service;
   final double? width;
 
@@ -408,47 +409,168 @@ class _ServiceCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final cardWidth = width ?? context.width * 0.8;
+  State<_ServiceCard> createState() => _ServiceCardState();
+}
 
-    return Container(
-      height: 70,
-      width: cardWidth,
+class _ServiceCardState extends State<_ServiceCard> {
+  bool isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final cardWidth = widget.width ?? context.width * 0.8;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeInOut,
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
       decoration: BoxDecoration(
         color: AppColors.whiteOne,
         border: Border.all(color: AppColors.greyOne, width: 1),
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: cardWidth / 2,
-            child: CommonText(
-              service.serviceName,
-              fontSize: 16,
-              fontWeight: 500,
-              color: AppColors.greyTwo,
-              textOverflow: TextOverflow.ellipsis,
-            ),
-          ),
+          /// HEADER ROW
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CommonText(
-                service.serviceCategory,
-                fontSize: 16,
-                fontWeight: 500,
-                color: AppColors.blackTwo,
+              SizedBox(
+                width: cardWidth / 2,
+                child: CommonText(
+                  widget.service.serviceName,
+                  fontSize: 16,
+                  fontWeight: 500,
+                  color: AppColors.greyTwo,
+                  textOverflow: TextOverflow.ellipsis,
+                ),
               ),
-              Icon(
-                Icons.keyboard_arrow_down,
-                color: AppColors.blackTwo,
-                size: 30,
+              GestureDetector(
+                onTap: () => setState(() => isExpanded = !isExpanded),
+                child: AnimatedRotation(
+                  turns: isExpanded ? 0.5 : 0,
+                  duration: const Duration(milliseconds: 250),
+                  child: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: AppColors.blackTwo,
+                    size: 30,
+                  ),
+                ),
               ),
             ],
           ),
+
+          /// EXPANDED SECTION
+          if (isExpanded) ...[
+            VerticalSpacing(15),
+
+            // Category
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CommonText(
+                  "${Strings.serviceCategoryText}:",
+                  fontSize: 14,
+                  fontWeight: 400,
+                  color: AppColors.greyTwo,
+                ),
+                CommonText(
+                  widget.service.serviceCategory,
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: AppColors.blackTwo,
+                ),
+              ],
+            ),
+            VerticalSpacing(6),
+
+            // Service For
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CommonText(
+                  "${Strings.serviceForText}:",
+                  fontSize: 14,
+                  fontWeight: 400,
+                  color: AppColors.greyTwo,
+                ),
+                CommonText(
+                  widget.service.serviceFor,
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: AppColors.blackTwo,
+                ),
+              ],
+            ),
+            VerticalSpacing(6),
+
+            // Price
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CommonText(
+                  "${Strings.priceText}:",
+                  fontSize: 14,
+                  fontWeight: 400,
+                  color: AppColors.greyTwo,
+                ),
+                CommonText(
+                  "R ${widget.service.servicePrice}",
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: AppColors.blackTwo,
+                ),
+              ],
+            ),
+            VerticalSpacing(10),
+
+            // Photo (optional)
+            if (widget.service.servicePhoto.isNotEmpty) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CommonText(
+                    Strings.photoText,
+                    fontSize: 14,
+                    fontWeight: 400,
+                    color: AppColors.greyTwo,
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.file(
+                      File(widget.service.servicePhoto),
+                      height: 60,
+                      width: 60,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            VerticalSpacing(10),
+
+            // Description
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CommonText(
+                  "${Strings.descriptionText}:",
+                  fontSize: 14,
+                  fontWeight: 400,
+                  color: AppColors.greyTwo,
+                ),
+                VerticalSpacing(6),
+                CommonText(
+                  widget.service.serviceDescription,
+                  fontSize: 14,
+                  fontWeight: 400,
+                  color: AppColors.greyTwo,
+                ),
+              ],
+            ),
+            VerticalSpacing(10),
+          ],
         ],
       ),
     );

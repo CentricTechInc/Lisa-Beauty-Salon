@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/error.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
@@ -97,10 +98,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
     final error = validateOtpCode(otp);
 
     if (error != null) {
-      Get.snackbar(
-        'Error',
+      ErrorUtils.showErrorSnackbar(
         error,
-        snackPosition: SnackPosition.BOTTOM,
       );
       return;
     }
