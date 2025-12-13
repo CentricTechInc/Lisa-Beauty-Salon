@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/input_formatters.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
@@ -268,6 +268,11 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
                 color: AppColors.greyTwo,
               ),
             )).toList(),
+            selectedItemBuilder: (context) => serviceCategories.map((value) => CommonText(
+              value,
+              fontSize: 15,
+              color: AppColors.blackTwo,
+            )).toList(),
             validator: validateTextNotEmpty,
             onChanged: (value) {
               serviceCategoryNameController.text = value ?? '';
@@ -283,6 +288,11 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
                 fontSize: 15,
                 color: AppColors.greyTwo,
               ),
+            )).toList(),
+            selectedItemBuilder: (context) => serviceFor.map((value) => CommonText(
+              value,
+              fontSize: 15,
+              color: AppColors.blackTwo,
             )).toList(),
             validator: validateTextNotEmpty,
             onChanged: (value) {
@@ -373,6 +383,8 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
             textColor: AppColors.whiteOne,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
+                final price = servicePriceController.text.replaceAll(
+                  "R", '').replaceAll(' ', '');
                 authController.addService(
                   ServiceDto(
                     serviceCategory: serviceCategoryNameController.text,
@@ -380,13 +392,13 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
                     serviceName: serviceNameController.text,
                     serviceDescription: serviceDescription.text,
                     servicePhoto: photoNotifier.value.toString(),
-                    servicePrice: double.tryParse(servicePriceController.text) ?? 0,
+                    servicePrice: double.tryParse(price) ?? 0,
                   )
                 );
                 authController.toggleAddServiceForm();
               }
               else{
-                ErrorUtils.showErrorSnackbar(
+                MessageUtils.showErrorSnackBar(
                   "Please make sure to fill the required fields",
                 );
               }
@@ -418,7 +430,6 @@ class _ServiceCardState extends State<_ServiceCard> {
   @override
   Widget build(BuildContext context) {
     final cardWidth = widget.width ?? context.width * 0.8;
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
       curve: Curves.easeInOut,

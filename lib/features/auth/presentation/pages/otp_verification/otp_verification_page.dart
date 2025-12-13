@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
@@ -19,8 +19,8 @@ class OtpVerificationPage extends StatefulWidget {
   State<OtpVerificationPage> createState() => _OtpVerificationPageState();
 }
 
-class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsValidation {
-
+class _OtpVerificationPageState extends State<OtpVerificationPage>
+    with FieldsValidation {
   final int _otpLength = 4;
   late final List<TextEditingController> _controllers;
   late final List<FocusNode> _focusNodes;
@@ -28,14 +28,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
   @override
   void initState() {
     super.initState();
-    _controllers = List.generate(
-      _otpLength,
-      (_) => TextEditingController()
-    );
-    _focusNodes = List.generate(
-      _otpLength,
-      (_) => FocusNode()
-    );
+    _controllers = List.generate(_otpLength, (_) => TextEditingController());
+    _focusNodes = List.generate(_otpLength, (_) => FocusNode());
   }
 
   @override
@@ -86,7 +80,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
         hintText: '',
         inputFormatter: [
           LengthLimitingTextInputFormatter(1),
-          FilteringTextInputFormatter.digitsOnly
+          FilteringTextInputFormatter.digitsOnly,
         ],
         onChanged: (value) => _onOtpChanged(value, index),
       ),
@@ -98,15 +92,12 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
     final error = validateOtpCode(otp);
 
     if (error != null) {
-      ErrorUtils.showErrorSnackbar(
-        error,
-      );
+      MessageUtils.showErrorSnackBar(error);
       return;
     }
 
     Get.toNamed(RouteNames.resetPassword);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -129,12 +120,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
                       color: AppColors.whiteTwo,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40)
-                      )
+                        bottomRight: Radius.circular(40),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -149,9 +138,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
                         ),
                         VerticalSpacing(25),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 40
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
                           child: Center(
                             child: CommonText(
                               Strings.otpVerificationDescriptionText,
@@ -171,7 +158,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
                               _otpLength,
                               (index) => Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 15
+                                  horizontal: 05,
                                 ),
                                 child: _buildOtpField(index),
                               ),
@@ -208,16 +195,11 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
           ),
 
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 20,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: SafeArea(
               top: false,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: CommonButton(
                   backgroundColor: AppColors.pinkTwo,
                   radius: 15,
@@ -233,7 +215,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with FieldsVa
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

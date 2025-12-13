@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 
-class ErrorUtils {
+class MessageUtils {
   static String getFriendlyErrorMessage(dynamic error) {
     if (error is String) {
       log(error);
@@ -52,7 +52,7 @@ class ErrorUtils {
     // await AnalyticsService.trackError(error, stackTrace, feature: feature);
   }
 
-  static void showErrorSnackbar(String error) {
+  static void showErrorSnackBar(String error) {
     Get.snackbar(
       'Error',
       getFriendlyErrorMessage(error),
@@ -65,14 +65,27 @@ class ErrorUtils {
     );
   }
 
-  static void showSuccessSnackbar(String message) {
+  static void showSuccessSnackBar(String message) {
     Get.snackbar(
       'Success',
       message,
       snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 2),
-      backgroundColor: Colors.green,
-      colorText: Colors.white,
+      backgroundColor: AppColors.greenOne,
+      colorText: AppColors.whiteOne,
+    );
+  }
+
+  static void showInfoSnackBar(String message) {
+    Get.snackbar(
+      'Info',
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      duration: const Duration(seconds: 2),
+      backgroundColor: AppColors.yellowOne.withValues(
+        alpha: 0.9
+      ),
+      colorText: AppColors.whiteOne,
     );
   }
 }

@@ -33,7 +33,7 @@ class _FileUploadComponentState extends State<FileUploadComponent> {
   Future<void> _pickImages() async {
     final pickedFiles = await _picker.pickMultiImage();
     widget.imageFilesNotifier.value = [...widget.imageFilesNotifier.value, ...pickedFiles];
-    }
+  }
 
   // Function to pick documents/files
   Future<void> _pickDocuments() async {

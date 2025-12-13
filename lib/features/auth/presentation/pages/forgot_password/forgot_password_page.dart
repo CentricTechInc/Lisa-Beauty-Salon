@@ -5,7 +5,7 @@ import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
-import 'package:lisa_beauty_salon/core/utils/error.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_back_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -21,8 +21,8 @@ class ForgotPasswordPage extends StatefulWidget {
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> with FieldsValidation {
-
+class _ForgotPasswordPageState extends State<ForgotPasswordPage>
+    with FieldsValidation {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController = TextEditingController();
@@ -48,12 +48,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> with FieldsVali
                       color: AppColors.whiteTwo,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40)
-                      )
+                        bottomRight: Radius.circular(40),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -78,9 +76,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> with FieldsVali
                           ),
                           VerticalSpacing(25),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 40
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: CommonText(
                               Strings.forgotPasswordDescriptionText,
                               fontSize: 16,
@@ -116,9 +112,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> with FieldsVali
           ),
 
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: CommonButton(
               backgroundColor: AppColors.pinkTwo,
               radius: 15,
@@ -130,11 +124,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> with FieldsVali
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  LoggerService.info('Send Forgot Password Email to: ${emailController.text}');
+                  LoggerService.info(
+                    'Send Forgot Password Email to: ${emailController.text}',
+                  );
                   Get.toNamed(RouteNames.otpVerification);
-                }
-                else{
-                  ErrorUtils.showErrorSnackbar(
+                } else {
+                  MessageUtils.showErrorSnackBar(
                     "Please make sure to enter the email to receive OTP code",
                   );
                 }

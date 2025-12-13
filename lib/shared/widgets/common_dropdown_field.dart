@@ -8,6 +8,7 @@ class CommonDropdownField<T> extends StatelessWidget {
   const CommonDropdownField({
     super.key,
     required this.items,
+    required this.selectedItemBuilder,
     required this.onChanged,
     this.value,
     this.hintText = "Select",
@@ -17,7 +18,7 @@ class CommonDropdownField<T> extends StatelessWidget {
     this.borderColor = AppColors.greyOne,
     this.enableBorder = AppColors.greyOne,
     this.disableBorder = AppColors.greyTwo,
-    this.textColor = AppColors.blackOne,
+    this.textColor = AppColors.blackTwo,
     this.hintColor = AppColors.greyTwo,
     this.labelColor = AppColors.greyTwo,
     this.titleLabelColor = AppColors.blackTwo,
@@ -41,6 +42,7 @@ class CommonDropdownField<T> extends StatelessWidget {
   });
 
   final List<DropdownMenuItem<T>> items;
+  final DropdownButtonBuilder? selectedItemBuilder;
   final T? value;
   final String hintText;
   final String labelText;
@@ -106,6 +108,7 @@ class CommonDropdownField<T> extends StatelessWidget {
               fontWeight: textWeight,
               color: textColor,
             ),
+            selectedItemBuilder: selectedItemBuilder,
             decoration: InputDecoration(
               contentPadding: contentPadding,
               floatingLabelBehavior: FloatingLabelBehavior.never,
