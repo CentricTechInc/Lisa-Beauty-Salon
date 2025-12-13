@@ -13,19 +13,24 @@ class AuthController extends GetxController {
   final AuthUseCase _authUseCase = Get.find<AuthUseCase>();
 
   final Rx<UserDto?> _currentUser = Rx<UserDto?>(null);
+
   final RxBool isLoading = false.obs;
   final RxBool agreeToTermsAndCondition = false.obs;
   final RxBool confirmAndConsentToThisAccount = false.obs;
   final RxBool rememberMe = false.obs;
-  final RxString errorMessage = ''.obs;
-  final RxString selectedCategory = Strings.salonsText.obs;
-  RxString selectedCityForSignUp = ''.obs;
-  RxString selectedCityForBuildYourProfile = ''.obs;
   final RxBool showAddServiceForm = false.obs;
   final RxBool showAddBankAccountsForm = false.obs;
-  var selectedBankAccountIndex = Rx<int?>(null);
-
   final RxBool isCustomScheduleEnabled = false.obs;
+  final RxBool isCountryLoading = false.obs;
+
+  final RxString selectedCategory = Strings.salonsText.obs;
+  final RxString errorMessage = ''.obs;
+  RxString selectedCityForSignUp = ''.obs;
+  RxString selectedCityForBuildYourProfile = ''.obs;
+
+  var selectedBankAccountIndex = Rx<int?>(null);
+  final RxInt selectedCityIndex = (-1).obs;
+
   final Rx<DayScheduleDto> defaultSchedule = DayScheduleDto(
     workSlots: [
       TimeSlotDto(
@@ -47,7 +52,6 @@ class AuthController extends GetxController {
 
   List<Country> countriesList = [];
   RxList<City> citiesList = <City>[].obs;
-  final RxInt selectedCityIndex = (-1).obs;
   Country? countryDataOfUs;
 
   UserDto? get currentUser => _currentUser.value;
@@ -136,6 +140,8 @@ class AuthController extends GetxController {
   // }
 
   Future<void> loadCountries() async {
+    isCountryLoading.value = true;
+
     final result = await _authUseCase.loadCountries();
 
     result.fold(
@@ -154,10 +160,15 @@ class AuthController extends GetxController {
         );
       },
     );
+
+    isCountryLoading.value = false;
   }
 
   void setCitiesAccordingToState(String stateName, String scenario) {
-    final state = countryDataOfUs?.states.firstWhereOrNull((s) => s.name == stateName);
+    final state = countryDataOfUs?.states.firstWhereOrNull(
+      (s) => s.name == stateName
+    );
+
     if (state != null) {
       citiesList.assignAll(state.cities);
     } else {

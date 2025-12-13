@@ -6,6 +6,7 @@ import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
@@ -235,7 +236,7 @@ class _MainPageState extends State<MainPage> {
             ),
             VerticalSpacing(20),
             SizedBox(
-              height: context.height * 0.2 ,
+              height: context.height * 0.3 ,
               child: ListView.builder(
                 itemCount: items.length,
                 scrollDirection: Axis.horizontal,
@@ -280,21 +281,145 @@ class _MainPageState extends State<MainPage> {
             ),
 
             // Promotional Card Section
-            GestureDetector(
-              onTap: () {
-                showFeatureInDevelopment();
-              },
-              child: Container(
-                width: context.width - 40,
-                height: 200,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      Assets.discountImage
-                    ),
-                    fit: BoxFit.cover
-                  )
+            // GestureDetector(
+            //   onTap: () {
+            //     showFeatureInDevelopment();
+            //   },
+            //   child: Container(
+            //     width: context.width - 40,
+            //     height: 200,
+            //     decoration: BoxDecoration(
+            //       image: DecorationImage(
+            //         image: AssetImage(
+            //           Assets.discountImage
+            //         ),
+            //         fit: BoxFit.cover
+            //       )
+            //     ),
+            //   ),
+            // ),
+            VerticalSpacing(20),
+            // New Promotional Card Section
+            Container(
+              width: context.width - 40,
+              decoration: BoxDecoration(
+                color: AppColors.greyFive.withValues(
+                  alpha: 0.3
                 ),
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 20,
+                        top: 15,
+                        bottom: 15
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "30%",
+                                  style: TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.blackTwo,
+                                    fontFamily: Strings.fontFamily,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: " Discount",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.blackTwo,
+                                    fontFamily: Strings.fontFamily,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          VerticalSpacing(5),
+                          CommonText(
+                            "Skin care just for you",
+                            fontSize: 12,
+                            color: AppColors.greyTwo,
+                            fontWeight: 400,
+                          ),
+                          VerticalSpacing(10),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Promo: ",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.blackTwo,
+                                    fontFamily: Strings.fontFamily,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "L30d",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.pinkTwo,
+                                    fontFamily: Strings.fontFamily,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          VerticalSpacing(10),
+                          CommonButton(
+                            width: 70,
+                            height: 30,
+                            radius: 10,
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.centerLeft,
+                            onPressed: () {
+                              showFeatureInDevelopment();
+                            },
+                            text: "Book Now",
+                            textFontSize: 10,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  HorizontalSpacing(10),
+                  SizedBox(
+                    width: context.width / 2.4,
+                    height: 140,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          top: -40,
+                          child: Container(
+                            width: context.width / 2.4,
+                            height: 205,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  Assets.discountImage
+                                ),
+                                fit: BoxFit.cover
+                              )
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             VerticalSpacing(20),

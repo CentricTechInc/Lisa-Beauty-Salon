@@ -12,7 +12,6 @@ import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
-import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
@@ -32,6 +31,19 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> with FieldsValidation
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  final ValueNotifier<bool> passwordObscure = ValueNotifier(true);
+  final ValueNotifier<bool> confirmPasswordObscure = ValueNotifier(true);
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    passwordObscure.dispose();
+    confirmPasswordObscure.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,35 +114,63 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> with FieldsValidation
                       validator: validateEmail,
                     ),
                     VerticalSpacing(20),
-                    CommonTextField(
-                      titleLabelText: Strings.passwordText,
-                      controller: passwordController,
-                      labelText: Strings.passwordPlaceholderText,
-                      hintText: Strings.passwordPlaceholderText,
-                      hintSize: 16,
-                      labelSize: 16,
-                      labelColor: AppColors.greyTwo,
-                      hintColor: AppColors.greyTwo,
-                      textColor: AppColors.blackTwo,
-                      cursorColor: AppColors.blackTwo,
-                      validator: validatePassword,
+                    ValueListenableBuilder<bool>(
+                      valueListenable: passwordObscure,
+                      builder: (context, obscure, child) {
+                        return CommonTextField(
+                          titleLabelText: Strings.passwordText,
+                          controller: passwordController,
+                          labelText: Strings.passwordPlaceholderText,
+                          hintText: Strings.passwordPlaceholderText,
+                          hintSize: 16,
+                          labelSize: 16,
+                          labelColor: AppColors.greyTwo,
+                          hintColor: AppColors.greyTwo,
+                          textColor: AppColors.blackTwo,
+                          cursorColor: AppColors.blackTwo,
+                          pass: obscure,
+                          suffix: Icon(
+                            obscure ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                            color: AppColors.greyTwo,
+                          ),
+                          suffixIconOnTap: () {
+                            passwordObscure.value = !passwordObscure.value;
+                          },
+                          validator: validatePassword,
+                        );
+                      }
                     ),
                     VerticalSpacing(20),
-                    CommonTextField(
-                      titleLabelText: Strings.confirmPasswordText,
-                      controller: confirmPasswordController,
-                      labelText: Strings.passwordPlaceholderText,
-                      hintText: Strings.passwordPlaceholderText,
-                      labelSize: 16,
-                      hintSize: 16,
-                      labelColor: AppColors.greyTwo,
-                      hintColor: AppColors.greyTwo,
-                      textColor: AppColors.blackTwo,
-                      cursorColor: AppColors.blackTwo,
-                      validator: (value) => validateConfirmPassword(
-                        passwordController.text,
-                        value
-                      ),
+                    ValueListenableBuilder<bool>(
+                      valueListenable: confirmPasswordObscure,
+                      builder: (context, obscure, child) {
+                        return CommonTextField(
+                          titleLabelText: Strings.confirmPasswordText,
+                          controller: confirmPasswordController,
+                          labelText: Strings.passwordPlaceholderText,
+                          hintText: Strings.passwordPlaceholderText,
+                          labelSize: 16,
+                          hintSize: 16,
+                          labelColor: AppColors.greyTwo,
+                          hintColor: AppColors.greyTwo,
+                          textColor: AppColors.blackTwo,
+                          cursorColor: AppColors.blackTwo,
+                          pass: obscure,
+                          suffix: Icon(
+                            obscure ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                            color: AppColors.greyTwo,
+                          ),
+                          suffixIconOnTap: () {
+                            confirmPasswordObscure.value = !confirmPasswordObscure.value;
+                          },
+                          validator: (value) => validateConfirmPassword(
+                            passwordController.text,
+                            value
+                          ),
+                        );
+                      }
                     ),
                     VerticalSpacing(20),
                     Row(

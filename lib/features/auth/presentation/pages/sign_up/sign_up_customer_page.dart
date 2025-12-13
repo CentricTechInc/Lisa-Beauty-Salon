@@ -39,6 +39,25 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
   final stateController = TextEditingController();
   final zipCodeController = TextEditingController();
 
+  final ValueNotifier<bool> passwordObscure = ValueNotifier(true);
+  final ValueNotifier<bool> confirmPasswordObscure = ValueNotifier(true);
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    ageController.dispose();
+    genderController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    stateController.dispose();
+    zipCodeController.dispose();
+    passwordObscure.dispose();
+    confirmPasswordObscure.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
@@ -148,37 +167,67 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
                       validator: validateEmail,
                     ),
                     VerticalSpacing(20),
-                    CommonTextField(
-                      controller: passwordController,
-                      titleLabelText: Strings.passwordText,
-                      labelText: Strings.passwordPlaceholderText,
-                      hintText: Strings.passwordPlaceholderText,
-                      labelSize: 16,
-                      hintSize: 16,
-                      labelColor: AppColors.greyTwo,
-                      hintColor: AppColors.greyTwo,
-                      textColor: AppColors.blackTwo,
-                      cursorColor: AppColors.blackTwo,
-                      validator: validatePassword,
+                    ValueListenableBuilder<bool>(
+                      valueListenable: passwordObscure,
+                      builder: (context, obscure, child) {
+                        return CommonTextField(
+                          controller: passwordController,
+                          titleLabelText: Strings.passwordText,
+                          labelText: Strings.passwordPlaceholderText,
+                          hintText: Strings.passwordPlaceholderText,
+                          labelSize: 16,
+                          hintSize: 16,
+                          labelColor: AppColors.greyTwo,
+                          hintColor: AppColors.greyTwo,
+                          textColor: AppColors.blackTwo,
+                          cursorColor: AppColors.blackTwo,
+                          pass: obscure,
+                          suffix: Icon(
+                            obscure
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                            color: AppColors.greyTwo,
+                          ),
+                          suffixIconOnTap: () {
+                            passwordObscure.value = !passwordObscure.value;
+                          },
+                          validator: validatePassword,
+                        );
+                      }
                     ),
                     VerticalSpacing(20),
-                    CommonTextField(
-                      controller: confirmPasswordController,
-                      titleLabelText: Strings.confirmPasswordText,
-                      labelText: Strings.passwordPlaceholderText,
-                      hintText: Strings.passwordPlaceholderText,
-                      labelSize: 16,
-                      hintSize: 16,
-                      labelColor: AppColors.greyTwo,
-                      hintColor: AppColors.greyTwo,
-                      textColor: AppColors.blackTwo,
-                      cursorColor: AppColors.blackTwo,
-                      validator: (value) {
-                        return validateConfirmPassword(
-                          passwordController.text,
-                          value
+                    ValueListenableBuilder<bool>(
+                      valueListenable: confirmPasswordObscure,
+                      builder: (context, obscure, child) {
+                        return CommonTextField(
+                          controller: confirmPasswordController,
+                          titleLabelText: Strings.confirmPasswordText,
+                          labelText: Strings.passwordPlaceholderText,
+                          hintText: Strings.passwordPlaceholderText,
+                          labelSize: 16,
+                          hintSize: 16,
+                          labelColor: AppColors.greyTwo,
+                          hintColor: AppColors.greyTwo,
+                          textColor: AppColors.blackTwo,
+                          cursorColor: AppColors.blackTwo,
+                          pass: obscure,
+                          suffix: Icon(
+                            obscure
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                            color: AppColors.greyTwo,
+                          ),
+                          suffixIconOnTap: () {
+                            confirmPasswordObscure.value = !confirmPasswordObscure.value;
+                          },
+                          validator: (value) {
+                            return validateConfirmPassword(
+                              passwordController.text,
+                              value
+                            );
+                          },
                         );
-                      },
+                      }
                     ),
                     VerticalSpacing(20),
                     Row(
@@ -235,36 +284,51 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> with FieldsVali
                       ],
                     ),
                     VerticalSpacing(20),
-                    CommonDropdownField(
-                      titleLabelText: Strings.stateText,
-                      items: (authController.countryDataOfUs?.states ?? []).map(
-                        (state) => DropdownMenuItem(
-                          value: state,
-                          child: CommonText(
-                            state.name,
-                            fontSize: 15,
-                            color: AppColors.greyTwo,
+                    Obx(() {
+                      if (authController.isCountryLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.pinkTwo,
                           ),
-                        )
-                      ).toList(),
-                      selectedItemBuilder: (context) {
-                        return (authController.countryDataOfUs?.states ?? []).map(
-                          (state) => CommonText(
-                            state.name,
-                            fontSize: 15,
-                            color: AppColors.blackTwo,
-                          ),
-                        ).toList();
-                      },
-                      validator: (value) => validateTextWithDashes(value?.name),
-                      onChanged: (value) {
-                        stateController.text = value?.name ?? '';
-                        authController.setCitiesAccordingToState(
-                          stateController.text,
-                          Strings.signUpDropdownScenario
                         );
-                      },
-                    ),
+                      }
+
+                      final states = authController.countryDataOfUs?.states;
+                      if (states == null) {
+                        return const SizedBox();
+                      }
+
+                      return CommonDropdownField(
+                        titleLabelText: Strings.stateText,
+                        items: states.map(
+                          (state) => DropdownMenuItem(
+                            value: state,
+                            child: CommonText(
+                              state.name,
+                              fontSize: 15,
+                              color: AppColors.greyTwo,
+                            ),
+                          )
+                        ).toList(),
+                        selectedItemBuilder: (context) {
+                          return states.map(
+                            (state) => CommonText(
+                              state.name,
+                              fontSize: 15,
+                              color: AppColors.blackTwo,
+                            ),
+                          ).toList();
+                        },
+                        validator: (value) => validateTextWithDashes(value?.name),
+                        onChanged: (value) {
+                          stateController.text = value?.name ?? '';
+                          authController.setCitiesAccordingToState(
+                            stateController.text,
+                            Strings.signUpDropdownScenario
+                          );
+                        },
+                      );
+                    }),
                     VerticalSpacing(20),
                     Obx(() {
                       final cities = authController.citiesList;

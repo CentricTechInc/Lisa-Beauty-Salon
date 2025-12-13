@@ -31,6 +31,16 @@ class _SignInPageState extends State<SignInPage> with FieldsValidation {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  final ValueNotifier<bool> passwordObscure = ValueNotifier(true);
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    passwordObscure.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
@@ -95,18 +105,32 @@ class _SignInPageState extends State<SignInPage> with FieldsValidation {
                       validator: validateEmailSimple,
                     ),
                     VerticalSpacing(40),
-                    CommonTextField(
-                      titleLabelText: Strings.passwordText,
-                      controller: passwordController,
-                      labelText: Strings.passwordPlaceholderText,
-                      hintText: Strings.passwordPlaceholderText,
-                      labelSize: 16,
-                      hintSize: 16,
-                      labelColor: AppColors.greyTwo,
-                      hintColor: AppColors.greyTwo,
-                      textColor: AppColors.blackTwo,
-                      cursorColor: AppColors.blackTwo,
-                      validator: validatePasswordSimple,
+                    ValueListenableBuilder<bool>(
+                      valueListenable: passwordObscure,
+                        builder: (context, obscure, child) {
+                        return CommonTextField(
+                          titleLabelText: Strings.passwordText,
+                          controller: passwordController,
+                          labelText: Strings.passwordPlaceholderText,
+                          hintText: Strings.passwordPlaceholderText,
+                          labelSize: 16,
+                          hintSize: 16,
+                          labelColor: AppColors.greyTwo,
+                          hintColor: AppColors.greyTwo,
+                          textColor: AppColors.blackTwo,
+                          cursorColor: AppColors.blackTwo,
+                          pass: obscure,
+                          suffix: Icon(
+                            obscure ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                            color: AppColors.greyTwo,
+                          ),
+                          suffixIconOnTap: () {
+                            passwordObscure.value = !passwordObscure.value;
+                          },
+                          validator: validatePasswordSimple,
+                        );
+                      }
                     ),
                     VerticalSpacing(40),
                     Row(
