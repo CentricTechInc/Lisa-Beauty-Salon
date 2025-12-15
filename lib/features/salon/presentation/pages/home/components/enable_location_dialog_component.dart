@@ -6,8 +6,8 @@ import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
-class EnableLocationDialog extends StatelessWidget {
-  const EnableLocationDialog({super.key});
+class EnableLocationDialogComponent extends StatelessWidget {
+  const EnableLocationDialogComponent({super.key});
 
   @override
   Widget build(BuildContext context) {

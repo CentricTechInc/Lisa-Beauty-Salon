@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/widgets/enable_location_dialog.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/home/components/enable_location_dialog_component.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<String> monthItems = [];
-  String? selectedMonth;
+  final ValueNotifier<String?> selectedMonthNotifier = ValueNotifier(null);
 
   @override
   void initState() {
@@ -34,6 +34,12 @@ class _HomePageState extends State<HomePage> {
     _generateMonths();
   }
 
+  @override
+  void dispose() {
+    selectedMonthNotifier.dispose();
+    super.dispose();
+  }
+
   Future<void> _checkLocationDialog() async {
     const storage = FlutterSecureStorage();
     final hasShown = await storage.read(key: 'hasShownLocationDialog');
@@ -41,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     if (hasShown != 'true') {
       Get.generalDialog(
         pageBuilder: (context, animation, secondaryAnimation) {
-          return const EnableLocationDialog();
+          return const EnableLocationDialogComponent();
         },
         transitionBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
@@ -80,7 +86,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (monthItems.isNotEmpty) {
-      selectedMonth = monthItems.first;
+      selectedMonthNotifier.value = monthItems.first;
     }
   }
 
@@ -117,7 +123,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Row(
                 children: [
-                  GestureDetector(
+                   GestureDetector(
                     onTap: () {
                       showFeatureInDevelopment();
                     },
@@ -281,46 +287,49 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(
                 width: context.width * 0.3,
-                child: CommonDropdownField<String>(
-                  items: monthItems.map((String value) {
-                    return DropdownMenuItem<String>(
+                child: ValueListenableBuilder<String?>(
+                  valueListenable: selectedMonthNotifier,
+                  builder: (context, value, child) {
+                    return CommonDropdownField<String>(
+                      items: monthItems.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: CommonText(
+                            value,
+                            fontSize: 12,
+                            fontWeight: 400,
+                            color: AppColors.greyTwo,
+                          ),
+                        );
+                      }).toList(),
+                      selectedItemBuilder: (BuildContext context) {
+                        return monthItems.map<Widget>((String value) {
+                          return CommonText(
+                            value,
+                            fontSize: 12,
+                            fontWeight: 400,
+                            color: AppColors.greyTwo,
+                            textOverflow: TextOverflow.ellipsis,
+                          );
+                        }).toList();
+                      },
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          selectedMonthNotifier.value = newValue;
+                        }
+                      },
                       value: value,
-                      child: CommonText(
-                        value,
-                        fontSize: 12,
-                        fontWeight: 400,
-                        color: AppColors.greyTwo,
+                      hintText: "Select Month",
+                      fillColor: AppColors.transparent,
+                      iconColor: AppColors.greyTwo,
+                      borderColor: AppColors.transparent,
+                      borderRadius: 10,
+                      padding: EdgeInsets.zero,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15,
                       ),
                     );
-                  }).toList(),
-                  selectedItemBuilder: (BuildContext context) {
-                    return monthItems.map<Widget>((String value) {
-                      return CommonText(
-                        value,
-                        fontSize: 12,
-                        fontWeight: 400,
-                        color: AppColors.greyTwo,
-                        textOverflow: TextOverflow.ellipsis,
-                      );
-                    }).toList();
-                  },
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      setState(() {
-                        selectedMonth = newValue;
-                      });
-                    }
-                  },
-                  value: selectedMonth,
-                  hintText: "Select Month",
-                  fillColor: AppColors.transparent,
-                  iconColor: AppColors.greyTwo,
-                  borderColor: AppColors.transparent,
-                  borderRadius: 10,
-                  padding: EdgeInsets.zero,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                  ),
+                  }
                 ),
               )
             ],
@@ -399,7 +408,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CommonText(
-                        Strings.canceledText,
+                        Strings.cancelledText,
                         fontSize: 14,
                         fontWeight: 400,
                         color: AppColors.greyTwo,

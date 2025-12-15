@@ -296,9 +296,12 @@ class Strings {
   static const String appointmentStatisticsText = "Appointment Statistics";
   static const String totalText = "Total";
   static const String completedText = "Completed";
-  static const String canceledText = "Canceled";
 
   static const String featureUnderDevelopment =
       "This feature isn't quite ready yet, but we're working hard to bring it to you soon.";
+
+  static const String upcomingText = "Upcoming";
+  static const String previousText = "Previous";
+  static const String cancelledText = "Cancelled";
 
 }

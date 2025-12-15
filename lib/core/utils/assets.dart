@@ -29,4 +29,6 @@ class Assets {
 
   static const String discountImage = "assets/images/discount_image.png";
   static const String locationImage = "assets/images/location_icon.png";
+
+  static const String filterIcon = "assets/svgs/filter.svg";
 }

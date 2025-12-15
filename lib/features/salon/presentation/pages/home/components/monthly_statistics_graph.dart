@@ -98,7 +98,7 @@ class MonthlyStatisticsGraph extends StatelessWidget {
               dataSource: data,
               xValueMapper: (ChartData data, _) => data.x,
               yValueMapper: (ChartData data, _) => data.canceled,
-              name: Strings.canceledText,
+              name: Strings.cancelledText,
               color: AppColors.pinkTwo,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(5),
