@@ -13,7 +13,8 @@ class RouteNames {
   static const String buildYourProfile = '/buildYourProfile';
   static const String privacyPolicy = '/privacyPolicy';
   static const String termsAndConditions = '/termsAndConditions';
-  static const String main = '/main';
+  static const String mainCustomer = '/mainCustomer';
+  static const String mainSalon = '/mainSalon';
 
 
 }

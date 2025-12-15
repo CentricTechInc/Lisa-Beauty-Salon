@@ -186,9 +186,16 @@ class _SignInPageState extends State<SignInPage> with FieldsValidation {
                               seconds: 2
                             ),
                             () {
-                              Get.offAllNamed(
-                                RouteNames.main
-                              );
+                              if (authController.selectedCategory.value == Strings.salonsText) {
+                                Get.offAllNamed(
+                                  RouteNames.mainSalon
+                                );
+                              }
+                              else {
+                                Get.offAllNamed(
+                                  RouteNames.mainCustomer
+                                );
+                              }
                             }
                           );
                         }

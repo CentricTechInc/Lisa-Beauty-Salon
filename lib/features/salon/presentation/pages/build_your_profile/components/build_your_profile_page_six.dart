@@ -203,7 +203,7 @@ class _ShowBankAccountsWidget extends StatelessWidget {
       ),
       () {
         Get.offAllNamed(
-          RouteNames.main
+          RouteNames.mainSalon
         );
       }
     );

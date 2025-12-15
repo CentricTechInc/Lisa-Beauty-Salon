@@ -52,6 +52,7 @@ dependencies:
   file_picker: ^10.3.7
   mobkit_dashed_border: ^0.0.8
   flutter_html: ^3.0.0
+  syncfusion_flutter_charts: ^31.2.18
 
 dev_dependencies:
   flutter_test:

@@ -22,5 +22,11 @@ class Assets {
   static const String manicureIcon = "assets/images/manicure_icon.png";
   static const String skincareIcon = "assets/images/skincare_icon.png";
 
+  static const String bottomBarIconOne = "assets/svgs/icon_one.svg";
+  static const String bottomBarIconTwo = "assets/svgs/icon_two.svg";
+  static const String bottomBarIconThree = "assets/svgs/icon_three.svg";
+  static const String bottomBarIconFour = "assets/svgs/icon_four.svg";
+
   static const String discountImage = "assets/images/discount_image.png";
+  static const String locationImage = "assets/images/location_icon.png";
 }

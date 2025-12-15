@@ -1,6 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
-import 'package:lisa_beauty_salon/features/auth/presentation/pages/build_your_profile/build_your_profile_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/create_account/create_account_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/email_verification/email_verification_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/forgot_password/forgot_password_page.dart';
@@ -13,7 +12,9 @@ import 'package:lisa_beauty_salon/features/auth/presentation/pages/sign_up/sign_
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/splash/splash_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/terms_and_conditions/terms_and_conditions_page.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/welcome/welcome_page.dart';
-import 'package:lisa_beauty_salon/features/main/presentation/pages/main_page.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/shell/customer_shell.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/build_your_profile_page.dart';
+import 'package:lisa_beauty_salon/features/salon/shell/salon_shell.dart';
 
 class AppPages {
 
@@ -72,8 +73,12 @@ class AppPages {
       page: () => TermsAndConditionsPage(),
     ),
     GetPage(
-      name: RouteNames.main,
-      page: () => MainPage(),
+      name: RouteNames.mainCustomer,
+      page: () => CustomerShell(),
+    ),
+    GetPage(
+      name: RouteNames.mainSalon,
+      page: () => SalonShell(),
     ),
   ];
 }

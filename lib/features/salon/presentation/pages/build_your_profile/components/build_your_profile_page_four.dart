@@ -14,7 +14,7 @@ import 'package:lisa_beauty_salon/core/utils/input_formatters.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:lisa_beauty_salon/features/auth/presentation/pages/build_your_profile/components/profile_photo_picker_component.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/components/profile_photo_picker_component.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';

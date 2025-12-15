@@ -290,6 +290,13 @@ class Strings {
   static const String nineAmText = "09:00 AM";
   static const String nearestSalonText = "Nearest Salon";
   static const String viewAllText = "View All";
+  static const String weekRevenueText = "This Week's Revenue";
+  static const String weekRevenuePriceText = "\$1,240";
+  static const String earnedText = "Earned";
+  static const String appointmentStatisticsText = "Appointment Statistics";
+  static const String totalText = "Total";
+  static const String completedText = "Completed";
+  static const String canceledText = "Canceled";
 
   static const String featureUnderDevelopment =
       "This feature isn't quite ready yet, but we're working hard to bring it to you soon.";

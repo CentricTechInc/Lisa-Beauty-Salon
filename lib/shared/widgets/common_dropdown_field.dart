@@ -18,6 +18,7 @@ class CommonDropdownField<T> extends StatelessWidget {
     this.borderColor = AppColors.greyOne,
     this.enableBorder = AppColors.greyOne,
     this.disableBorder = AppColors.greyTwo,
+    this.iconColor = AppColors.blackTwo,
     this.textColor = AppColors.blackTwo,
     this.hintColor = AppColors.greyTwo,
     this.labelColor = AppColors.greyTwo,
@@ -63,6 +64,7 @@ class CommonDropdownField<T> extends StatelessWidget {
   final Color borderColor;
   final Color enableBorder;
   final Color disableBorder;
+  final Color iconColor;
   final Color textColor;
   final Color hintColor;
   final Color labelColor;
@@ -101,7 +103,10 @@ class CommonDropdownField<T> extends StatelessWidget {
             items: items,
             validator: validator,
             onChanged: onChanged,
-            icon: const Icon(Icons.keyboard_arrow_down),
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: iconColor,
+            ),
             style: TextStyle(
               fontFamily: fontFamily,
               fontSize: fontSize,

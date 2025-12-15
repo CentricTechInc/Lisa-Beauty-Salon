@@ -98,7 +98,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage>
     if (authController.selectedCategory.value == Strings.salonsText) {
       Get.toNamed(RouteNames.buildYourProfile);
     } else {
-      Get.offAllNamed(RouteNames.main);
+      Get.offAllNamed(RouteNames.mainCustomer);
     }
   }
 
