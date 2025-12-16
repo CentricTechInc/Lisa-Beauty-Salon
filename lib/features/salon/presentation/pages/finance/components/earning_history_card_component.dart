@@ -5,7 +5,7 @@ import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
-class EarningHistoryCard extends StatelessWidget {
+class EarningHistoryCardComponent extends StatelessWidget {
   final String date;
   final String time;
   final String professionalName;
@@ -13,7 +13,7 @@ class EarningHistoryCard extends StatelessWidget {
   final String earnAmount;
   final String imagePath;
 
-  const EarningHistoryCard({
+  const EarningHistoryCardComponent({
     super.key,
     required this.date,
     required this.time,

@@ -15,6 +15,7 @@ class RouteNames {
   static const String termsAndConditions = '/termsAndConditions';
   static const String mainCustomer = '/mainCustomer';
   static const String mainSalon = '/mainSalon';
+  static const String messageDetail = "/messageDetail";
 
 
 }

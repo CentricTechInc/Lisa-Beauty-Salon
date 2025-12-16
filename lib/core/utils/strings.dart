@@ -343,9 +343,12 @@ class Strings {
   static const String servicesText = "Services: ";
   static const String withdrawText = "Withdraw";
   static const String remainingBalanceText = "Remaining Balance";
+  static const String messagesText = "Messages";
   static const String remainingBalancePlaceholderText = "\$1,240";
   static const String enterAmountToWithdrawText = "Enter Amount To Withdraw";
   static const String confirmWithdrawText = "Confirm Withdraw";
   static const String notesText = "Notes";
   static const String withdrawalsProcessedText = "Withdrawals are processed within 2 - 3 business days.";
+  static const String onlineText = "Online";
+  static const String typeMessageHint = "Type a message";
 }

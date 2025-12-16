@@ -3,14 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/components/earning_history_card_component.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/components/finance_chart_component.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/components/payout_history_card_component.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/components/withdraw_bottom_sheet_component.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_tabbar_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/widgets/finance_chart_widget.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/widgets/earning_history_card.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/widgets/payout_history_card.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/widgets/withdraw_bottom_sheet.dart';
+
 
 class FinancePage extends StatefulWidget {
   const FinancePage({super.key});
@@ -217,7 +218,7 @@ class _FinancePageState extends State<FinancePage> {
                   context: context,
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
-                  builder: (context) => const WithdrawBottomSheet(),
+                  builder: (context) => const WithdrawBottomSheetComponent(),
                 );
               },
               text: Strings.withdrawText,
@@ -235,7 +236,7 @@ class _FinancePageState extends State<FinancePage> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          FinanceChartWidget(
+          FinanceChartComponent(
             title: Strings.earningStatisticsText,
             data: earningsData,
           ),
@@ -254,7 +255,7 @@ class _FinancePageState extends State<FinancePage> {
             children: [
               for (var i = 0; i < earningHistoryList.length; i++) ...[
                 if (i > 0) VerticalSpacing(16),
-                EarningHistoryCard(
+                EarningHistoryCardComponent(
                   date: earningHistoryList[i]['date'],
                   time: earningHistoryList[i]['time'],
                   professionalName: earningHistoryList[i]['professionalName'],
@@ -275,7 +276,7 @@ class _FinancePageState extends State<FinancePage> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          FinanceChartWidget(
+          FinanceChartComponent(
             title: Strings.payoutStatisticsText,
             data: payoutsData,
           ),
@@ -294,7 +295,7 @@ class _FinancePageState extends State<FinancePage> {
             children: [
               for (var i = 0; i < payoutHistoryList.length; i++) ...[
                 if (i > 0) VerticalSpacing(16),
-                PayoutHistoryCard(
+                PayoutHistoryCardComponent(
                   date: payoutHistoryList[i]['date'],
                   time: payoutHistoryList[i]['time'],
                   bankName: payoutHistoryList[i]['bankName'],

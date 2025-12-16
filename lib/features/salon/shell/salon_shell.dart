@@ -7,6 +7,7 @@ import 'package:lisa_beauty_salon/features/salon/presentation/controllers/settin
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/appointment/appointment_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/finance_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/home/home_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/message_page.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_bar.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 
@@ -21,7 +22,7 @@ class SalonShell extends StatelessWidget {
     HomePage(),
     AppointmentPage(),
     FinancePage(),
-    Container(),
+    MessagePage(),
     Container(),
   ];
 

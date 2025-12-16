@@ -6,11 +6,11 @@ import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:get/get.dart';
 
-class FinanceChartWidget extends StatelessWidget {
+class FinanceChartComponent extends StatelessWidget {
   final String title;
   final List<ChartData> data;
 
-  const FinanceChartWidget({
+  const FinanceChartComponent({
     super.key,
     required this.title,
     required this.data,

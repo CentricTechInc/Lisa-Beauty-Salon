@@ -6,8 +6,8 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 
-class WithdrawBottomSheet extends StatelessWidget {
-  const WithdrawBottomSheet({super.key});
+class WithdrawBottomSheetComponent extends StatelessWidget {
+  const WithdrawBottomSheetComponent({super.key});
 
   @override
   Widget build(BuildContext context) {

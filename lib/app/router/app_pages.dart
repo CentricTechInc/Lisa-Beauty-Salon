@@ -14,6 +14,7 @@ import 'package:lisa_beauty_salon/features/auth/presentation/pages/terms_and_con
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/welcome/welcome_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/shell/customer_shell.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/build_your_profile_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/message_detail_page.dart';
 import 'package:lisa_beauty_salon/features/salon/shell/salon_shell.dart';
 
 class AppPages {
@@ -79,6 +80,10 @@ class AppPages {
     GetPage(
       name: RouteNames.mainSalon,
       page: () => SalonShell(),
+    ),
+    GetPage(
+      name: RouteNames.messageDetail,
+      page: () => MessageDetailPage(),
     ),
   ];
 }
