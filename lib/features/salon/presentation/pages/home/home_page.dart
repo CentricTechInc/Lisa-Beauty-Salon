@@ -197,51 +197,64 @@ class _HomePageState extends State<HomePage> {
           VerticalSpacing(20),
           Container(
             width: context.width - 40,
-            height: 56,
+            height: 66,
             decoration: BoxDecoration(
               color: AppColors.pinkTwo,
               borderRadius: BorderRadius.circular(15)
             ),
-            padding: EdgeInsets.symmetric(
-                horizontal: 10
+            padding: EdgeInsets.only(
+              left: 10,
+              right: 5,
+              top: 10,
+              bottom: 10
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      Assets.bottomBarIconTwo,
-                      width: 24,
-                      height: 24,
-                    ),
-                    HorizontalSpacing(10),
-                    CommonText(
-                      Strings.bloomAndBladeText,
-                      fontSize: 18,
-                      fontWeight: 600,
-                      color: AppColors.whiteOne,
-                    )
-                  ],
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        Assets.bottomBarIconTwo,
+                        width: 20,
+                        height: 20,
+                      ),
+                      HorizontalSpacing(8),
+                      Expanded(
+                        child: CommonText(
+                          Strings.bloomAndBladeText,
+                          fontSize: 18,
+                          fontWeight: 600,
+                          color: AppColors.whiteOne,
+                          textOverflow: TextOverflow.visible,
+                          maxLines: null,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CommonText(
-                      Strings.nineAmText,
-                      fontSize: 12,
-                      fontWeight: 400,
-                      color: AppColors.whiteOne,
-                    ),
-                    CommonText(
-                      Strings.todayOrMorningText,
-                      fontSize: 12,
-                      fontWeight: 400,
-                      color: AppColors.whiteOne,
-                    ),
-                  ],
-                )
+                SizedBox(
+                  width: 100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CommonText(
+                        Strings.nineAmText,
+                        fontSize: 12,
+                        fontWeight: 400,
+                        color: AppColors.whiteOne,
+                      ),
+                      CommonText(
+                        Strings.todayOrMorningText,
+                        fontSize: 12,
+                        fontWeight: 400,
+                        color: AppColors.whiteOne,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -279,14 +292,19 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CommonText(
-                Strings.appointmentStatisticsText,
-                fontSize: 20,
-                fontWeight: 700,
-                color: AppColors.blackTwo,
+              Expanded(
+                flex: 2,
+                child: CommonText(
+                  Strings.appointmentStatisticsText,
+                  fontSize: 20,
+                  fontWeight: 700,
+                  color: AppColors.blackTwo,
+                  textOverflow: TextOverflow.visible,
+                  maxLines: null,
+                ),
               ),
               SizedBox(
-                width: context.width * 0.3,
+                width: context.width * 0.45,
                 child: ValueListenableBuilder<String?>(
                   valueListenable: selectedMonthNotifier,
                   builder: (context, value, child) {
@@ -336,7 +354,10 @@ class _HomePageState extends State<HomePage> {
           ),
           VerticalSpacing(20),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            padding: const EdgeInsets.symmetric(
+              vertical: 15, 
+              horizontal: 10
+            ),
             decoration: BoxDecoration(
               color: AppColors.whiteOne,
               borderRadius: BorderRadius.circular(12)
@@ -362,7 +383,6 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: 400,
                           color: AppColors.greyTwo,
                         ),
-                        VerticalSpacing(5),
                         CommonText(
                           "80", // TODO: Replace with dynamic data
                           fontSize: 24,
@@ -392,7 +412,6 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: 400,
                           color: AppColors.greyTwo,
                         ),
-                        VerticalSpacing(5),
                         CommonText(
                           "65", // TODO: Replace with dynamic data
                           fontSize: 24,
@@ -413,7 +432,6 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: 400,
                         color: AppColors.greyTwo,
                       ),
-                      VerticalSpacing(5),
                       CommonText(
                         "15", // TODO: Replace with dynamic data
                         fontSize: 24,

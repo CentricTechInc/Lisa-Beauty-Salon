@@ -304,4 +304,48 @@ class Strings {
   static const String previousText = "Previous";
   static const String cancelledText = "Cancelled";
 
+  static const String financeText = "Finance";
+  static const String availableForPayoutsText = "Available For Payouts";
+  static const String totalEarningsText = "Total Earnings";
+  static const String totalPayoutsText = "Total Payouts";
+  static const String payoutPlaceholderText = "R 1,850";
+  static const String totalEarningPlaceholderText = "R 3.240";
+  static const String totalPayoutsPlaceholderText = "R 1,200";
+  static const String commissionBreakdownText = "Commission Breakdown";
+  static const String commissionBreakdownDescriptionText =
+      "The platform takes a 15% service fee per payment. You'll receive the remaining 85% .";
+  static const String totalAppointmentCompletedText = "Total Completed Appointments";
+  static const String totalAppointmentCompletedPlaceholderText = "250";
+  static const String platformFeeText = "Platform Fee";
+  static const String platformFeePlaceholderText = "R 350";
+  
+  static const String earningStatisticsText = "Yearly Earnings Statistics";
+  static const String payoutStatisticsText = "Yearly Payouts Statistics";
+  static const String earningsButtonText = "Earnings";
+  static const String payoutsButtonText = "Payouts";
+  static const String januaryText = "January";
+  static const String februaryText = "February";
+  static const String marchText = "March";
+  static const String aprilText = "April";
+  static const String mayText = "May";
+  static const String juneText = "June";
+  static const String julyText = "July";
+  static const String augustText = "August";
+  static const String septemberText = "September";
+  static const String octoberText = "October";
+  static const String novemberText = "November";
+  static const String decemberText = "December";
+  static const String earningHistoryText = "Earning History";
+  static const String payoutHistoryText = "Payout History";
+  // bankAccountText already defined above
+  static const String withdrawAmountText = "Withdraw Amount: ";
+  static const String earnText = "Earn: ";
+  static const String servicesText = "Services: ";
+  static const String withdrawText = "Withdraw";
+  static const String remainingBalanceText = "Remaining Balance";
+  static const String remainingBalancePlaceholderText = "\$1,240";
+  static const String enterAmountToWithdrawText = "Enter Amount To Withdraw";
+  static const String confirmWithdrawText = "Confirm Withdraw";
+  static const String notesText = "Notes";
+  static const String withdrawalsProcessedText = "Withdrawals are processed within 2 - 3 business days.";
 }

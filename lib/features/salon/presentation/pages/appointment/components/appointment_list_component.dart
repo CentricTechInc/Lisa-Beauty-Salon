@@ -27,6 +27,7 @@ class UpcomingAppointmentListComponent extends StatelessWidget {
         "subTotal": "32.99",
         "platformFee": "4.95",
         "grandTotal": "28.05",
+        "reminderTime": ValueNotifier("30 min before"),
       },
       {
         "date": "16 November 2025",
@@ -42,6 +43,7 @@ class UpcomingAppointmentListComponent extends StatelessWidget {
         "subTotal": "50.00",
         "platformFee": "4.99",
         "grandTotal": "54.99",
+        "reminderTime": ValueNotifier("30 min before"),
       },
     ];
     return ListView.separated(
@@ -60,6 +62,7 @@ class UpcomingAppointmentListComponent extends StatelessWidget {
           imagePath: appointment['imagePath'],
           isReminderEnabled: appointment['reminder'],
           appointmentData: appointment,
+          reminderTime: appointment['reminderTime'],
         );
       },
     );
@@ -85,7 +88,10 @@ class _UpcomingAppointmentCardComponent extends StatelessWidget {
     this.onReminderChanged,
     required this.isReminderEnabled,
     required this.appointmentData,
+    required this.reminderTime,
   });
+
+  final ValueNotifier<String> reminderTime;
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +107,7 @@ class _UpcomingAppointmentCardComponent extends StatelessWidget {
             appointmentData: appointmentData,
              // Pass the notifier to keep state sync if needed, or handle separately
             isReminderEnabled: isReminderEnabled,
+            reminderTime: reminderTime,
           ),
         );
       },
@@ -201,17 +208,41 @@ class _UpcomingAppointmentCardComponent extends StatelessWidget {
                   ),
                 ),
                 HorizontalSpacing(5),
-                CommonText(
-                  "30 min before",
-                  fontSize: 12,
-                  fontWeight: 400,
-                  color: AppColors.greyTwo,
-                ),
-                HorizontalSpacing(5),
-                const Icon(
-                  Icons.keyboard_arrow_down,
-                  size: 16,
-                  color: AppColors.blackTwo,
+                ValueListenableBuilder<String>(
+                  valueListenable: reminderTime,
+                  builder: (context, value, child) {
+                    return DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: value,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 16,
+                          color: AppColors.blackTwo,
+                        ),
+                        style: const TextStyle(
+                          fontFamily: Strings.fontFamily,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.blackTwo,
+                        ),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            reminderTime.value = newValue;
+                          }
+                        },
+                        items: [
+                          "15 min before",
+                          "30 min before",
+                          "45 min before"
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -225,10 +256,12 @@ class _UpcomingAppointmentCardComponent extends StatelessWidget {
 class _UpcomingAppointmentDetailsSheet extends StatelessWidget {
   final Map<String, dynamic> appointmentData;
   final ValueNotifier<bool> isReminderEnabled;
+  final ValueNotifier<String> reminderTime;
 
   const _UpcomingAppointmentDetailsSheet({
     required this.appointmentData,
     required this.isReminderEnabled,
+    required this.reminderTime,
   });
 
   @override
@@ -291,17 +324,25 @@ class _UpcomingAppointmentDetailsSheet extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CommonText(
-              "Date & Time",
-              fontSize: 16,
-              fontWeight: 700,
-              color: AppColors.blackTwo,
+            Expanded(
+              flex: 2,
+              child: CommonText(
+                "Date & Time",
+                fontSize: 16,
+                fontWeight: 700,
+                color: AppColors.blackTwo,
+              ),
             ),
-            CommonText(
-              "$date, $time",
-              fontSize: 16,
-              fontWeight: 600,
-              color: AppColors.pinkTwo, 
+            Expanded(
+              flex: 1,
+              child: CommonText(
+                "$date, $time",
+                fontSize: 16,
+                fontWeight: 600,
+                color: AppColors.pinkTwo,
+                textOverflow: TextOverflow.visible,
+                maxLines: null, 
+              ),
             ),
           ],
         ),
@@ -328,7 +369,7 @@ class _UpcomingAppointmentDetailsSheet extends StatelessWidget {
                 color: AppColors.blackTwo,
               ),
               CommonText(
-                "\$${service['price']}", // Assuming $ based on image, user prompt showed R in others but image shows $
+                "R ${service['price']}", // Assuming $ based on image, user prompt showed R in others but image shows $
                 fontSize: 16,
                 fontWeight: 600,
                 color: AppColors.pinkTwo,
@@ -338,9 +379,9 @@ class _UpcomingAppointmentDetailsSheet extends StatelessWidget {
         )),
         Divider(color: AppColors.greyOne),
         VerticalSpacing(10),
-        _buildPriceRow("Sub Total", "\$$subTotal"),
+        _buildPriceRow("Sub Total", "R $subTotal"),
         VerticalSpacing(10),
-        _buildPriceRow("Platform Fee (15%)", "\$$platformFee"),
+        _buildPriceRow("Platform Fee (15%)", "R $platformFee"),
         VerticalSpacing(10),
         Divider(color: AppColors.greyOne),
         VerticalSpacing(10),
@@ -354,7 +395,7 @@ class _UpcomingAppointmentDetailsSheet extends StatelessWidget {
                 color: AppColors.blackTwo,
               ),
               CommonText(
-                "\$$grandTotal",
+                "R $grandTotal",
                 fontSize: 24,
                 fontWeight: 700,
                 color: AppColors.pinkTwo,
@@ -408,30 +449,53 @@ class _UpcomingAppointmentDetailsSheet extends StatelessWidget {
                       },
                     ),
                   ),
-                  HorizontalSpacing(5),
-                   CommonText(
-                    "30 min before",
-                    fontSize: 14,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  ),
-                   HorizontalSpacing(5),
-                  const Icon(
-                    Icons.keyboard_arrow_down,
-                    size: 16,
-                    color: AppColors.blackTwo,
-                  ),
+                  ValueListenableBuilder<String>(
+                    valueListenable: reminderTime,
+                    builder: (context, value, child) {
+                    return DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: value,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 16,
+                          color: AppColors.blackTwo,
+                        ),
+                        style: const TextStyle(
+                          fontFamily: Strings.fontFamily,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.blackTwo,
+                        ),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            reminderTime.value = newValue;
+                          }
+                        },
+                        items: [
+                          "15 min before",
+                          "30 min before",
+                          "45 min before"
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  },
+                ),
                ],
              ),
              Container(
-               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                decoration: BoxDecoration(
                  borderRadius: BorderRadius.circular(12),
                  border: Border.all(color: AppColors.greyTwo)
                ),
                child: CommonText(
                  "Service Completed",
-                 fontSize: 14,
+                 fontSize: 12,
                  fontWeight: 500,
                  color: AppColors.blackTwo,
                ),

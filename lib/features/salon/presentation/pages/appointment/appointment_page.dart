@@ -26,65 +26,74 @@ class AppointmentPage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CommonText(
-                "Your Appointments",
-                fontSize: 24,
-                color: AppColors.blackTwo,
-                fontWeight: 600,
+              Expanded(
+                flex: 2,
+                child: CommonText(
+                  "Your Appointments",
+                  fontSize: 24,
+                  color: AppColors.blackTwo,
+                  fontWeight: 600,
+                  textOverflow: TextOverflow.visible,
+                  maxLines: null,
+                ),
               ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showFeatureInDevelopment();
-                    },
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteOne,
-                        borderRadius: BorderRadius.circular(
-                          16
+              HorizontalSpacing(8),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        showFeatureInDevelopment();
+                      },
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: AppColors.whiteOne,
+                          borderRadius: BorderRadius.circular(
+                            16
+                          ),
+                          border: Border.all(
+                            color: AppColors.greyOne
+                          )
                         ),
-                        border: Border.all(
-                          color: AppColors.greyOne
-                        )
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          Assets.filterIcon,
-                          width: 24,
-                          height: 24,
-                        ),
-                      ),
-                    ),
-                  ),
-                  HorizontalSpacing(10),
-                  GestureDetector(
-                    onTap: () {
-                      showFeatureInDevelopment();
-                    },
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteOne,
-                        borderRadius: BorderRadius.circular(
-                          16
-                        ),
-                        border: Border.all(
-                          color: AppColors.greyOne
-                        )
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.tune,
-                          color: AppColors.blackTwo,
+                        child: Center(
+                          child: SvgPicture.asset(
+                            Assets.filterIcon,
+                            width: 24,
+                            height: 24,
+                          ),
                         ),
                       ),
                     ),
-                  )
-                ],
+                    HorizontalSpacing(10),
+                    GestureDetector(
+                      onTap: () {
+                        showFeatureInDevelopment();
+                      },
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: AppColors.whiteOne,
+                          borderRadius: BorderRadius.circular(
+                            16
+                          ),
+                          border: Border.all(
+                            color: AppColors.greyOne
+                          )
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.tune,
+                            color: AppColors.blackTwo,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               )
             ],
           ),

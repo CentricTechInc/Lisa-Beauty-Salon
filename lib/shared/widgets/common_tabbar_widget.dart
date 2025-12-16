@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -146,8 +146,16 @@ class CommonTabBarWidgetTwo extends StatefulWidget {
     this.onTabChange,
     this.isScrollable = false,
     this.heightFactor = 0.058,
+    this.selectedLabelColor = AppColors.whiteOne,
+    this.unselectedLabelColor = AppColors.blackTwo,
+    this.indicatorColor = AppColors.blackThree,
+    this.labelFontSize = 14,
+    this.labelFontWeight = FontWeight.w600,
+    this.fontFamily = Strings.fontFamily,
+    this.unselectedLabelFontSize = 14,
+    this.unselectedLabelFontWeight = FontWeight.w400,
   }) : assert(tabs.length == tabViews.length,
-  'Tabs and TabViews must match in length');
+            'Tabs and TabViews must match in length');
 
   final List<String> tabs;
   final List<Widget> tabViews;
@@ -155,6 +163,14 @@ class CommonTabBarWidgetTwo extends StatefulWidget {
   final Function(int)? onTabChange;
   final bool isScrollable;
   final double heightFactor;
+  final Color selectedLabelColor;
+  final Color unselectedLabelColor;
+  final Color indicatorColor;
+  final double labelFontSize;
+  final FontWeight labelFontWeight;
+  final String fontFamily;
+  final double unselectedLabelFontSize;
+  final FontWeight unselectedLabelFontWeight;
 
   @override
   State<CommonTabBarWidgetTwo> createState() => _CommonTabBarWidgetTwoState();
@@ -189,32 +205,21 @@ class _CommonTabBarWidgetTwoState extends State<CommonTabBarWidgetTwo>
 
   @override
   Widget build(BuildContext context) {
-    final height = context.height;
+    final height = MediaQuery.of(context).size.height;
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.transparent,
-        borderRadius: BorderRadius.circular(
-          20
-        )
-      ),
+          color: AppColors.transparent, borderRadius: BorderRadius.circular(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12, 
-              vertical: 8
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: Container(
               height: height * widget.heightFactor,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  10
-                ),
-                border: Border.all(
-                  color: AppColors.greyOne
-                ),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.greyOne),
                 color: AppColors.transparent,
               ),
               child: TabBar(
@@ -224,39 +229,40 @@ class _CommonTabBarWidgetTwoState extends State<CommonTabBarWidgetTwo>
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorAnimation: TabIndicatorAnimation.elastic,
                 dividerColor: AppColors.transparent,
-                labelColor: AppColors.whiteOne,
-                unselectedLabelColor: AppColors.blackTwo,
+                labelColor: widget.selectedLabelColor,
+                unselectedLabelColor: widget.unselectedLabelColor,
                 labelStyle: TextStyle(
-                  color: AppColors.whiteOne,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  fontFamily: Strings.fontFamily,
-                  fontStyle: FontStyle.normal
+                  color: widget.selectedLabelColor,
+                  fontWeight: widget.labelFontWeight,
+                  fontSize: widget.labelFontSize,
+                  fontFamily: widget.fontFamily,
+                  fontStyle: FontStyle.normal,
                 ),
                 unselectedLabelStyle: TextStyle(
-                  color: AppColors.blackTwo,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  fontFamily: Strings.fontFamily,
-                  fontStyle: FontStyle.normal
+                  color: widget.unselectedLabelColor,
+                  fontWeight: widget.unselectedLabelFontWeight,
+                  fontSize: widget.unselectedLabelFontSize,
+                  fontFamily: widget.fontFamily,
+                  fontStyle: FontStyle.normal,
                 ),
                 indicator: BoxDecoration(
-                  color: AppColors.blackThree,
+                  color: widget.indicatorColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                tabs: widget.tabs.map((title) => Text(
-                  title,
-                )).toList(),
+                tabs: widget.tabs
+                    .map((title) => Text(
+                          title,
+                        ))
+                    .toList(),
               ),
             ),
           ),
           const VerticalSpacing(10),
           AnimatedBuilder(
-            animation: _tabController,
-            builder: (BuildContext context, Widget? child) {
-              return widget.tabViews[_tabController.index];
-            }
-          ),
+              animation: _tabController,
+              builder: (BuildContext context, Widget? child) {
+                return widget.tabViews[_tabController.index];
+              }),
         ],
       ),
     );

@@ -1,5 +1,4 @@
 class Assets {
-
   static const String logo = 'assets/svgs/logo.svg';
   static const String googleIcon = "assets/svgs/google_icon.svg";
   static const String appleIcon = "assets/svgs/apple_icon.svg";
@@ -12,8 +11,9 @@ class Assets {
   static const String createAccountIllustration =
       "assets/svgs/create_account.svg";
   static const String uploadLicenseSvgIcon = "assets/svgs/upload_license.svg";
-  static const String placeholderSvgIcon = "assets/svgs/placeholder_svg.svg";
-  static const String addBankAccountSvgIcon = "assets/svgs/add_bank_account_svg.svg";
+  static const String placeholderSvgIcon = "assets/svgs/placeholder.svg";
+  static const String addBankAccountSvgIcon =
+      "assets/svgs/add_bank_account.svg";
   static const String bankAccountSvgIcon = "assets/svgs/bank_account.svg";
   static const String appointmentSvgIcon = "assets/svgs/appointment_icon.svg";
 
@@ -31,4 +31,8 @@ class Assets {
   static const String locationImage = "assets/images/location_icon.png";
 
   static const String filterIcon = "assets/svgs/filter.svg";
+  static const String notificationIcon = "assets/svgs/notification.svg";
+
+  static const String totalEarningIcon = "assets/svgs/total_earning.svg";
+  static const String totalPayoutIcon = "assets/svgs/total_payout.svg"; 
 }
