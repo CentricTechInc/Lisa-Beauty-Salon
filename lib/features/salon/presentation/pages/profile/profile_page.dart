@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -204,11 +205,16 @@ class ProfilePage extends StatelessWidget {
                 color: AppColors.blackTwo,
               ),
               HorizontalSpacing(12),
-              SvgPicture.asset(
-                Assets.profileEditIcon,
-                width: 20,
-                height: 20,
-              )
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(RouteNames.profileEdit);
+                },
+                child: SvgPicture.asset(
+                  Assets.profileEditIcon,
+                  width: 20,
+                  height: 20,
+                ),
+              ),
             ],
           ),
           // Email
@@ -235,27 +241,24 @@ class ProfilePage extends StatelessWidget {
                 VerticalSpacing(16),
 
                 // Section Items
-                ...List.generate(
-                  section['items'].length,
-                  (index) {
-                    final item = section['items'][index];
-                    return Column(
-                      children: [
-                        ProfileMenuItem(
-                          icon: item['icon'],
-                          title: item['title'],
-                          onTap: item['onTap'],
-                          iconColor: item['iconColor'],
-                          arrowIconColor: item['arrowIconColor'],
-                          iconbackgroundColor: item['iconBackgroundColor'],
-                          backgroundColor: item['backgroundColor'],
-                        ),
-                        if (index < section['items'].length - 1)
-                          VerticalSpacing(12),
-                      ],
-                    );
-                  },
-                ),
+                ...List.generate(section['items'].length, (index) {
+                  final item = section['items'][index];
+                  return Column(
+                    children: [
+                      ProfileMenuItem(
+                        icon: item['icon'],
+                        title: item['title'],
+                        onTap: item['onTap'],
+                        iconColor: item['iconColor'],
+                        arrowIconColor: item['arrowIconColor'],
+                        iconbackgroundColor: item['iconBackgroundColor'],
+                        backgroundColor: item['backgroundColor'],
+                      ),
+                      if (index < section['items'].length - 1)
+                        VerticalSpacing(12),
+                    ],
+                  );
+                }),
                 VerticalSpacing(16),
               ],
             );

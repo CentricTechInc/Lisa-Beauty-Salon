@@ -1,5 +1,4 @@
 class RouteNames {
-
   static const String splash = '/splash';
   static const String welcome = '/welcome';
   static const String signIn = '/signIn';
@@ -16,6 +15,5 @@ class RouteNames {
   static const String mainCustomer = '/mainCustomer';
   static const String mainSalon = '/mainSalon';
   static const String messageDetail = "/messageDetail";
-
-
+  static const String profileEdit = "/profileEdit";
 }

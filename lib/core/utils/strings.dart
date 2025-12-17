@@ -373,4 +373,7 @@ class Strings {
   static const String yesText = "Yes";
   static const String noText = "No";
   static const String signOutText = "Sign Out";
+
+  static const String personalInfoText = "Personal Info";
+  static const String professionalInfoText = "Professional Info";
 }
