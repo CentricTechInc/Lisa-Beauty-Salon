@@ -72,180 +72,177 @@ class _ProfessionalInfoTabState extends State<ProfessionalInfoTab>
       Strings.tanningSpecialistLicenseType,
     ];
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CommonTextField(
-              titleLabelText: Strings.professionalAndBioOrHeadlineText,
-              controller: professionalBioController,
-              hintText: Strings.descriptionPlaceholderText,
-              labelText: null,
-              labelSize: 15,
-              hintSize: 15,
-              minLines: 6,
-              maxLines: 8,
-              labelColor: AppColors.greyTwo,
-              hintColor: AppColors.greyTwo,
-              cursorColor: AppColors.blackTwo,
-              textColor: AppColors.blackTwo,
-              fillColor: AppColors.greyFour,
-              borderColor: AppColors.transparent,
-            ),
-            VerticalSpacing(20),
-            CommonTextField(
-              titleLabelText: Strings.yearsOfExperienceText,
-              controller: yearsOfExperienceController,
-              labelText: Strings.yearsOfExperiencePlaceholderText,
-              hintText: Strings.yearsOfExperiencePlaceholderText,
-              labelSize: 15,
-              hintSize: 15,
-              labelColor: AppColors.greyTwo,
-              hintColor: AppColors.greyTwo,
-              cursorColor: AppColors.blackTwo,
-              inputType: TextInputType.number,
-              validator: validateOnlyIntNumber,
-            ),
-            VerticalSpacing(20),
-            CommonTextField(
-              titleLabelText: "How Many Professionals Are On Your Team?",
-              controller: professionalsOnTeamController,
-              labelText: "07",
-              hintText: "07",
-              labelSize: 15,
-              hintSize: 15,
-              labelColor: AppColors.greyTwo,
-              hintColor: AppColors.greyTwo,
-              cursorColor: AppColors.blackTwo,
-              inputType: TextInputType.number,
-              validator: validateOnlyIntNumber,
-            ),
-            VerticalSpacing(20),
-            CommonDropdownField(
-              titleLabelText: Strings.licenseTypeText,
-              items: licenseTypesList
-                  .map(
-                    (value) => DropdownMenuItem(
-                      value: value,
-                      child: CommonText(
-                        value,
-                        fontSize: 15,
-                        color: AppColors.greyTwo,
-                      ),
-                    ),
-                  )
-                  .toList(),
-              selectedItemBuilder: (context) => licenseTypesList
-                  .map(
-                    (value) => CommonText(
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CommonTextField(
+            titleLabelText: Strings.professionalAndBioOrHeadlineText,
+            controller: professionalBioController,
+            hintText: Strings.descriptionPlaceholderText,
+            labelText: null,
+            labelSize: 15,
+            hintSize: 15,
+            minLines: 6,
+            maxLines: 8,
+            labelColor: AppColors.greyTwo,
+            hintColor: AppColors.greyTwo,
+            cursorColor: AppColors.blackTwo,
+            textColor: AppColors.blackTwo,
+            fillColor: AppColors.greyFour,
+            borderColor: AppColors.transparent,
+          ),
+          VerticalSpacing(20),
+          CommonTextField(
+            titleLabelText: Strings.yearsOfExperienceText,
+            controller: yearsOfExperienceController,
+            labelText: Strings.yearsOfExperiencePlaceholderText,
+            hintText: Strings.yearsOfExperiencePlaceholderText,
+            labelSize: 15,
+            hintSize: 15,
+            labelColor: AppColors.greyTwo,
+            hintColor: AppColors.greyTwo,
+            cursorColor: AppColors.blackTwo,
+            inputType: TextInputType.number,
+            validator: validateOnlyIntNumber,
+          ),
+          VerticalSpacing(20),
+          CommonTextField(
+            titleLabelText: "How Many Professionals Are On Your Team?",
+            controller: professionalsOnTeamController,
+            labelText: "07",
+            hintText: "07",
+            labelSize: 15,
+            hintSize: 15,
+            labelColor: AppColors.greyTwo,
+            hintColor: AppColors.greyTwo,
+            cursorColor: AppColors.blackTwo,
+            inputType: TextInputType.number,
+            validator: validateOnlyIntNumber,
+          ),
+          VerticalSpacing(20),
+          CommonDropdownField(
+            titleLabelText: Strings.licenseTypeText,
+            items: licenseTypesList
+                .map(
+                  (value) => DropdownMenuItem(
+                    value: value,
+                    child: CommonText(
                       value,
                       fontSize: 15,
-                      color: AppColors.blackTwo,
+                      color: AppColors.greyTwo,
                     ),
-                  )
-                  .toList(),
-              validator: validateTextNotEmpty,
-              onChanged: (value) {
-                licenseTypeController.text = value ?? '';
-              },
-            ),
-            VerticalSpacing(20),
-            CommonTextField(
-              titleLabelText: Strings.licenseNumberText,
-              controller: licenseNumberController,
-              labelText: Strings.licenseNumberPlaceholderText,
-              hintText: Strings.licenseNumberPlaceholderText,
-              labelSize: 15,
-              hintSize: 15,
-              labelColor: AppColors.greyTwo,
-              hintColor: AppColors.greyTwo,
-              textColor: AppColors.blackTwo,
-              cursorColor: AppColors.blackTwo,
-              validator: validateOnlyIntNumber,
-            ),
-            VerticalSpacing(20),
-            CommonDropdownField(
-              titleLabelText: Strings.issuanceStateOrCountryNumberText,
-              items: authController.countriesList
-                  .map(
-                    (value) => DropdownMenuItem(
-                      value: value,
-                      child: CommonText(
-                        value.name,
-                        fontSize: 15,
-                        color: AppColors.greyTwo,
-                      ),
-                    ),
-                  )
-                  .toList(),
-              selectedItemBuilder: (context) => authController.countriesList
-                  .map(
-                    (value) => CommonText(
+                  ),
+                )
+                .toList(),
+            selectedItemBuilder: (context) => licenseTypesList
+                .map(
+                  (value) => CommonText(
+                    value,
+                    fontSize: 15,
+                    color: AppColors.blackTwo,
+                  ),
+                )
+                .toList(),
+            validator: validateTextNotEmpty,
+            onChanged: (value) {
+              licenseTypeController.text = value ?? '';
+            },
+          ),
+          VerticalSpacing(20),
+          CommonTextField(
+            titleLabelText: Strings.licenseNumberText,
+            controller: licenseNumberController,
+            labelText: Strings.licenseNumberPlaceholderText,
+            hintText: Strings.licenseNumberPlaceholderText,
+            labelSize: 15,
+            hintSize: 15,
+            labelColor: AppColors.greyTwo,
+            hintColor: AppColors.greyTwo,
+            textColor: AppColors.blackTwo,
+            cursorColor: AppColors.blackTwo,
+            validator: validateOnlyIntNumber,
+          ),
+          VerticalSpacing(20),
+          CommonDropdownField(
+            titleLabelText: Strings.issuanceStateOrCountryNumberText,
+            items: authController.countriesList
+                .map(
+                  (value) => DropdownMenuItem(
+                    value: value,
+                    child: CommonText(
                       value.name,
                       fontSize: 15,
-                      color: AppColors.blackTwo,
+                      color: AppColors.greyTwo,
                     ),
-                  )
-                  .toList(),
-              validator: (value) => validateTextWithDashes(value?.name),
-              onChanged: (value) {
-                issuanceStateOrCountryController.text = value?.name ?? '';
-              },
-            ),
-            VerticalSpacing(20),
-            // Simulating the License Photo link as per UI
-            CommonText(
-              "License Photo.jpeg", // This would dynamic
-              fontSize: 14,
-              color: AppColors.pinkTwo,
-              // textDecoration: TextDecoration.underline,
-              // decorationColor: AppColors.pinkTwo,
-            ),
-            VerticalSpacing(10),
-            CommonText(
-              Strings
-                  .uploadLicensePhotoText, // "Upload Another License" in UI maybe? UI says "Upload Another License"
-              fontSize: 12,
-              fontWeight: 400,
-              color: AppColors.blackTwo,
-            ),
-            VerticalSpacing(5),
-            CommonText(
-              Strings.uploadLicensePhotoDescriptionText,
-              fontSize: 12,
-              fontWeight: 400,
-              color: AppColors.blackTwo,
-            ),
-            VerticalSpacing(10),
-            FileUploadComponent(
-              documentFilesNotifier: _documentFilesNotifier,
-              imageFilesNotifier: _imageFilesNotifier,
-            ),
-            VerticalSpacing(30),
-            CommonButton(
-              text: "Save",
-              onPressed: () {
-                final fileError = validateFileSelection(
-                  images: _imageFilesNotifier.value,
-                  documents: _documentFilesNotifier.value,
-                );
+                  ),
+                )
+                .toList(),
+            selectedItemBuilder: (context) => authController.countriesList
+                .map(
+                  (value) => CommonText(
+                    value.name,
+                    fontSize: 15,
+                    color: AppColors.blackTwo,
+                  ),
+                )
+                .toList(),
+            validator: (value) => validateTextWithDashes(value?.name),
+            onChanged: (value) {
+              issuanceStateOrCountryController.text = value?.name ?? '';
+            },
+          ),
+          VerticalSpacing(20),
+          // Simulating the License Photo link as per UI
+          CommonText(
+            "License Photo.jpeg", // This would dynamic
+            fontSize: 14,
+            color: AppColors.pinkTwo,
+            // textDecoration: TextDecoration.underline,
+            // decorationColor: AppColors.pinkTwo,
+          ),
+          VerticalSpacing(10),
+          CommonText(
+            Strings
+                .uploadLicensePhotoText, // "Upload Another License" in UI maybe? UI says "Upload Another License"
+            fontSize: 12,
+            fontWeight: 400,
+            color: AppColors.blackTwo,
+          ),
+          VerticalSpacing(5),
+          CommonText(
+            Strings.uploadLicensePhotoDescriptionText,
+            fontSize: 12,
+            fontWeight: 400,
+            color: AppColors.blackTwo,
+          ),
+          VerticalSpacing(10),
+          FileUploadComponent(
+            documentFilesNotifier: _documentFilesNotifier,
+            imageFilesNotifier: _imageFilesNotifier,
+          ),
+          VerticalSpacing(30),
+          CommonButton(
+            text: "Save",
+            onPressed: () {
+              final fileError = validateFileSelection(
+                images: _imageFilesNotifier.value,
+                documents: _documentFilesNotifier.value,
+              );
 
-                if (_formKey.currentState!.validate() && fileError == null) {
-                  // TODO: Implement Save
-                  Get.back();
-                } else if (fileError != null) {
-                  MessageUtils.showErrorSnackBar(fileError);
-                }
-              },
-              backgroundColor: AppColors.pinkTwo,
-              textColor: AppColors.whiteOne,
-            ),
-            VerticalSpacing(20),
-          ],
-        ),
+              if (_formKey.currentState!.validate() && fileError == null) {
+                // TODO: Implement Save
+                Get.back();
+              } else if (fileError != null) {
+                MessageUtils.showErrorSnackBar(fileError);
+              }
+            },
+            backgroundColor: AppColors.pinkTwo,
+            textColor: AppColors.whiteOne,
+          ),
+          VerticalSpacing(20),
+        ],
       ),
     );
   }

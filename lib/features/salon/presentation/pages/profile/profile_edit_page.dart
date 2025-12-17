@@ -7,6 +7,7 @@ import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/comp
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/professional_info_tab.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_tabbar_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
 class ProfileEditPage extends StatefulWidget {
@@ -16,52 +17,35 @@ class ProfileEditPage extends StatefulWidget {
   State<ProfileEditPage> createState() => _ProfileEditPageState();
 }
 
-class _ProfileEditPageState extends State<ProfileEditPage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
+class _ProfileEditPageState extends State<ProfileEditPage> {
   @override
   Widget build(BuildContext context) {
     return CommonScaffoldWidget(
-      padding: EdgeInsets.zero,
       systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
         statusBarColor: AppColors.whiteTwo,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
       ),
       resizeToAvoidBottomInset: true,
-      child: Column(
-        children: [
-          VerticalSpacing(30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            VerticalSpacing(30),
+            Row(
               children: [
                 GestureDetector(
                   onTap: () => Get.back(),
                   child: Container(
-                    width: 48,
-                    height: 48,
+                    width: 40,
+                    height: 40,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       border: Border.all(color: AppColors.greyOne),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(
                       Icons.arrow_back_ios_new,
-                      size: 20,
+                      size: 16,
                       color: AppColors.blackOne,
                     ),
                   ),
@@ -75,54 +59,20 @@ class _ProfileEditPageState extends State<ProfileEditPage>
                 ),
               ],
             ),
-          ),
-          VerticalSpacing(20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Container(
-              height: 45,
-              decoration: BoxDecoration(
-                color: AppColors.whiteOne,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.greyOne),
-              ),
-              child: TabBar(
-                controller: _tabController,
-                indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: AppColors.pinkTwo,
-                ),
-                labelColor: AppColors.whiteOne,
-                unselectedLabelColor: AppColors.greyTwo,
-                labelStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Manrope',
-                ),
-                unselectedLabelStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Manrope',
-                ),
-                indicatorSize: TabBarIndicatorSize.tab,
-                dividerColor: Colors.transparent,
-                padding: EdgeInsets.zero,
-                labelPadding: EdgeInsets.zero,
-                tabs: const [
-                  Tab(text: "Personal Info"),
-                  Tab(text: "Professional Info"),
-                ],
-              ),
+            VerticalSpacing(20),
+            CommonTabBarWidgetTwo(
+              indicatorColor: AppColors.pinkTwo,
+              selectedLabelColor: AppColors.whiteOne,
+              unselectedLabelColor: AppColors.greyTwo,
+              tabPadding: EdgeInsets.zero,
+              tabs: const [
+                Strings.personalInfoText,
+                Strings.professionalInfoText,
+              ],
+              tabViews: const [PersonalInfoTab(), ProfessionalInfoTab()],
             ),
-          ),
-          VerticalSpacing(20),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: const [PersonalInfoTab(), ProfessionalInfoTab()],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

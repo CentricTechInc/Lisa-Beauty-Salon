@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -15,8 +14,10 @@ class CommonTabBarWidgetOne extends StatefulWidget {
     this.isScrollable = false,
     this.heightFactor = 0.058,
     this.onTabChange,
-  }) : assert(tabs.length == tabViews.length,
-  'Tabs and TabViews must match in length');
+  }) : assert(
+         tabs.length == tabViews.length,
+         'Tabs and TabViews must match in length',
+       );
 
   final List<String> tabs;
 
@@ -67,27 +68,18 @@ class _CommonTabBarWidgetOneState extends State<CommonTabBarWidgetOne>
     return Container(
       decoration: BoxDecoration(
         color: AppColors.transparent,
-        borderRadius: BorderRadius.circular(
-          20
-        )
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 15
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             child: Container(
               height: height * widget.heightFactor,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  10
-                ),
-                border: Border.all(
-                  color: AppColors.greyOne
-                ),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.greyOne),
                 color: AppColors.transparent,
               ),
               child: TabBar(
@@ -104,22 +96,20 @@ class _CommonTabBarWidgetOneState extends State<CommonTabBarWidgetOne>
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                   fontFamily: Strings.fontFamily,
-                  fontStyle: FontStyle.normal
+                  fontStyle: FontStyle.normal,
                 ),
                 unselectedLabelStyle: TextStyle(
                   color: AppColors.blackTwo,
                   fontWeight: FontWeight.w400,
                   fontSize: 18,
                   fontFamily: Strings.fontFamily,
-                  fontStyle: FontStyle.normal
+                  fontStyle: FontStyle.normal,
                 ),
                 indicator: BoxDecoration(
                   color: AppColors.blackThree,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                tabs: widget.tabs.map((title) => Text(
-                  title,
-                )).toList(),
+                tabs: widget.tabs.map((title) => Text(title)).toList(),
               ),
             ),
           ),
@@ -154,8 +144,11 @@ class CommonTabBarWidgetTwo extends StatefulWidget {
     this.fontFamily = Strings.fontFamily,
     this.unselectedLabelFontSize = 14,
     this.unselectedLabelFontWeight = FontWeight.w400,
-  }) : assert(tabs.length == tabViews.length,
-            'Tabs and TabViews must match in length');
+    this.tabPadding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+  }) : assert(
+         tabs.length == tabViews.length,
+         'Tabs and TabViews must match in length',
+       );
 
   final List<String> tabs;
   final List<Widget> tabViews;
@@ -171,6 +164,7 @@ class CommonTabBarWidgetTwo extends StatefulWidget {
   final String fontFamily;
   final double unselectedLabelFontSize;
   final FontWeight unselectedLabelFontWeight;
+  final EdgeInsets tabPadding;
 
   @override
   State<CommonTabBarWidgetTwo> createState() => _CommonTabBarWidgetTwoState();
@@ -209,12 +203,14 @@ class _CommonTabBarWidgetTwoState extends State<CommonTabBarWidgetTwo>
 
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.transparent, borderRadius: BorderRadius.circular(20)),
+        color: AppColors.transparent,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: widget.tabPadding,
             child: Container(
               height: height * widget.heightFactor,
               decoration: BoxDecoration(
@@ -249,20 +245,17 @@ class _CommonTabBarWidgetTwoState extends State<CommonTabBarWidgetTwo>
                   color: widget.indicatorColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                tabs: widget.tabs
-                    .map((title) => Text(
-                          title,
-                        ))
-                    .toList(),
+                tabs: widget.tabs.map((title) => Text(title)).toList(),
               ),
             ),
           ),
           const VerticalSpacing(10),
           AnimatedBuilder(
-              animation: _tabController,
-              builder: (BuildContext context, Widget? child) {
-                return widget.tabViews[_tabController.index];
-              }),
+            animation: _tabController,
+            builder: (BuildContext context, Widget? child) {
+              return widget.tabViews[_tabController.index];
+            },
+          ),
         ],
       ),
     );
