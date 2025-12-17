@@ -25,6 +25,7 @@ class CommonScaffoldWidget extends StatelessWidget {
     this.drawerKey,
     this.drawer,
     this.systemOverlayStyle, // New Parameter
+    this.onWhiteSpaceTap,
   });
 
   final Widget child;
@@ -43,6 +44,7 @@ class CommonScaffoldWidget extends StatelessWidget {
   final Key? drawerKey;
   final Widget? drawer;
   final SystemUiOverlayStyle? systemOverlayStyle;
+  final Function()? onWhiteSpaceTap;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +73,9 @@ class CommonScaffoldWidget extends StatelessWidget {
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus(); // Dismiss keyboard on tap
+          if (onWhiteSpaceTap != null) {
+            onWhiteSpaceTap!();
+          }
         },
         child: useSafeArea
             ? SafeArea(

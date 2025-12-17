@@ -34,5 +34,6 @@ class Assets {
   static const String notificationIcon = "assets/svgs/notification.svg";
 
   static const String totalEarningIcon = "assets/svgs/total_earning.svg";
-  static const String totalPayoutIcon = "assets/svgs/total_payout.svg"; 
+  static const String totalPayoutIcon = "assets/svgs/total_payout.svg";
+  static const String sendIcon = "assets/svgs/send.svg";
 }

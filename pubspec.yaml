@@ -53,6 +53,7 @@ dependencies:
   mobkit_dashed_border: ^0.0.8
   flutter_html: ^3.0.0
   syncfusion_flutter_charts: ^31.2.18
+  emoji_picker_flutter: ^4.4.0
 
 dev_dependencies:
   flutter_test:
