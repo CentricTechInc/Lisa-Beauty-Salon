@@ -8,6 +8,7 @@ import 'package:lisa_beauty_salon/features/salon/presentation/pages/appointment/
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/finance_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/home/home_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/message_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/profile_page.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_bar.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 
@@ -23,7 +24,7 @@ class SalonShell extends StatelessWidget {
     AppointmentPage(),
     FinancePage(),
     MessagePage(),
-    Container(),
+    ProfilePage(),
   ];
 
   @override
@@ -35,7 +36,8 @@ class SalonShell extends StatelessWidget {
         onTap: controller.changeTab,
         items: [
           SvgPicture.asset(
-            Assets.bottomBarIconOne,
+            controller.currentIndex.value == 0 ? Assets.bottomBarIconOneActive
+            : Assets.bottomBarIconOneInActive,
           ),
           SvgPicture.asset(
             Assets.bottomBarIconTwo,

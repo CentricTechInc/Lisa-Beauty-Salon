@@ -30,7 +30,8 @@ class CustomerShell extends StatelessWidget {
         onTap: controller.changeTab,
         items: [
           SvgPicture.asset(
-            Assets.bottomBarIconOne,
+            controller.currentIndex.value == 0 ? Assets.bottomBarIconOneActive
+            : Assets.bottomBarIconOneInActive,
           ),
           SvgPicture.asset(
             Assets.bottomBarIconTwo,

@@ -351,4 +351,26 @@ class Strings {
   static const String withdrawalsProcessedText = "Withdrawals are processed within 2 - 3 business days.";
   static const String onlineText = "Online";
   static const String typeMessageHint = "Type a message";
+  
+  // Profile Page
+  static const String profileText = "Profile";
+  static const String generalText = "General";
+  static const String bankAccountMenuText = "Bank Account";
+  static const String paymentHistoryText = "Payment History";
+  static const String servicesMenuText = "Services";
+  static const String availabilityText = "Availability";
+  static const String promotionalToolText = "Promotional Tool";
+  static const String changePasswordText = "Change Password";
+  static const String notificationsText = "Notifications";
+  static const String securityAndPrivacyText = "Security & Privacy";
+  static const String supportText = "Support";
+  static const String privacyPolicyMenuText = "Privacy Policy";
+  static const String aboutUsText = "About Us";
+  static const String dangerZoneText = "Danger Zone";
+  static const String closeAccountText = "Close Account";
+  static const String closeAccountQuestionText = "Close Account?";
+  static const String closeAccountDescriptionText = "Are you sure, you want to close your account";
+  static const String yesText = "Yes";
+  static const String noText = "No";
+  static const String signOutText = "Sign Out";
 }
