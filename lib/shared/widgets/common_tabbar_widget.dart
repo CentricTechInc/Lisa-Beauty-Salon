@@ -251,11 +251,11 @@ class _CommonTabBarWidgetTwoState extends State<CommonTabBarWidgetTwo>
           ),
           const VerticalSpacing(10),
           AnimatedBuilder(
-            animation: _tabController,
-            builder: (BuildContext context, Widget? child) {
-              return widget.tabViews[_tabController.index];
-            },
-          ),
+              animation: _tabController,
+              builder: (BuildContext context, Widget? child) {
+                return widget.tabViews[_tabController.index];
+              },
+            ),
         ],
       ),
     );

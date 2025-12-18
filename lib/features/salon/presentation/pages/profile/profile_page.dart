@@ -37,7 +37,9 @@ class ProfilePage extends StatelessWidget {
             "arrowIconColor": AppColors.blackTwo,
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
-            'onTap': () {},
+            'onTap': () {
+              Get.toNamed(RouteNames.paymentHistory);
+            },
           },
           {
             'icon': Assets.serviceIcon,
@@ -64,7 +66,9 @@ class ProfilePage extends StatelessWidget {
             "arrowIconColor": AppColors.blackTwo,
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
-            'onTap': () {},
+            'onTap': () {
+              Get.toNamed(RouteNames.promotionalTool);
+            },
           },
           {
             'icon': Assets.changePasswordIcon,
@@ -105,7 +109,9 @@ class ProfilePage extends StatelessWidget {
             "arrowIconColor": AppColors.blackTwo,
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
-            'onTap': () {},
+            'onTap': () {
+              Get.toNamed(RouteNames.privacyPolicy);
+            },
           },
           {
             'icon': Assets.aboutUsIcon,

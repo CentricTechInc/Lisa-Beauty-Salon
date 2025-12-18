@@ -340,7 +340,7 @@ class Strings {
   // bankAccountText already defined above
   static const String withdrawAmountText = "Withdraw Amount: ";
   static const String earnText = "Earn: ";
-  static const String servicesText = "Services: ";
+  static const String servicesText = "Services";
   static const String withdrawText = "Withdraw";
   static const String remainingBalanceText = "Remaining Balance";
   static const String messagesText = "Messages";
@@ -376,4 +376,15 @@ class Strings {
 
   static const String personalInfoText = "Personal Info";
   static const String professionalInfoText = "Professional Info";
+
+  static const String grandTotalText = "Grand Total";
+  static const String totalWithdrawText = "Total Withdraw";
+  static const String bankNameText = "Bank Name";
+  static const String statusText = "Status";
+  static const String dateTimeText = "Date & Time";
+  static const String totalWithdrawAmountText = "Total Withdraw Amount";
+
+  static const String thisWeekText = "This Week";
+  static const String thisMonthText = "This Month";
+  static const String thisYearText = "This Year";
 }

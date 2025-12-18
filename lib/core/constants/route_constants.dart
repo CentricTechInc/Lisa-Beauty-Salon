@@ -16,4 +16,6 @@ class RouteNames {
   static const String mainSalon = '/mainSalon';
   static const String messageDetail = "/messageDetail";
   static const String profileEdit = "/profileEdit";
+  static const String promotionalTool = "/promotionalTool";
+  static const String paymentHistory = "/paymentHistory";
 }

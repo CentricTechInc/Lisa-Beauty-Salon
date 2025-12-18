@@ -8,6 +8,7 @@ import 'package:lisa_beauty_salon/core/utils/typedef.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/user_dto.dart';
 import 'package:lisa_beauty_salon/features/auth/domain/use_cases/auth_use_case.dart';
+import 'package:lisa_beauty_salon/features/promotions/data/dto/promotion_dto.dart';
 
 class AuthController extends GetxController {
   final AuthUseCase _authUseCase = Get.find<AuthUseCase>();
@@ -19,6 +20,7 @@ class AuthController extends GetxController {
   final RxBool confirmAndConsentToThisAccount = false.obs;
   final RxBool rememberMe = false.obs;
   final RxBool showAddServiceForm = false.obs;
+  final RxBool showAddPromotionForm = false.obs;
   final RxBool showAddBankAccountsForm = false.obs;
   final RxBool isCustomScheduleEnabled = false.obs;
   final RxBool isCountryLoading = false.obs;
@@ -53,6 +55,7 @@ class AuthController extends GetxController {
   List<Country> countriesList = [];
   RxList<City> citiesList = <City>[].obs;
   Country? countryDataOfUs;
+  final RxList<PromotionDto> promotions = <PromotionDto>[].obs;
 
   UserDto? get currentUser => _currentUser.value;
   BuildProfileDto? get buildProfileData => _buildProfileData.value;
@@ -187,6 +190,9 @@ class AuthController extends GetxController {
   void toggleAddServiceForm() {
     showAddServiceForm.toggle();
   }
+  void toggleAddPromotionForm() {
+    showAddPromotionForm.toggle();
+  }
 
   void toggleAddBankAccountsForm() {
     showAddBankAccountsForm.toggle();
@@ -310,6 +316,16 @@ class AuthController extends GetxController {
     _ensureDtoInitialized();
     _buildProfileData.value?.services = List.from(_buildProfileData.value?.services ?? [])..add(service);
     _buildProfileData.refresh();
+  }
+
+  void addPromotion(PromotionDto promotion) {
+    promotions.add(promotion);
+  }
+
+  void removePromotion(int index) {
+    if (index >= 0 && index < promotions.length) {
+      promotions.removeAt(index);
+    }
   }
 
   void removeService(ServiceDto service) {
