@@ -82,54 +82,61 @@ class _AddServiceFormComponentState extends State<AddServiceFormComponent> with 
     final Map<String, List<String>> categorySubCategories = {
       Strings.hairCategoryText: [
         Strings.hairWashText,
-        "Hair Cut",
-        "Hair Coloring",
-        "Styling",
-        "Treatments"
+        Strings.hairCutText,
+        Strings.hairColoringText,
+        Strings.stylingText,
+        Strings.treatmentsText
       ],
       Strings.nailsCategoryText: [
-        "Manicure",
-        "Pedicure",
-        "Gel Polish",
-        "Nail Art",
-        "Acrylics"
+        Strings.manicureText,
+        Strings.pedicureText,
+        Strings.gelPolishText,
+        Strings.nailArtText,
+        Strings.acrylicsText
       ],
       Strings.makeupCategoryText: [
-        "Bridal Makeup",
-        "Full Glam",
-        "Natural Look",
-        "Party Makeup"
+        Strings.bridalMakeupText,
+        Strings.fullGlamText,
+        Strings.naturalLookText,
+        Strings.partyMakeupText
       ],
       Strings.massageCategoryText: [
-        "Swedish Massage",
-        "Deep Tissue",
-        "Aromatherapy",
-        "Hot Stone"
+        Strings.swedishMassageText,
+        Strings.deepTissueText,
+        Strings.aromatherapyText,
+        Strings.hotStoneText
       ],
       Strings.skinCareCategoryText: [
-        "Classic Facial",
-        "Hydrating Facial",
-        "Chemical Peel",
-        "Extraction"
+        Strings.classicFacialText,
+        Strings.hydratingFacialText,
+        Strings.chemicalPeelText,
+        Strings.extractionText
       ],
-      Strings.tanningCategoryText: ["Spray Tan", "UV Tanning"],
+      Strings.tanningCategoryText: [
+        Strings.sprayTanText,
+        Strings.uvTanningText
+      ],
       Strings.waxingCategoryText: [
-        "Leg Waxing",
-        "Arm Waxing",
-        "Bikini Waxing",
-        "Full Body Waxing"
+        Strings.legWaxingText,
+        Strings.armWaxingText,
+        Strings.bikiniWaxingText,
+        Strings.fullBodyWaxingText
       ],
-      Strings.spaTreatmentsCategoryText: ["Body Scrub", "Mud Wrap", "Steam Bath"],
+      Strings.spaTreatmentsCategoryText: [
+        Strings.bodyScrubText,
+        Strings.mudWrapText,
+        Strings.steamBathText
+      ],
       Strings.lashesAndBrowsCategoryText: [
-        "Lash Extensions",
-        "Lash Lift",
-        "Brow Threading",
-        "Henna Brows"
+        Strings.lashExtensionsText,
+        Strings.lashLiftText,
+        Strings.browThreadingText,
+        Strings.hennaBrowsText
       ],
       Strings.permanentMakeupCategoryText: [
-        "Microblading",
-        "Lip Blush",
-        "Permanent Eyeliner"
+        Strings.microbladingText,
+        Strings.lipBlushText,
+        Strings.permanentEyelinerText
       ],
     };
 
@@ -317,7 +324,7 @@ class _AddServiceFormComponentState extends State<AddServiceFormComponent> with 
                   widget.onSaved();
                 } else {
                   MessageUtils.showErrorSnackBar(
-                    "Please make sure to fill the required fields",
+                    Strings.fillRequiredFieldsText,
                   );
                 }
               },

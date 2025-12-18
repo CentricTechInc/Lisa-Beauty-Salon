@@ -412,4 +412,49 @@ class Strings {
   static const String deleteAnyServiceText = "Delete Service";
   static const String subCategoryLabelText = "Sub Category*";
   static const String typesText = "types";
+
+  // --- Service Sub-Categories ---
+  static const String hairCutText = "Hair Cut";
+  static const String hairColoringText = "Hair Coloring";
+  static const String stylingText = "Styling";
+  static const String treatmentsText = "Treatments";
+  static const String manicureText = "Manicure";
+  static const String pedicureText = "Pedicure";
+  static const String gelPolishText = "Gel Polish";
+  static const String nailArtText = "Nail Art";
+  static const String acrylicsText = "Acrylics";
+  static const String bridalMakeupText = "Bridal Makeup";
+  static const String fullGlamText = "Full Glam";
+  static const String naturalLookText = "Natural Look";
+  static const String partyMakeupText = "Party Makeup";
+  static const String swedishMassageText = "Swedish Massage";
+  static const String deepTissueText = "Deep Tissue";
+  static const String aromatherapyText = "Aromatherapy";
+  static const String hotStoneText = "Hot Stone";
+  static const String classicFacialText = "Classic Facial";
+  static const String hydratingFacialText = "Hydrating Facial";
+  static const String chemicalPeelText = "Chemical Peel";
+  static const String extractionText = "Extraction";
+  static const String sprayTanText = "Spray Tan";
+  static const String uvTanningText = "UV Tanning";
+  static const String legWaxingText = "Leg Waxing";
+  static const String armWaxingText = "Arm Waxing";
+  static const String bikiniWaxingText = "Bikini Waxing";
+  static const String fullBodyWaxingText = "Full Body Waxing";
+  static const String bodyScrubText = "Body Scrub";
+  static const String mudWrapText = "Mud Wrap";
+  static const String steamBathText = "Steam Bath";
+  static const String lashExtensionsText = "Lash Extensions";
+  static const String lashLiftText = "Lash Lift";
+  static const String browThreadingText = "Brow Threading";
+  static const String hennaBrowsText = "Henna Brows";
+  static const String microbladingText = "Microblading";
+  static const String lipBlushText = "Lip Blush";
+  static const String permanentEyelinerText = "Permanent Eyeliner";
+
+  // --- Service Messages ---
+  static const String fillRequiredFieldsText = "Please make sure to fill the required fields";
+  static const String noticeText = "Notice";
+  static const String tapServiceToEditDeleteText = "Tap a service to edit or delete (Not yet implemented)";
+  static const String descriptionLabelText = "Description: ";
 }

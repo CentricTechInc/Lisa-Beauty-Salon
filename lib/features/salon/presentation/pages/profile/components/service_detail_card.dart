@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
+import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
@@ -82,7 +83,7 @@ class ServiceDetailCard extends StatelessWidget {
               text: TextSpan(
                 children: [
                   const TextSpan(
-                    text: "Description: ",
+                    text: Strings.descriptionLabelText,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,

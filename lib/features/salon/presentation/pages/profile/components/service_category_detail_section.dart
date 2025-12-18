@@ -49,8 +49,8 @@ class ServiceCategoryDetailSection extends StatelessWidget {
                 // Implementation for delete could open a selection mode or a bottom sheet
                 // For now, mirroring the image which shows a simple button
                 Get.snackbar(
-                  "Notice",
-                  "Tap a service to edit or delete (Not yet implemented)",
+                  Strings.noticeText,
+                  Strings.tapServiceToEditDeleteText,
                 );
               },
               text: Strings.deleteAnyServiceText,
