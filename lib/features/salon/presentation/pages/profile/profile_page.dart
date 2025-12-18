@@ -8,6 +8,7 @@ import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/close_account_dialog_component.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/profile_menu_item.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/sign_out_dialog_component.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
@@ -110,7 +111,9 @@ class ProfilePage extends StatelessWidget {
             "arrowIconColor": AppColors.blackTwo,
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
-            'onTap': () {},
+            'onTap': () {
+              Get.toNamed(RouteNames.support);
+            },
           },
           {
             'icon': Assets.privacyPolicyIcon,
@@ -124,13 +127,26 @@ class ProfilePage extends StatelessWidget {
             },
           },
           {
+            'icon': Assets.privacyPolicyIcon,
+            'title': Strings.termsAndConditionMenuText,
+            "iconColor": AppColors.blackTwo,
+            "arrowIconColor": AppColors.blackTwo,
+            "iconBackgroundColor": AppColors.whiteThree,
+            "backgroundColor": AppColors.whiteOne,
+            'onTap': () {
+              Get.toNamed(RouteNames.termsAndConditions);
+            },
+          },
+          {
             'icon': Assets.aboutUsIcon,
             'title': Strings.aboutUsText,
             "iconColor": AppColors.blackTwo,
             "arrowIconColor": AppColors.blackTwo,
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
-            'onTap': () {},
+            'onTap': () {
+              Get.toNamed(RouteNames.aboutUs);
+            },
           },
         ],
       },
@@ -144,11 +160,14 @@ class ProfilePage extends StatelessWidget {
             "arrowIconColor": AppColors.pinkTwo,
             "iconBackgroundColor": AppColors.pinkTwo,
             "backgroundColor": AppColors.pinkTwo.withValues(alpha: 0.2),
-            'onTap': () {
-              Get.dialog(
+            'onTap': () async {
+              final result = await Get.dialog(
                 CloseAccountDialogComponent(),
                 barrierDismissible: true,
               );
+              if (result == true) {
+                Get.offAllNamed(RouteNames.signIn);
+              }
             },
           },
         ],
@@ -163,7 +182,15 @@ class ProfilePage extends StatelessWidget {
             "arrowIconColor": AppColors.blackTwo,
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
-            'onTap': () {},
+            'onTap': () async {
+              final result = await Get.dialog(
+                SignOutDialogComponent(),
+                barrierDismissible: true,
+              );
+              if (result == true) {
+                Get.offAllNamed(RouteNames.signIn);
+              }
+            },
           },
         ],
       },

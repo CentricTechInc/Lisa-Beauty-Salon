@@ -51,4 +51,8 @@ class Assets {
   static const String aboutUsIcon = "assets/svgs/about_us_icon.svg";
   static const String deleteAccountIcon = "assets/svgs/delete_account_icon.svg";
   static const String signOutIcon = "assets/svgs/sign_out_icon.svg";
+
+  static const String faqIcon = "assets/svgs/faq.svg";
+  static const String chatSupportIcon = "assets/svgs/chat_support.svg";
+  static const String callSupportIcon = "assets/svgs/call_support.svg";
 }

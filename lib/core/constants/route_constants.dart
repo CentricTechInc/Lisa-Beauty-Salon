@@ -12,6 +12,7 @@ class RouteNames {
   static const String buildYourProfile = '/buildYourProfile';
   static const String privacyPolicy = '/privacyPolicy';
   static const String termsAndConditions = '/termsAndConditions';
+  static const String aboutUs = '/aboutUs';
   static const String mainCustomer = '/mainCustomer';
   static const String mainSalon = '/mainSalon';
   static const String messageDetail = "/messageDetail";
@@ -23,4 +24,7 @@ class RouteNames {
   static const String availability = "/availability";
   static const String changePassword = "/changePassword";
   static const String notification = "/notification";
+  static const String support = "/support";
+  static const String faq = "/faq";
+  static const String chatSupport = "/chatSupport";
 }

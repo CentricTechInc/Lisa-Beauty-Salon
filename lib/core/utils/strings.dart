@@ -366,11 +366,14 @@ class Strings {
   static const String securityAndPrivacyText = "Security & Privacy";
   static const String supportText = "Support";
   static const String privacyPolicyMenuText = "Privacy Policy";
+  static const String termsAndConditionMenuText = "Terms & Conditions";
   static const String aboutUsText = "About Us";
   static const String dangerZoneText = "Danger Zone";
   static const String closeAccountText = "Close Account";
   static const String closeAccountQuestionText = "Close Account?";
+  static const String signOutQuestionText = "Sign Out?";
   static const String closeAccountDescriptionText = "Are you sure, you want to close your account";
+  static const String signOutDescriptionText = "Are you sure, you want to sign out?";
   static const String yesText = "Yes";
   static const String noText = "No";
   static const String signOutText = "Sign Out";
@@ -473,4 +476,14 @@ class Strings {
   static const String currentPasswordText = "Current Password*";
   static const String newPasswordText = "New Password*";
   static const String createNewPasswordButtonText = "Change Password";
+
+  static const String supportDescriptionText = "Find answers to the most common questions or contact us directly";
+  static const String faqsDescriptionText = "We answered most of your questions. Please check.";
+  static const String chatsText = "Chats";
+  static const String chatSupportText = "Chat Support";
+  static const String needHelpText = "Need help? We are here for you.";
+  static const String callSupportText = "Call Support";
+  static const String callSupportTimeText = "Monday to Friday 10:30 am- 1:30 pm";
+  static const String faqsText = "FAQs";
+  static const String supportPhoneNumber = "+1234567890";
 }

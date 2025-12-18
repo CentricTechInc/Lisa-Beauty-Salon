@@ -15,8 +15,12 @@ import 'package:lisa_beauty_salon/features/auth/presentation/pages/welcome/welco
 import 'package:lisa_beauty_salon/features/customer/presentation/shell/customer_shell.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/build_your_profile_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/message_detail_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/about_us_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/change_password_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/notification_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/support_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/faq_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/chat_support_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/payment_history_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/profile_edit_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/promotional_tool_page.dart';
@@ -96,6 +100,22 @@ class AppPages {
     GetPage(
       name: RouteNames.notification, 
       page: () => const NotificationPage()
+    ),
+    GetPage(
+      name: RouteNames.support, 
+      page: () => const SupportPage()
+    ),
+    GetPage(
+      name: RouteNames.faq, 
+      page: () => const FaqPage()
+    ),
+    GetPage(
+      name: RouteNames.chatSupport, 
+      page: () => const ChatSupportPage()
+    ),
+    GetPage(
+      name: RouteNames.aboutUs, 
+      page: () => const AboutUsPage()
     ),
   ];
 }
