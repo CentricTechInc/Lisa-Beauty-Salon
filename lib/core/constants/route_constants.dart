@@ -20,4 +20,5 @@ class RouteNames {
   static const String paymentHistory = "/paymentHistory";
   static const String bankAccount = "/bankAccount";
   static const String services = "/services";
+  static const String availability = "/availability";
 }

@@ -457,4 +457,15 @@ class Strings {
   static const String noticeText = "Notice";
   static const String tapServiceToEditDeleteText = "Tap a service to edit or delete (Not yet implemented)";
   static const String descriptionLabelText = "Description: ";
+  static const String editAvailabilityText = "Edit Availability";
+  static const String setAvailabilityText = "Set Availability";
+  static const String monShortText = "Mon";
+  static const String tueShortText = "Tue";
+  static const String wedShortText = "Wed";
+  static const String thuShortText = "Thu";
+  static const String friShortText = "Fri";
+  static const String satShortText = "Sat";
+  static const String sunShortText = "Sun";
+  static const String customizeTextSimple = "You can customize your availability by day. Tab to \"Customize\" toggle button for customize time.";
+  static const String availabilityByWeeklyText = "You can set availability by weekly. Switch off to \"Customize\" toggle button for availability by weekly.";
 }

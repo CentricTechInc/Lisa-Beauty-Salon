@@ -20,6 +20,7 @@ import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/prof
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/promotional_tool_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/bank_account_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/services_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/availability_page.dart';
 import 'package:lisa_beauty_salon/features/salon/shell/salon_shell.dart';
 
 class AppPages {
@@ -81,6 +82,10 @@ class AppPages {
     GetPage(
       name: RouteNames.services, 
       page: () => const ServicesPage()
+    ),
+    GetPage(
+      name: RouteNames.availability, 
+      page: () => const AvailabilityPage()
     ),
   ];
 }

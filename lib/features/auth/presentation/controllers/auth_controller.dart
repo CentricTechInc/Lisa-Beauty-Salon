@@ -22,6 +22,7 @@ class AuthController extends GetxController {
   final RxBool showAddServiceForm = false.obs;
   final RxBool showAddPromotionForm = false.obs;
   final RxBool showAddBankAccountsForm = false.obs;
+  final RxBool showAvailabilityEditForm = false.obs;
   final RxBool isCustomScheduleEnabled = false.obs;
   final RxBool isCountryLoading = false.obs;
 
@@ -32,6 +33,7 @@ class AuthController extends GetxController {
 
   var selectedBankAccountIndex = Rx<int?>(null);
   final RxString viewingCategory = "".obs;
+  final RxBool showAddBreakTime = false.obs;
   final RxInt selectedCityIndex = (-1).obs;
 
   final Rx<DayScheduleDto> defaultSchedule = DayScheduleDto(
