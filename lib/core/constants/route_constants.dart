@@ -22,4 +22,5 @@ class RouteNames {
   static const String services = "/services";
   static const String availability = "/availability";
   static const String changePassword = "/changePassword";
+  static const String notification = "/notification";
 }

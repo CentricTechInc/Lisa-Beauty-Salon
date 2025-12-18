@@ -51,6 +51,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with FieldsVali
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
       ),
+      bgColor: AppColors.whiteTwo,
       child: Column(
         children: [
           Expanded(
