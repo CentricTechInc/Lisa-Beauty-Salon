@@ -34,6 +34,7 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
   final _formKey = GlobalKey<FormState>();
 
   final licenseTypeController = TextEditingController();
+  final numberOfProfessionalController = TextEditingController();
   final licenseNumberController = TextEditingController();
   final issuanceStateOrCountryController = TextEditingController();
   final ValueNotifier<List<XFile>> _imageFilesNotifier = ValueNotifier([]);
@@ -100,6 +101,21 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
                 textAlign: TextAlign.center,
               ),
               VerticalSpacing(30),
+              CommonTextField(
+                titleLabelText: Strings.numberOfProfessionalText,
+                controller: numberOfProfessionalController,
+                labelText: Strings.numberOfProfessionalPlaceholderText,
+                hintText: Strings.numberOfProfessionalPlaceholderText,
+                labelSize: 15,
+                hintSize: 15,
+                labelColor: AppColors.greyTwo,
+                hintColor: AppColors.greyTwo,
+                textColor: AppColors.blackTwo,
+                cursorColor: AppColors.blackTwo,
+                validator: validateOnlyIntNumber,
+                inputType: TextInputType.number,
+              ),
+              VerticalSpacing(20),
               CommonDropdownField(
                 titleLabelText: Strings.licenseTypeText,
                 items: licenseTypesList.map((value) => DropdownMenuItem(
@@ -135,6 +151,7 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
                 textColor: AppColors.blackTwo,
                 cursorColor: AppColors.blackTwo,
                 validator: validateOnlyIntNumber,
+                inputType: TextInputType.number,
               ),
               VerticalSpacing(20),
               CommonDropdownField(

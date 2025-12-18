@@ -100,6 +100,8 @@ class Strings {
   static const String mobileNumberText = "Mobile Number*";
   static const String mobileNumberPlaceholderText = "27 82 123 4567";
 
+  static const String numberOfProfessionalText = "How many professionals are on your team?*";
+  static const String numberOfProfessionalPlaceholderText = "07";
   static const String licenseTypeText = "License Type*";
   static const String licenseNumberText = "License Number*";
   static const String licenseNumberPlaceholderText = "251167";

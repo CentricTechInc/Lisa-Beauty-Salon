@@ -208,11 +208,15 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
   final _formKey = GlobalKey<FormState>();
 
   final serviceCategoryNameController = TextEditingController();
+  final subCategoryController = TextEditingController();
   final serviceForController = TextEditingController();
   final serviceNameController = TextEditingController();
   final servicePriceController = TextEditingController();
   final serviceDescription = TextEditingController();
   final photoNotifier = ValueNotifier<String?>(null);
+
+  final categoryNotifier = ValueNotifier<String>('');
+  final subCategoryNotifier = ValueNotifier<String>('');
 
   Future<File?> pickImageFromGallery() async {
     try {
@@ -237,6 +241,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
+    
     final serviceCategories = [
       Strings.hairCategoryText,
       Strings.nailsCategoryText,
@@ -249,11 +254,74 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
       Strings.lashesAndBrowsCategoryText,
       Strings.permanentMakeupCategoryText,
     ];
+
     final serviceFor = [
       Strings.menText,
       Strings.womenText,
       Strings.bothText,
     ];
+
+    final Map<String, List<String>> categorySubCategories = {
+      Strings.hairCategoryText: [
+        Strings.hairWashText,
+        Strings.hairCutText,
+        Strings.hairColoringText,
+        Strings.stylingText,
+        Strings.treatmentsText
+      ],
+      Strings.nailsCategoryText: [
+        Strings.manicureText,
+        Strings.pedicureText,
+        Strings.gelPolishText,
+        Strings.nailArtText,
+        Strings.acrylicsText
+      ],
+      Strings.makeupCategoryText: [
+        Strings.bridalMakeupText,
+        Strings.fullGlamText,
+        Strings.naturalLookText,
+        Strings.partyMakeupText
+      ],
+      Strings.massageCategoryText: [
+        Strings.swedishMassageText,
+        Strings.deepTissueText,
+        Strings.aromatherapyText,
+        Strings.hotStoneText
+      ],
+      Strings.skinCareCategoryText: [
+        Strings.classicFacialText,
+        Strings.hydratingFacialText,
+        Strings.chemicalPeelText,
+        Strings.extractionText
+      ],
+      Strings.tanningCategoryText: [
+        Strings.sprayTanText,
+        Strings.uvTanningText
+      ],
+      Strings.waxingCategoryText: [
+        Strings.legWaxingText,
+        Strings.armWaxingText,
+        Strings.bikiniWaxingText,
+        Strings.fullBodyWaxingText
+      ],
+      Strings.spaTreatmentsCategoryText: [
+        Strings.bodyScrubText,
+        Strings.mudWrapText,
+        Strings.steamBathText
+      ],
+      Strings.lashesAndBrowsCategoryText: [
+        Strings.lashExtensionsText,
+        Strings.lashLiftText,
+        Strings.browThreadingText,
+        Strings.hennaBrowsText
+      ],
+      Strings.permanentMakeupCategoryText: [
+        Strings.microbladingText,
+        Strings.lipBlushText,
+        Strings.permanentEyelinerText
+      ],
+    };
+
     return Form(
       key: _formKey,
       child: Column(
@@ -275,7 +343,47 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
             )).toList(),
             validator: validateTextNotEmpty,
             onChanged: (value) {
+              categoryNotifier.value = value ?? '';
               serviceCategoryNameController.text = value ?? '';
+              subCategoryNotifier.value = '';
+              subCategoryController.clear();
+            },
+          ),
+          const VerticalSpacing(20),
+          ValueListenableBuilder<String>(
+            valueListenable: categoryNotifier,
+            builder: (context, category, _) {
+              return ValueListenableBuilder<String>(
+                valueListenable: subCategoryNotifier,
+                builder: (context, subCategory, _) {
+                  return CommonDropdownField(
+                    titleLabelText: Strings.subCategoryLabelText,
+                    items: (categorySubCategories[category] ?? [])
+                        .map((value) => DropdownMenuItem(
+                              value: value,
+                              child: CommonText(
+                                value,
+                                fontSize: 15,
+                                color: AppColors.greyTwo,
+                              ),
+                            ))
+                        .toList(),
+                    selectedItemBuilder: (context) => (categorySubCategories[category] ?? [])
+                        .map((value) => CommonText(
+                              value,
+                              fontSize: 15,
+                              color: AppColors.blackTwo,
+                            ))
+                        .toList(),
+                    value: subCategory.isEmpty ? null : subCategory,
+                    validator: validateTextNotEmpty,
+                    onChanged: (value) {
+                      subCategoryNotifier.value = value ?? '';
+                      subCategoryController.text = value ?? '';
+                    },
+                  );
+                },
+              );
             },
           ),
           VerticalSpacing(20),
@@ -334,20 +442,11 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
           ),
           VerticalSpacing(20),
 
-          Align(
-            alignment: Alignment.centerLeft,
-            child: CommonText(
-              Strings.uploadYourProfilePhotoText,
-              fontSize: 12,
-              fontWeight: 400,
-              color: AppColors.blackTwo,
-            ),
-          ),
-          VerticalSpacing(10),
           ValueListenableBuilder(
             valueListenable: photoNotifier,
             builder: (context, path, _) {
               return PhotoPickerComponent(
+                title: Strings.uploadYourProfilePhotoText,
                 imagePath: path,
                 onTap: () async {
                   final file = await pickImageFromGallery();
@@ -388,6 +487,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
                 authController.addService(
                   ServiceDto(
                     serviceCategory: serviceCategoryNameController.text,
+                    subCategory: subCategoryController.text,
                     serviceFor: serviceForController.text,
                     serviceName: serviceNameController.text,
                     serviceDescription: serviceDescription.text,
@@ -425,165 +525,198 @@ class _ServiceCard extends StatefulWidget {
 }
 
 class _ServiceCardState extends State<_ServiceCard> {
-  bool isExpanded = false;
+  final ValueNotifier<bool> isExpandedNotifier = ValueNotifier(false);
+
+  @override
+  void dispose() {
+    isExpandedNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final cardWidth = widget.width ?? context.width * 0.8;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeInOut,
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-      decoration: BoxDecoration(
-        color: AppColors.whiteOne,
-        border: Border.all(color: AppColors.greyOne, width: 1),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// HEADER ROW
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: cardWidth / 2,
-                child: CommonText(
-                  widget.service.serviceName,
-                  fontSize: 16,
-                  fontWeight: 500,
-                  color: AppColors.greyTwo,
-                  textOverflow: TextOverflow.ellipsis,
-                ),
-              ),
-              GestureDetector(
-                onTap: () => setState(() => isExpanded = !isExpanded),
-                child: AnimatedRotation(
-                  turns: isExpanded ? 0.5 : 0,
-                  duration: const Duration(milliseconds: 250),
-                  child: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: AppColors.blackTwo,
-                    size: 30,
-                  ),
-                ),
-              ),
-            ],
+    return ValueListenableBuilder<bool>(
+      valueListenable: isExpandedNotifier,
+      builder: (context, isExpanded, _) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          margin: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          decoration: BoxDecoration(
+            color: AppColors.whiteOne,
+            border: Border.all(color: AppColors.greyOne, width: 1),
+            borderRadius: BorderRadius.circular(20),
           ),
-
-          /// EXPANDED SECTION
-          if (isExpanded) ...[
-            VerticalSpacing(15),
-
-            // Category
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CommonText(
-                  "${Strings.serviceCategoryText}:",
-                  fontSize: 14,
-                  fontWeight: 400,
-                  color: AppColors.greyTwo,
-                ),
-                CommonText(
-                  widget.service.serviceCategory,
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: AppColors.blackTwo,
-                ),
-              ],
-            ),
-            VerticalSpacing(6),
-
-            // Service For
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CommonText(
-                  "${Strings.serviceForText}:",
-                  fontSize: 14,
-                  fontWeight: 400,
-                  color: AppColors.greyTwo,
-                ),
-                CommonText(
-                  widget.service.serviceFor,
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: AppColors.blackTwo,
-                ),
-              ],
-            ),
-            VerticalSpacing(6),
-
-            // Price
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CommonText(
-                  "${Strings.priceText}:",
-                  fontSize: 14,
-                  fontWeight: 400,
-                  color: AppColors.greyTwo,
-                ),
-                CommonText(
-                  "R ${widget.service.servicePrice}",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: AppColors.blackTwo,
-                ),
-              ],
-            ),
-            VerticalSpacing(10),
-
-            // Photo (optional)
-            if (widget.service.servicePhoto.isNotEmpty) ...[
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// HEADER ROW
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CommonText(
-                    Strings.photoText,
-                    fontSize: 14,
-                    fontWeight: 400,
-                    color: AppColors.greyTwo,
+                  SizedBox(
+                    width: cardWidth / 2,
+                    child: CommonText(
+                      widget.service.serviceName,
+                      fontSize: 16,
+                      fontWeight: 500,
+                      color: AppColors.greyTwo,
+                      textOverflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      File(widget.service.servicePhoto),
-                      height: 60,
-                      width: 60,
-                      fit: BoxFit.cover,
+                  GestureDetector(
+                    onTap: () => isExpandedNotifier.value = !isExpandedNotifier.value,
+                    child: AnimatedRotation(
+                      turns: isExpanded ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 250),
+                      child: Icon(
+                        Icons.keyboard_arrow_down,
+                        color: AppColors.blackTwo,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ],
-            VerticalSpacing(10),
-
-            // Description
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CommonText(
-                  "${Strings.descriptionText}:",
-                  fontSize: 14,
-                  fontWeight: 400,
-                  color: AppColors.greyTwo,
+    
+              /// EXPANDED SECTION
+              if (isExpanded) ...[
+                VerticalSpacing(15),
+    
+                // Category
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonText(
+                      "${Strings.serviceCategoryText}:",
+                      fontSize: 14,
+                      fontWeight: 400,
+                      color: AppColors.greyTwo,
+                    ),
+                    CommonText(
+                      widget.service.serviceCategory,
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: AppColors.blackTwo,
+                    ),
+                  ],
                 ),
                 VerticalSpacing(6),
-                CommonText(
-                  widget.service.serviceDescription,
-                  fontSize: 14,
-                  fontWeight: 400,
-                  color: AppColors.greyTwo,
+    
+                // Sub Category
+                if (widget.service.subCategory.isNotEmpty) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CommonText(
+                        "${Strings.subCategoryLabelText}:",
+                        fontSize: 14,
+                        fontWeight: 400,
+                        color: AppColors.greyTwo,
+                      ),
+                      CommonText(
+                        widget.service.subCategory,
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: AppColors.blackTwo,
+                      ),
+                    ],
+                  ),
+                  VerticalSpacing(6),
+                ],
+    
+                // Service For
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonText(
+                      "${Strings.serviceForText}:",
+                      fontSize: 14,
+                      fontWeight: 400,
+                      color: AppColors.greyTwo,
+                    ),
+                    CommonText(
+                      widget.service.serviceFor,
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: AppColors.blackTwo,
+                    ),
+                  ],
                 ),
+                VerticalSpacing(6),
+    
+                // Price
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonText(
+                      "${Strings.priceText}:",
+                      fontSize: 14,
+                      fontWeight: 400,
+                      color: AppColors.greyTwo,
+                    ),
+                    CommonText(
+                      "R ${widget.service.servicePrice}",
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: AppColors.blackTwo,
+                    ),
+                  ],
+                ),
+                VerticalSpacing(10),
+    
+                // Photo (optional)
+                if (widget.service.servicePhoto.isNotEmpty) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CommonText(
+                        Strings.photoText,
+                        fontSize: 14,
+                        fontWeight: 400,
+                        color: AppColors.greyTwo,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.file(
+                          File(widget.service.servicePhoto),
+                          height: 60,
+                          width: 60,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+                VerticalSpacing(10),
+    
+                // Description
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonText(
+                      "${Strings.descriptionText}:",
+                      fontSize: 14,
+                      fontWeight: 400,
+                      color: AppColors.greyTwo,
+                    ),
+                    VerticalSpacing(6),
+                    CommonText(
+                      widget.service.serviceDescription,
+                      fontSize: 14,
+                      fontWeight: 400,
+                      color: AppColors.greyTwo,
+                    ),
+                  ],
+                ),
+                VerticalSpacing(10),
               ],
-            ),
-            VerticalSpacing(10),
-          ],
-        ],
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
