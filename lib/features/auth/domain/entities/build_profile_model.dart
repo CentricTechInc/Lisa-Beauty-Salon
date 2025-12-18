@@ -93,6 +93,7 @@ class BankAccountInfoModel {
 class ServiceModel {
   ServiceModel({
     required this.serviceCategory,
+    this.subCategory = "",
     required this.serviceFor,
     required this.serviceName,
     required this.servicePhoto,
@@ -101,6 +102,7 @@ class ServiceModel {
   });
 
   final String serviceCategory;
+  final String subCategory;
   final String serviceFor;
   final String serviceName;
   final String servicePhoto;

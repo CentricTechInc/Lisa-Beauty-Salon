@@ -31,6 +31,7 @@ class AuthController extends GetxController {
   RxString selectedCityForBuildYourProfile = ''.obs;
 
   var selectedBankAccountIndex = Rx<int?>(null);
+  final RxString viewingCategory = "".obs;
   final RxInt selectedCityIndex = (-1).obs;
 
   final Rx<DayScheduleDto> defaultSchedule = DayScheduleDto(

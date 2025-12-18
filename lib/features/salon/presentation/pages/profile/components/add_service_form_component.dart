@@ -1,0 +1,335 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
+import 'package:lisa_beauty_salon/core/services/logger_service.dart';
+import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/input_formatters.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
+import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
+import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/components/profile_photo_picker_component.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
+
+class AddServiceFormComponent extends StatefulWidget {
+  final VoidCallback onSaved;
+
+  const AddServiceFormComponent({
+    required this.onSaved,
+    super.key,
+  });
+
+  @override
+  State<AddServiceFormComponent> createState() => _AddServiceFormComponentState();
+}
+
+class _AddServiceFormComponentState extends State<AddServiceFormComponent> with FieldsValidation {
+  final _formKey = GlobalKey<FormState>();
+
+  final serviceCategoryNameController = TextEditingController();
+  final subCategoryController = TextEditingController();
+  final serviceForController = TextEditingController();
+  final serviceNameController = TextEditingController();
+  final servicePriceController = TextEditingController();
+  final serviceDescription = TextEditingController();
+  final photoNotifier = ValueNotifier<String?>(null);
+
+  Future<File?> pickImageFromGallery() async {
+    try {
+      final picker = ImagePicker();
+      final picked = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+      );
+      if (picked == null) return null;
+      return File(picked.path);
+    } catch (e) {
+      LoggerService.info("Image pick error: $e");
+      return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
+
+    final serviceCategories = [
+      Strings.hairCategoryText,
+      Strings.nailsCategoryText,
+      Strings.makeupCategoryText,
+      Strings.massageCategoryText,
+      Strings.skinCareCategoryText,
+      Strings.tanningCategoryText,
+      Strings.waxingCategoryText,
+      Strings.spaTreatmentsCategoryText,
+      Strings.lashesAndBrowsCategoryText,
+      Strings.permanentMakeupCategoryText,
+    ];
+
+    final serviceFor = [
+      Strings.menText,
+      Strings.womenText,
+      Strings.bothText,
+    ];
+
+    final Map<String, List<String>> categorySubCategories = {
+      Strings.hairCategoryText: [
+        Strings.hairWashText,
+        "Hair Cut",
+        "Hair Coloring",
+        "Styling",
+        "Treatments"
+      ],
+      Strings.nailsCategoryText: [
+        "Manicure",
+        "Pedicure",
+        "Gel Polish",
+        "Nail Art",
+        "Acrylics"
+      ],
+      Strings.makeupCategoryText: [
+        "Bridal Makeup",
+        "Full Glam",
+        "Natural Look",
+        "Party Makeup"
+      ],
+      Strings.massageCategoryText: [
+        "Swedish Massage",
+        "Deep Tissue",
+        "Aromatherapy",
+        "Hot Stone"
+      ],
+      Strings.skinCareCategoryText: [
+        "Classic Facial",
+        "Hydrating Facial",
+        "Chemical Peel",
+        "Extraction"
+      ],
+      Strings.tanningCategoryText: ["Spray Tan", "UV Tanning"],
+      Strings.waxingCategoryText: [
+        "Leg Waxing",
+        "Arm Waxing",
+        "Bikini Waxing",
+        "Full Body Waxing"
+      ],
+      Strings.spaTreatmentsCategoryText: ["Body Scrub", "Mud Wrap", "Steam Bath"],
+      Strings.lashesAndBrowsCategoryText: [
+        "Lash Extensions",
+        "Lash Lift",
+        "Brow Threading",
+        "Henna Brows"
+      ],
+      Strings.permanentMakeupCategoryText: [
+        "Microblading",
+        "Lip Blush",
+        "Permanent Eyeliner"
+      ],
+    };
+
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const VerticalSpacing(20),
+                  CommonDropdownField(
+                    titleLabelText: "${Strings.serviceCategoryText}*",
+                    items: serviceCategories
+                        .map((value) => DropdownMenuItem(
+                              value: value,
+                              child: CommonText(
+                                value,
+                                fontSize: 15,
+                                color: AppColors.greyTwo,
+                              ),
+                            ))
+                        .toList(),
+                    selectedItemBuilder: (context) => serviceCategories
+                        .map((value) => CommonText(
+                              value,
+                              fontSize: 15,
+                              color: AppColors.blackTwo,
+                            ))
+                        .toList(),
+                    validator: validateTextNotEmpty,
+                    onChanged: (value) {
+                      setState(() {
+                        serviceCategoryNameController.text = value ?? '';
+                        subCategoryController.clear();
+                      });
+                    },
+                  ),
+                  const VerticalSpacing(20),
+                  CommonDropdownField(
+                    titleLabelText: Strings.subCategoryLabelText,
+                    items: (categorySubCategories[serviceCategoryNameController.text] ?? [])
+                        .map((value) => DropdownMenuItem(
+                              value: value,
+                              child: CommonText(
+                                value,
+                                fontSize: 15,
+                                color: AppColors.greyTwo,
+                              ),
+                            ))
+                        .toList(),
+                    selectedItemBuilder: (context) => (categorySubCategories[serviceCategoryNameController.text] ?? [])
+                        .map((value) => CommonText(
+                              value,
+                              fontSize: 15,
+                              color: AppColors.blackTwo,
+                            ))
+                        .toList(),
+                    value: subCategoryController.text.isEmpty ? null : subCategoryController.text,
+                    validator: validateTextNotEmpty,
+                    onChanged: (value) {
+                      setState(() {
+                        subCategoryController.text = value ?? '';
+                      });
+                    },
+                  ),
+                  const VerticalSpacing(20),
+                  CommonDropdownField(
+                    titleLabelText: "${Strings.serviceForText}*",
+                    items: serviceFor
+                        .map((value) => DropdownMenuItem(
+                              value: value,
+                              child: CommonText(
+                                value,
+                                fontSize: 15,
+                                color: AppColors.greyTwo,
+                              ),
+                            ))
+                        .toList(),
+                    selectedItemBuilder: (context) => serviceFor
+                        .map((value) => CommonText(
+                              value,
+                              fontSize: 15,
+                              color: AppColors.blackTwo,
+                            ))
+                        .toList(),
+                    validator: validateTextNotEmpty,
+                    onChanged: (value) {
+                      serviceForController.text = value ?? '';
+                    },
+                  ),
+                  const VerticalSpacing(20),
+                  CommonTextField(
+                    titleLabelText: Strings.serviceNameText,
+                    controller: serviceNameController,
+                    labelText: Strings.serviceNamePlaceholderText,
+                    hintText: Strings.serviceNamePlaceholderText,
+                    labelSize: 15,
+                    hintSize: 15,
+                    labelColor: AppColors.greyTwo,
+                    hintColor: AppColors.greyTwo,
+                    textColor: AppColors.blackTwo,
+                    cursorColor: AppColors.blackTwo,
+                    validator: validateBusinessName,
+                  ),
+                  const VerticalSpacing(20),
+                  CommonTextField(
+                    titleLabelText: "${Strings.priceText}*",
+                    controller: servicePriceController,
+                    labelText: Strings.pricePlaceholderText,
+                    hintText: Strings.pricePlaceholderText,
+                    labelSize: 15,
+                    hintSize: 15,
+                    labelColor: AppColors.greyTwo,
+                    hintColor: AppColors.greyTwo,
+                    textColor: AppColors.blackTwo,
+                    cursorColor: AppColors.blackTwo,
+                    validator: validatePrice,
+                    inputFormatter: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[R\s\d.]')),
+                      CurrencyInputFormatter(currencySymbol: "R "),
+                    ],
+                  ),
+                  const VerticalSpacing(20),
+                  const VerticalSpacing(10),
+                  ValueListenableBuilder(
+                    valueListenable: photoNotifier,
+                    builder: (context, path, _) {
+                      return PhotoPickerComponent(
+                        title: Strings.uploadAPictureText,
+                        imagePath: path,
+                        onTap: () async {
+                          final file = await pickImageFromGallery();
+                          if (file != null) {
+                            photoNotifier.value = file.path;
+                          }
+                        },
+                      );
+                    },
+                  ),
+                  const VerticalSpacing(20),
+                  CommonTextField(
+                    titleLabelText: "${Strings.descriptionText} (${Strings.optionalText})",
+                    controller: serviceDescription,
+                    labelText: null,
+                    hintText: Strings.descriptionPlaceholderText,
+                    labelSize: 15,
+                    hintSize: 15,
+                    minLines: 4,
+                    maxLines: 6,
+                    labelColor: AppColors.greyTwo,
+                    hintColor: AppColors.greyTwo,
+                    textColor: AppColors.blackTwo,
+                    cursorColor: AppColors.blackTwo,
+                    fillColor: AppColors.greyFour,
+                    borderColor: AppColors.transparent,
+                  ),
+                  const VerticalSpacing(20),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: CommonButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  final price = servicePriceController.text
+                      .replaceAll("R", '')
+                      .replaceAll(' ', '');
+                  authController.addService(
+                    ServiceDto(
+                      serviceCategory: serviceCategoryNameController.text,
+                      subCategory: subCategoryController.text,
+                      serviceFor: serviceForController.text,
+                      serviceName: serviceNameController.text,
+                      serviceDescription: serviceDescription.text,
+                      servicePhoto: photoNotifier.value ?? "",
+                      servicePrice: double.tryParse(price) ?? 0,
+                    ),
+                  );
+                  widget.onSaved();
+                } else {
+                  MessageUtils.showErrorSnackBar(
+                    "Please make sure to fill the required fields",
+                  );
+                }
+              },
+              text: Strings.addText,
+              textColor: AppColors.whiteOne,
+              radius: 12,
+              textFontWeight: 600,
+              textFontSize: 18,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

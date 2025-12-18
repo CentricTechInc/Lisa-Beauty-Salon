@@ -409,4 +409,7 @@ class Strings {
   static const String platformServiceFeeText = "The platform takes a 15% service fee per payment. You'll receive the remaining 85% .";
   static const String addAnotherAccountText = "Add Another Account";
   static const String addAccountTitleText = "Add Account";
+  static const String deleteAnyServiceText = "Delete Service";
+  static const String subCategoryLabelText = "Sub Category*";
+  static const String typesText = "types";
 }

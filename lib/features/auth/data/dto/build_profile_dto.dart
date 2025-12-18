@@ -95,6 +95,7 @@ class BankAccountInfoDto extends BankAccountInfoModel {
 class ServiceDto extends ServiceModel {
   ServiceDto({
     required super.serviceCategory,
+    super.subCategory = "",
     required super.serviceFor,
     required super.serviceName,
     required super.servicePhoto,
@@ -105,6 +106,7 @@ class ServiceDto extends ServiceModel {
   factory ServiceDto.fromJson(DataMap json) {
     return ServiceDto(
       serviceCategory: json['serviceCategory'] as String,
+      subCategory: json['subCategory'] as String? ?? "",
       serviceFor: json['serviceFor'] as String,
       serviceName: json['serviceName'] as String,
       servicePhoto: json['servicePhoto'] as String,
@@ -116,6 +118,7 @@ class ServiceDto extends ServiceModel {
   DataMap toJson() {
     return {
       "serviceCategory": serviceCategory,
+      "subCategory": subCategory,
       "serviceFor": serviceFor,
       "serviceName": serviceName,
       "servicePhoto": servicePhoto,
