@@ -5,12 +5,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:mobkit_dashed_border/mobkit_dashed_border.dart';
 
 class PhotoPickerComponent extends StatelessWidget {
   const PhotoPickerComponent({
     super.key,
     required this.onTap,
+    this.title = Strings.uploadYourProfilePhotoText,
     this.imagePath,
     this.outerHeight = 200,
     this.innerHeight = 130,
@@ -18,6 +22,7 @@ class PhotoPickerComponent extends StatelessWidget {
   });
 
   final String? imagePath;
+  final String title;
   final VoidCallback onTap;
   final double outerHeight;
   final double innerHeight;
@@ -26,21 +31,36 @@ class PhotoPickerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = context.width * 0.88;
-    return isUserInProfileCreateScreen
-        ? _DashedPhotoPickerCard(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CommonText(
+          title,
+          fontSize: 12,
+          fontWeight: 400,
+          color: AppColors.blackTwo,
+        ),
+        VerticalSpacing(10),
+        if (isUserInProfileCreateScreen)...[
+          _DashedPhotoPickerCard(
             onTap: onTap,
             imagePath: imagePath,
             outerHeight: outerHeight,
             innerHeight: innerHeight,
             width: width,
           )
-        : _PlainPhotoPickerCard(
+        ]
+        else...[
+          _PlainPhotoPickerCard(
             onTap: onTap,
             imagePath: imagePath,
             outerHeight: outerHeight,
             innerHeight: innerHeight,
             width: width,
-          );
+          )
+        ],
+      ],
+    );
   }
 }
 

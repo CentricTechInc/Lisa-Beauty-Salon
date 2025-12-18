@@ -9,15 +9,18 @@ class CommonBottomSheet extends StatelessWidget {
     super.key,
     required this.title,
     required this.content,
+    this.footer,
   });
 
   final String title;
   final Widget content;
+  final Widget? footer;
 
   static Future<void> show(
     BuildContext context, {
       required String title,
       required Widget content,
+      Widget? footer,
       bool isDismissible = true,
       minChildSize = 0.3,
       maxChildSize = 0.5,
@@ -41,7 +44,8 @@ class CommonBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: CommonBottomSheet(
               title: title,
-              content: content
+              content: content,
+              footer: footer,
           ),
         ),
       ),
@@ -78,6 +82,10 @@ class CommonBottomSheet extends StatelessWidget {
             child: content,
           ),
         ),
+        if (footer != null)...[
+          VerticalSpacing(16),
+          footer!,
+        ],
       ],
     );
   }

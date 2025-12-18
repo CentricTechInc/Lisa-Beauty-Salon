@@ -357,5 +357,10 @@ mixin FieldsValidation {
     return null;
   }
 
-
+  String? validateListNotEmpty<T>(List<T>? value) {
+    if (value == null || value.isEmpty) {
+      return "Required*";
+    }
+    return null;
+  }
 }

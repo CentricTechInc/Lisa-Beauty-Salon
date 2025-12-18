@@ -113,6 +113,7 @@ class Strings {
   static const String createYourProfessionalProfileDescriptionText =
       "This is how clients will find and book you.";
   static const String uploadYourProfilePhotoText = "Upload Your Profile Photo";
+  static const String uploadYourPictureOptionalText = "Upload A Picture (Optional)";
   static const String professionalAndBioOrHeadlineText = "Professional Bio/Headline";
   static const String areaOfSpecializationText = "Areas of Specialization*";
   static const String yearsOfExperienceText = "Years of Experience*";
@@ -387,4 +388,20 @@ class Strings {
   static const String thisWeekText = "This Week";
   static const String thisMonthText = "This Month";
   static const String thisYearText = "This Year";
+
+  static const String promotionListDescriptionText = "Click the “Add a Promotion” button to create packages or offers.";
+  static const String addAPromotionText = "+ Add a Promotion";
+  static const String servicesTitleText = "Services";
+  static const String bookNowText = "Book Now";
+  static const String createPromotionText = "Create Promotion";
+  static const String titleLabelText = "Title*";
+  static const String titlePlaceholderText = "Bridal Beauty Makeup";
+  static const String subtitleLabelText = "Subtitle*";
+  static const String subtitlePlaceholderText = "Complete Package Offer";
+  static const String categoryLabelText = "Category*";
+  static const String selectCategoriesHintText = "Select Categories";
+  static const String servicesLabelText = "Services*";
+  static const String selectServicesHintText = "Select Services";
+  static const String saveText = "Save";
+  static const String selectedText = "Selected";
 }
