@@ -18,6 +18,7 @@ import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/mess
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/payment_history_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/profile_edit_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/promotional_tool_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/bank_account_page.dart';
 import 'package:lisa_beauty_salon/features/salon/shell/salon_shell.dart';
 
 class AppPages {
@@ -71,6 +72,10 @@ class AppPages {
     GetPage(
       name: RouteNames.paymentHistory, 
       page: () => PaymentHistoryPage()
+    ),
+    GetPage(
+      name: RouteNames.bankAccount, 
+      page: () => const BankAccountPage()
     ),
   ];
 }

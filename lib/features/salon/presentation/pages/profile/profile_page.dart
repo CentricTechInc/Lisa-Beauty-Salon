@@ -28,7 +28,9 @@ class ProfilePage extends StatelessWidget {
             "arrowIconColor": AppColors.blackTwo,
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
-            'onTap': () {},
+            'onTap': () {
+              Get.toNamed(RouteNames.bankAccount);
+            },
           },
           {
             'icon': Assets.paymentHistoryIcon,

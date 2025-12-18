@@ -14,9 +14,9 @@ class RegularExpressions {
     r'^(\d+)\s*[:.]\s*(\d+)$',
   );
 
-  /// Text with number (your existing one)
+  /// Text with number (Alphanumeric)
   static RegExp textWithNumberRegex = RegExp(
-    r'^([a-zA-Z]+(-|_)?([0-9]+(\.[0-9]+) ?))$',
+    r'^[a-zA-Z0-9]+$',
   );
 
   /// Text only (alphabets + spaces)

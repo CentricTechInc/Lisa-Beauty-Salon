@@ -18,4 +18,5 @@ class RouteNames {
   static const String profileEdit = "/profileEdit";
   static const String promotionalTool = "/promotionalTool";
   static const String paymentHistory = "/paymentHistory";
+  static const String bankAccount = "/bankAccount";
 }

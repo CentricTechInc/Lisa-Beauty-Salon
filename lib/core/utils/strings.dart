@@ -404,4 +404,9 @@ class Strings {
   static const String selectServicesHintText = "Select Services";
   static const String saveText = "Save";
   static const String selectedText = "Selected";
+  static const String bankAccountTitleText = "Bank Account";
+  static const String addYourBankInfoText = "Add Your Bank Account Info";
+  static const String platformServiceFeeText = "The platform takes a 15% service fee per payment. You'll receive the remaining 85% .";
+  static const String addAnotherAccountText = "Add Another Account";
+  static const String addAccountTitleText = "Add Account";
 }

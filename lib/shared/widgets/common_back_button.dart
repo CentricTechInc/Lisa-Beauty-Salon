@@ -8,17 +8,19 @@ class CommonBackButton extends StatelessWidget {
     super.key,
     this.iconColor,
     this.child,
+    this.onTap,
   });
 
   final Color? iconColor;
   final Widget? child;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
+          onTap: onTap ?? () {
             Get.back();
           },
           child: Icon(

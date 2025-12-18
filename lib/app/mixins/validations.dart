@@ -338,7 +338,7 @@ mixin FieldsValidation {
     if (value == null || value.isEmpty) {
       return "Required*";
     }
-    if (!RegularExpressions.onlyNumbersRegex.hasMatch(value)) {
+    if (!RegularExpressions.textWithNumberRegex.hasMatch(value)) {
       return "Invalid Input";
     }
     return null;
@@ -348,7 +348,7 @@ mixin FieldsValidation {
     if (accountNumber == null || accountNumber.isEmpty) {
       return "Required*";
     }
-    if (!RegularExpressions.onlyNumbersRegex.hasMatch(accountNumber)) {
+    if (!RegularExpressions.textWithNumberRegex.hasMatch(accountNumber)) {
       return "Invalid Input";
     }
     if (accountNumber != confirmAccountNumber) {
