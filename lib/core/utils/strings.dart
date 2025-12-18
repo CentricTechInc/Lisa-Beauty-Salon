@@ -468,4 +468,9 @@ class Strings {
   static const String sunShortText = "Sun";
   static const String customizeTextSimple = "You can customize your availability by day. Tab to \"Customize\" toggle button for customize time.";
   static const String availabilityByWeeklyText = "You can set availability by weekly. Switch off to \"Customize\" toggle button for availability by weekly.";
+
+  static const String changePasswordDescriptionText = "If your change the password make secure password that will be easy for you to remember.";
+  static const String currentPasswordText = "Current Password*";
+  static const String newPasswordText = "New Password*";
+  static const String createNewPasswordButtonText = "Change Password";
 }
