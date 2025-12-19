@@ -65,6 +65,8 @@ class _AvailabilityEditSectionState extends State<AvailabilityEditSection> {
                         fontWeight: 400,
                         color: AppColors.greyTwo,
                         textAlign: TextAlign.center,
+                        maxLines: 4,
+                        textOverflow: TextOverflow.visible,
                       ),
                     ),
                     const VerticalSpacing(20),

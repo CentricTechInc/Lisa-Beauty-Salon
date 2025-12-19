@@ -204,35 +204,37 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                 validator: validateTextNotEmpty,
               ),
               VerticalSpacing(20),
-              CommonDropdownField(
-                titleLabelText: Strings.stateText,
-                items: (authController.countryDataOfUs?.states ??
-                  []).map(
-                    (state) => DropdownMenuItem(
-                      value: state,
-                      child: CommonText(
+              Obx(
+                () => CommonDropdownField(
+                  titleLabelText: Strings.stateText,
+                  items: (authController.countryDataOfUs?.states ??
+                    []).map(
+                      (state) => DropdownMenuItem(
+                        value: state,
+                        child: CommonText(
+                          state.name,
+                          fontSize: 15,
+                          color: AppColors.greyTwo,
+                        ),
+                      )
+                  ).toList(),
+                  selectedItemBuilder: (context) => (authController.countryDataOfUs?.states ??
+                    []).map(
+                      (state) => CommonText(
                         state.name,
                         fontSize: 15,
-                        color: AppColors.greyTwo,
-                      ),
-                    )
-                ).toList(),
-                selectedItemBuilder: (context) => (authController.countryDataOfUs?.states ??
-                  []).map(
-                    (state) => CommonText(
-                      state.name,
-                      fontSize: 15,
-                      color: AppColors.blackTwo,
-                    )
-                ).toList(),
-                validator: (value) => validateTextWithDashes(value?.name),
-                onChanged: (value) {
-                  stateController.text = value?.name ?? '';
-                  authController.setCitiesAccordingToState(
-                    stateController.text,
-                    Strings.buildYourProfileDropdownScenario,
-                  );
-                },
+                        color: AppColors.blackTwo,
+                      )
+                  ).toList(),
+                  validator: (value) => validateTextWithDashes(value?.name),
+                  onChanged: (value) {
+                    stateController.text = value?.name ?? '';
+                    authController.setCitiesAccordingToState(
+                      stateController.text,
+                      Strings.buildYourProfileDropdownScenario,
+                    );
+                  },
+                ),
               ),
               VerticalSpacing(20),
               Obx(() {

@@ -196,7 +196,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage>
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: SafeArea(
               top: false,
               child: CommonButton(

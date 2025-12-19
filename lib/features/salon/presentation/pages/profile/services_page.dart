@@ -19,16 +19,28 @@ class ServicesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
 
-    return CommonScaffoldWidget(
-      padding: EdgeInsets.zero,
-      systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: AppColors.whiteTwo,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-      ),
-      resizeToAvoidBottomInset: true,
-      bgColor: AppColors.whiteTwo,
-      child: Column(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        if (authController.showAddServiceForm.value) {
+          authController.toggleAddServiceForm();
+        } else if (authController.viewingCategory.value.isNotEmpty) {
+          authController.viewingCategory.value = "";
+        } else {
+          Get.back();
+        }
+      },
+      child: CommonScaffoldWidget(
+        padding: EdgeInsets.zero,
+        systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: AppColors.whiteTwo,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        resizeToAvoidBottomInset: true,
+        bgColor: AppColors.whiteTwo,
+        child: Column(
         children: [
           const VerticalSpacing(30),
           Obx(() => Padding(
@@ -100,6 +112,7 @@ class ServicesPage extends StatelessWidget {
           ),
         ],
       ),
+      )
     );
   }
 }

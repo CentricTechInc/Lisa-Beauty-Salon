@@ -57,7 +57,8 @@ class AuthController extends GetxController {
 
   List<Country> countriesList = [];
   RxList<City> citiesList = <City>[].obs;
-  Country? countryDataOfUs;
+  final Rx<Country?> _countryDataOfUs = Rx<Country?>(null);
+  Country? get countryDataOfUs => _countryDataOfUs.value;
   final RxList<PromotionDto> promotions = <PromotionDto>[].obs;
 
   UserDto? get currentUser => _currentUser.value;
@@ -156,7 +157,7 @@ class AuthController extends GetxController {
       },
       (data) {
         countriesList = data ?? [];
-        countryDataOfUs = countriesList.firstWhereOrNull(
+        _countryDataOfUs.value = countriesList.firstWhereOrNull(
           (country) {
             if (country.name == Strings.southAfricaStringText) {
               return true;

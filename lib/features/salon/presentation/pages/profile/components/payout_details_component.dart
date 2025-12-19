@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -35,6 +36,7 @@ class PayoutDetailsComponent extends StatelessWidget {
         ),
         const VerticalSpacing(20),
         _buildDetailRow(
+          context,
           Strings.dateTimeText,
           DateFormat('dd MMMM yyyy, hh:mm a').format(payout.dateTime),
           fontSize: 16,
@@ -42,6 +44,7 @@ class PayoutDetailsComponent extends StatelessWidget {
         ),
         const VerticalSpacing(10),
         _buildDetailRow(
+          context,
           Strings.bankNameText,
           Strings.investecBankText,
           fontSize: 16,
@@ -49,6 +52,7 @@ class PayoutDetailsComponent extends StatelessWidget {
         ),
         const VerticalSpacing(10),
         _buildDetailRow(
+          context,
           Strings.accountNumberNameText,
           payout.accountNumber,
           fontSize: 16,
@@ -56,6 +60,7 @@ class PayoutDetailsComponent extends StatelessWidget {
         ),
         const VerticalSpacing(10),
         _buildDetailRow(
+          context,
           Strings.statusText,
           Strings.completedText,
           fontSize: 16,
@@ -64,6 +69,7 @@ class PayoutDetailsComponent extends StatelessWidget {
         ),
         const Divider(height: 30),
         _buildDetailRow(
+          context,
           Strings.totalWithdrawText,
           "R ${payout.amount.toStringAsFixed(2)}",
           fontSize: 24,
@@ -75,13 +81,39 @@ class PayoutDetailsComponent extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, String value,
-      {double fontSize = 16, double fontWeight = 500.0, Color? valueColor}) {
+  Widget _buildDetailRow(
+    BuildContext context,
+    String label, 
+    String value, {
+      double fontSize = 16, 
+      double fontWeight = 500.0, 
+      Color? valueColor
+    }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CommonText(label, fontSize: fontSize, fontWeight: fontWeight, color: AppColors.blackTwo),
-        CommonText(value, fontSize: fontSize, fontWeight: fontWeight, color: valueColor ?? AppColors.blackTwo),
+        SizedBox(
+          width: context.width * 0.4,
+          child: CommonText(
+            label, 
+            fontSize: fontSize, 
+            fontWeight: fontWeight, 
+            color: AppColors.blackTwo,  
+            maxLines: 3,
+            textOverflow: TextOverflow.visible
+          )
+        ),
+        SizedBox(
+          width: context.width * 0.5,
+          child: CommonText(
+            value, 
+            fontSize: fontSize, 
+            fontWeight: fontWeight, 
+            color: valueColor ?? AppColors.blackTwo,
+            maxLines: 3,
+            textOverflow: TextOverflow.visible,
+          )
+        ),
       ],
     );
   }
