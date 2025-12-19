@@ -84,57 +84,60 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
       onWhiteSpaceTap: () {
         _showEmojiPicker.value = false;
       },
+      padding: EdgeInsets.only(
+        left: 15,
+        right: 15,
+        top: 05
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          VerticalSpacing(16),
           // Header
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteOne,
-                      border: Border.all(color: AppColors.greyOne, width: 1),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Icon(CupertinoIcons.back, color: AppColors.blackTwo),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteOne,
+                    border: Border.all(color: AppColors.greyOne, width: 1),
+                    borderRadius: BorderRadius.circular(16),
                   ),
+                  child: Icon(CupertinoIcons.back, color: AppColors.blackTwo),
                 ),
-                HorizontalSpacing(16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CommonText(
-                      'Bloom & Blade',
-                      fontSize: 18,
-                      fontWeight: 600,
-                      color: AppColors.blackTwo,
-                    ),
-                    CommonText(
-                      Strings.onlineText,
-                      fontSize: 12,
-                      fontWeight: 400,
-                      color: AppColors.greenOne,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+              HorizontalSpacing(16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonText(
+                    'Bloom & Blade',
+                    fontSize: 18,
+                    fontWeight: 600,
+                    color: AppColors.blackTwo,
+                  ),
+                  CommonText(
+                    Strings.onlineText,
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: AppColors.greenOne,
+                  ),
+                ],
+              ),
+            ],
           ),
-          VerticalSpacing(16),
+          VerticalSpacing(08),
 
           // Chat List
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(
+                vertical: 05
+              ),
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 final msg = _messages[index];
@@ -148,7 +151,9 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
 
           // Input Area
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(
+              vertical: 05
+            ),
             child: Row(
               children: [
                 Expanded(

@@ -57,7 +57,6 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VerticalSpacing(16),
         // Header
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,7 +81,7 @@ class _MessagePageState extends State<MessagePage> {
             ),
           ],
         ),
-        VerticalSpacing(24),
+        VerticalSpacing(10),
         // Message List
         Expanded(
           child: ListView.separated(
