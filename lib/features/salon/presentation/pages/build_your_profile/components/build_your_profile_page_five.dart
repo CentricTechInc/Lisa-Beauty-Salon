@@ -34,6 +34,9 @@ class BuildYourProfilePageFive extends StatelessWidget {
               fontSize: 20,
               fontWeight: 700,
               color: AppColors.blackTwo,
+              maxLines: 2,
+              textOverflow: TextOverflow.visible,
+              textAlign: TextAlign.center,
             ),
             VerticalSpacing(20),
             CommonText(
@@ -41,6 +44,9 @@ class BuildYourProfilePageFive extends StatelessWidget {
               fontSize: 16,
               fontWeight: 400,
               color: AppColors.greyTwo,
+              maxLines: 3,
+              textOverflow: TextOverflow.visible,
+              textAlign: TextAlign.center,
             ),
             VerticalSpacing(10),
             Row(
@@ -309,29 +315,28 @@ class TimeSlotEditor extends StatelessWidget {
         ),
         VerticalSpacing(10),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: context.width / 2.5,
-              height: 50,
-              child: CommonTextField(
-                controller: fromController,
-                fillColor: AppColors.greyFour,
-                borderRadius: 12,
-                textColor: AppColors.blackTwo,
-                labelText: null,
-                hintText: Strings.fromPlaceholderText,
-                cursorColor: AppColors.blackTwo,
-                textAlign: TextAlign.center,
+            Expanded(
+              flex: 5,
+              child: SizedBox(
+                height: 50,
+                child: CommonTextField(
+                  controller: fromController,
+                  fillColor: AppColors.greyFour,
+                  borderRadius: 12,
+                  textColor: AppColors.blackTwo,
+                  labelText: null,
+                  hintText: Strings.fromPlaceholderText,
+                  cursorColor: AppColors.blackTwo,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            HorizontalSpacing(20),
-            SizedBox(
-              width: context.width / 3,
+            HorizontalSpacing(12),
+            Expanded(
+              flex: 4,
               child: AmPmToggleButtons(
-                onPeriodSelected: (period) {
-
-                },
+                onPeriodSelected: (period) {},
               ),
             )
           ],
@@ -345,29 +350,28 @@ class TimeSlotEditor extends StatelessWidget {
         ),
         VerticalSpacing(10),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: context.width / 2.5,
-              height: 50,
-              child: CommonTextField(
-                controller: toController,
-                fillColor: AppColors.greyFour,
-                borderRadius: 12,
-                textColor: AppColors.blackTwo,
-                labelText: null,
-                hintText: Strings.toPlaceholderText,
-                cursorColor: AppColors.blackTwo,
-                textAlign: TextAlign.center,
+            Expanded(
+              flex: 5,
+              child: SizedBox(
+                height: 50,
+                child: CommonTextField(
+                  controller: toController,
+                  fillColor: AppColors.greyFour,
+                  borderRadius: 12,
+                  textColor: AppColors.blackTwo,
+                  labelText: null,
+                  hintText: Strings.toPlaceholderText,
+                  cursorColor: AppColors.blackTwo,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            HorizontalSpacing(20),
-            SizedBox(
-              width: context.width / 3,
+            HorizontalSpacing(12),
+            Expanded(
+              flex: 4,
               child: AmPmToggleButtons(
-                onPeriodSelected: (period) {
-
-                },
+                onPeriodSelected: (period) {},
               ),
             )
           ],
@@ -403,23 +407,26 @@ class AmPmToggleButtons extends StatelessWidget {
       valueListenable: _selectedIndexNotifier,
       builder: (context, selectedIndex, child) {
         return Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
-            _buildToggleButton(
-                context: context,
-                index: 0,
-                label: Strings.amText,
-                activeColor: activeColor,
-                inactiveColor: inactiveColor,
-                selectedIndex: selectedIndex
+            Expanded(
+              child: _buildToggleButton(
+                  context: context,
+                  index: 0,
+                  label: Strings.amText,
+                  activeColor: activeColor,
+                  inactiveColor: inactiveColor,
+                  selectedIndex: selectedIndex
+              ),
             ),
-            _buildToggleButton(
-                context: context,
-                index: 1,
-                label: Strings.pmText,
-                activeColor: activeColor,
-                inactiveColor: inactiveColor,
-                selectedIndex: selectedIndex
+            Expanded(
+              child: _buildToggleButton(
+                  context: context,
+                  index: 1,
+                  label: Strings.pmText,
+                  activeColor: activeColor,
+                  inactiveColor: inactiveColor,
+                  selectedIndex: selectedIndex
+              ),
             ),
           ],
         );
@@ -464,7 +471,7 @@ class AmPmToggleButtons extends StatelessWidget {
           ),
         ),
         padding: EdgeInsets.symmetric(
-            horizontal: 20
+            horizontal: 10
         ),
         child: CommonText(
           label,

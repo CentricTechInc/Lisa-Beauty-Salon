@@ -22,18 +22,12 @@ class CommonBottomBar extends StatelessWidget {
         16, 0, 16, 24
       ),
       padding: const EdgeInsets.symmetric(
-        vertical: 10
+        vertical: 8,
+        horizontal: 10
       ),
       decoration: BoxDecoration(
         color: AppColors.blackThree,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.blackOne,
-            blurRadius: 20,
-            offset: Offset(0, 8),
-          ),
-        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -73,8 +67,8 @@ class _BottomBarButton extends StatelessWidget {
         ),
         curve: Curves.easeOut,
         padding: EdgeInsets.symmetric(
-          horizontal: isAssetTypeIcon ? 16 : 0,
-          vertical: isAssetTypeIcon ? 8 : 0
+          horizontal: isAssetTypeIcon ? 14 : 0,
+          vertical: isAssetTypeIcon ? 10 : 0
         ),
         decoration: BoxDecoration(
           color: isSelected ?
