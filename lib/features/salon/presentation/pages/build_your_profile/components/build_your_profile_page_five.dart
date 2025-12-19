@@ -12,6 +12,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_switch_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/circular_day_selector.dart';
 
 class BuildYourProfilePageFive extends StatelessWidget {
   final PageController pageController;
@@ -98,47 +99,59 @@ class DefaultScheduleUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultSchedule = controller.defaultSchedule.value;
-    final defaultBreakSchedule = controller.defaultBreakSchedule.value;
+    return Obx(() {
+      final defaultSchedule = controller.defaultSchedule.value;
+      final defaultBreakSchedule = controller.defaultBreakSchedule.value;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TimeSlotEditor(
-          fromTitle: Strings.fromText,
-          toTitle: Strings.toText,
-          timeSlot: defaultSchedule.workSlots.isNotEmpty ?
-          defaultSchedule.workSlots.first : null,
-          onTimeSelected: (_) {
-
-          },
-        ),
-        VerticalSpacing(20),
-        Row(
-          children: [
-            CommonText(
-              Strings.addBreakTimeText,
-              fontSize: 20,
-              fontWeight: 700,
-              color: AppColors.blackTwo,
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: CircularDaySelector(
+              selectedDays: controller.defaultEnabledDays,
+              onDayToggle: controller.toggleDefaultEnabledDay,
             ),
-            CommonText(
-              " (${Strings.optionalText})",
-              fontSize: 16,
-              fontWeight: 400,
-              color: AppColors.blackTwo,
-            )
-          ],
-        ),
-        VerticalSpacing(20),
-        TimeSlotEditor(
-          fromTitle: Strings.fromText,
-          toTitle: Strings.toText,
-          timeSlot: defaultBreakSchedule,
-          onTimeSelected: (_) {},
-        ),
-      ],
-    );
+          ),
+          VerticalSpacing(20),
+          TimeSlotEditor(
+            fromTitle: Strings.fromText,
+            toTitle: Strings.toText,
+            timeSlot: defaultSchedule.workSlots.isNotEmpty
+                ? defaultSchedule.workSlots.first
+                : null,
+            onTimeSelected: (newTime) {
+              controller.setDefaultWorkSchedule([newTime]);
+            },
+          ),
+          VerticalSpacing(20),
+          Row(
+            children: [
+              CommonText(
+                Strings.addBreakTimeText,
+                fontSize: 20,
+                fontWeight: 700,
+                color: AppColors.blackTwo,
+              ),
+              CommonText(
+                " (${Strings.optionalText})",
+                fontSize: 16,
+                fontWeight: 400,
+                color: AppColors.blackTwo,
+              )
+            ],
+          ),
+          VerticalSpacing(20),
+          TimeSlotEditor(
+            fromTitle: Strings.fromText,
+            toTitle: Strings.toText,
+            timeSlot: defaultBreakSchedule,
+            onTimeSelected: (newTime) {
+              controller.defaultBreakSchedule.value = newTime;
+            },
+          ),
+        ],
+      );
+    });
   }
 }
 
@@ -152,62 +165,67 @@ class CustomScheduleUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultBreakSchedule = controller.defaultBreakSchedule;
-    return Column(
-      children: [
-        ...AppConstants.fullWeekDaysNames.map((day) {
-          final DayScheduleDto daySchedule = controller
-              .buildProfileData?.weeklySchedule[day] ?? DayScheduleDto();
+    return Obx(() {
+      final defaultBreakSchedule = controller.defaultBreakSchedule.value;
 
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: DayScheduleRow(
-              day: day,
-              schedule: daySchedule,
-              controller: controller,
+      return Column(
+        children: [
+          ...AppConstants.fullWeekDaysNames.map((day) {
+            final DayScheduleDto daySchedule = controller
+                    .buildProfileData?.weeklySchedule[day] ??
+                DayScheduleDto();
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: DayScheduleRow(
+                day: day,
+                schedule: daySchedule,
+                controller: controller,
+              ),
+            );
+          }),
+          VerticalSpacing(10),
+          Container(
+            decoration: BoxDecoration(
+                color: AppColors.whiteOne,
+                border: Border.all(
+                  color: AppColors.greyOne,
+                ),
+                borderRadius: BorderRadius.circular(16)),
+            padding: EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    CommonText(
+                      Strings.addBreakTimeText,
+                      fontSize: 20,
+                      fontWeight: 700,
+                      color: AppColors.blackTwo,
+                    ),
+                    CommonText(
+                      " (${Strings.optionalText})",
+                      fontSize: 16,
+                      fontWeight: 400,
+                      color: AppColors.blackTwo,
+                    )
+                  ],
+                ),
+                VerticalSpacing(20),
+                TimeSlotEditor(
+                  fromTitle: Strings.fromText,
+                  toTitle: Strings.toText,
+                  timeSlot: defaultBreakSchedule,
+                  onTimeSelected: (newTime) {
+                    controller.defaultBreakSchedule.value = newTime;
+                  },
+                ),
+              ],
             ),
-          );
-        }),
-        VerticalSpacing(10),
-        Container(
-          decoration: BoxDecoration(
-            color: AppColors.whiteOne,
-            border: Border.all(
-                color: AppColors.greyOne,
-              ),
-              borderRadius: BorderRadius.circular(16)
           ),
-          padding: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  CommonText(
-                    Strings.addBreakTimeText,
-                    fontSize: 20,
-                    fontWeight: 700,
-                    color: AppColors.blackTwo,
-                  ),
-                  CommonText(
-                    " (${Strings.optionalText})",
-                    fontSize: 16,
-                    fontWeight: 400,
-                    color: AppColors.blackTwo,
-                  )
-                ],
-              ),
-              VerticalSpacing(20),
-              TimeSlotEditor(
-                fromTitle: Strings.fromText,
-                toTitle: Strings.toText,
-                timeSlot: defaultBreakSchedule.value,
-                onTimeSelected: (_) {},
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }
 
@@ -270,7 +288,12 @@ class DayScheduleRow extends StatelessWidget {
                     timeSlot: (schedule?.workSlots ?? []).isNotEmpty
                         ? (schedule?.workSlots ?? []).first
                         : null,
-                    onTimeSelected: (time) {},
+                    onTimeSelected: (newTime) {
+                      final updatedSchedule = schedule?.copyWith(workSlots: [newTime]);
+                      if (updatedSchedule != null) {
+                        controller.setDailySchedule(day, updatedSchedule);
+                      }
+                    },
                   ),
               ],
             ),
@@ -329,6 +352,9 @@ class TimeSlotEditor extends StatelessWidget {
                   hintText: Strings.fromPlaceholderText,
                   cursorColor: AppColors.blackTwo,
                   textAlign: TextAlign.center,
+                  onChanged: (val) {
+                    onTimeSelected(timeSlot!.copyWith(fromTime: val));
+                  },
                 ),
               ),
             ),
@@ -336,7 +362,10 @@ class TimeSlotEditor extends StatelessWidget {
             Expanded(
               flex: 4,
               child: AmPmToggleButtons(
-                onPeriodSelected: (period) {},
+                initialPeriod: timeSlot?.fromAMPM,
+                onPeriodSelected: (period) {
+                  onTimeSelected(timeSlot!.copyWith(fromAMPM: period));
+                },
               ),
             )
           ],
@@ -364,6 +393,9 @@ class TimeSlotEditor extends StatelessWidget {
                   hintText: Strings.toPlaceholderText,
                   cursorColor: AppColors.blackTwo,
                   textAlign: TextAlign.center,
+                  onChanged: (val) {
+                    onTimeSelected(timeSlot!.copyWith(toTime: val));
+                  },
                 ),
               ),
             ),
@@ -371,7 +403,10 @@ class TimeSlotEditor extends StatelessWidget {
             Expanded(
               flex: 4,
               child: AmPmToggleButtons(
-                onPeriodSelected: (period) {},
+                initialPeriod: timeSlot?.toAMPM,
+                onPeriodSelected: (period) {
+                  onTimeSelected(timeSlot!.copyWith(toAMPM: period));
+                },
               ),
             )
           ],

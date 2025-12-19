@@ -2,6 +2,7 @@
 
 import 'package:country_state_city_dropdown/country_state_city_dropdown.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/app_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/core/utils/typedef.dart';
@@ -59,6 +60,13 @@ class AuthController extends GetxController {
   RxList<City> citiesList = <City>[].obs;
   final Rx<Country?> _countryDataOfUs = Rx<Country?>(null);
   Country? get countryDataOfUs => _countryDataOfUs.value;
+  final RxList<String> defaultEnabledDays = <String>[
+    Strings.monShortText,
+    Strings.tueShortText,
+    Strings.wedShortText,
+    Strings.thuShortText,
+    Strings.friShortText,
+  ].obs;
   final RxList<PromotionDto> promotions = <PromotionDto>[].obs;
 
   UserDto? get currentUser => _currentUser.value;
@@ -206,31 +214,55 @@ class AuthController extends GetxController {
     isCustomScheduleEnabled.value = value;
 
     if (!value) {
-      final defaultDaySchedule = defaultSchedule.value;
+      _applyDefaultScheduleToWeekly();
+    }
+  }
 
-      _buildProfileData.value = BuildProfileDto(
-        weeklySchedule: {
-          "Monday": defaultDaySchedule,
-          "Tuesday": defaultDaySchedule,
-          "Wednesday": defaultDaySchedule,
-          "Thursday": defaultDaySchedule,
-          "Friday": defaultDaySchedule,
-          "Saturday": defaultDaySchedule,
-          "Sunday": defaultDaySchedule,
-        }
-      );
-      _buildProfileData.refresh();
+  void _applyDefaultScheduleToWeekly() {
+    final defaultDaySchedule = defaultSchedule.value;
+    final Map<String, DayScheduleDto> weeklySchedule = {};
+
+    for (var day in AppConstants.fullWeekDaysNames) {
+      final isEnabled = _isDayEnabledInDefault(day);
+      weeklySchedule[day] = defaultDaySchedule.copyWith(isEnabled: isEnabled);
+    }
+
+    _ensureDtoInitialized();
+    _buildProfileData.value?.weeklySchedule = weeklySchedule;
+    _buildProfileData.refresh();
+  }
+
+  bool _isDayEnabledInDefault(String day) {
+    if (day == "Monday") return defaultEnabledDays.contains(Strings.monShortText);
+    if (day == "Tuesday") return defaultEnabledDays.contains(Strings.tueShortText);
+    if (day == "Wednesday") return defaultEnabledDays.contains(Strings.wedShortText);
+    if (day == "Thursday") return defaultEnabledDays.contains(Strings.thuShortText);
+    if (day == "Friday") return defaultEnabledDays.contains(Strings.friShortText);
+    if (day == "Saturday") return defaultEnabledDays.contains(Strings.satShortText);
+    if (day == "Sunday") return defaultEnabledDays.contains(Strings.sunShortText);
+    return false;
+  }
+
+  void toggleDefaultEnabledDay(String dayShortName) {
+    if (defaultEnabledDays.contains(dayShortName)) {
+      defaultEnabledDays.remove(dayShortName);
+    } else {
+      defaultEnabledDays.add(dayShortName);
+    }
+
+    if (!isCustomScheduleEnabled.value) {
+      _applyDefaultScheduleToWeekly();
     }
   }
 
   // New method to set the Default schedule when in the non-custom mode
-  void setDefaultWorkSchedule(List<TimeSlotDto> workSlots, TimeSlotDto breakSlots) {
+  void setDefaultWorkSchedule(List<TimeSlotDto> workSlots) {
     defaultSchedule.value = DayScheduleDto(
       workSlots: workSlots,
     );
     // If custom schedule is NOT enabled, apply this new default to all days
     if (!isCustomScheduleEnabled.value) {
-      // Logic to update all days in _buildProfileData.value.weeklySchedule as above
+      _applyDefaultScheduleToWeekly();
     }
   }
 

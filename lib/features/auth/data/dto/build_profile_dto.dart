@@ -18,6 +18,20 @@ class TimeSlotDto extends TimeSlotModel {
     );
   }
 
+  TimeSlotDto copyWith({
+    String? fromTime,
+    String? toTime,
+    String? fromAMPM,
+    String? toAMPM,
+  }) {
+    return TimeSlotDto(
+      fromTime: fromTime ?? this.fromTime,
+      toTime: toTime ?? this.toTime,
+      fromAMPM: fromAMPM ?? this.fromAMPM,
+      toAMPM: toAMPM ?? this.toAMPM,
+    );
+  }
+
   DataMap toJson() {
     return {
       "fromTime": fromTime,
