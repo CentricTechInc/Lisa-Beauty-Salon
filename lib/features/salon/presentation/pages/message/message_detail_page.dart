@@ -328,9 +328,9 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
                     maxWidth: MediaQuery.of(context).size.width * 0.7,
                   ),
                   decoration: BoxDecoration(
-                    color: isMe
-                        ? AppColors.greyOne.withOpacity(0.3)
-                        : const Color(0xFF1F1F1F), // Dark for received
+                    color: isMe ? AppColors.greyOne.withValues(
+                      alpha: 0.3
+                    ) : const Color(0xFF1F1F1F), // Dark for received
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(16),
                       topRight: isMe

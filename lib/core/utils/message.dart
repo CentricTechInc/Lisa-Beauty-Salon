@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 
 class MessageUtils {
@@ -46,7 +47,7 @@ class MessageUtils {
   static void logError(String error, StackTrace stackTrace, {String? feature}) {
     // In production, you might want to send this to a logging service
     ('🚨 ERROR in $feature: $error');
-    print('📋 Stack trace: $stackTrace');
+    LoggerService.info('📋 Stack trace: $stackTrace');
 
     // You can also send to analytics/crash reporting services here
     // await AnalyticsService.trackError(error, stackTrace, feature: feature);

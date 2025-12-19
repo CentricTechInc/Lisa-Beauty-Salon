@@ -151,9 +151,9 @@ class _ChatSupportPageState extends State<ChatSupportPage> {
                   maxWidth: MediaQuery.of(context).size.width * 0.7,
                 ),
                 decoration: BoxDecoration(
-                  color: isMe
-                      ? AppColors.greyOne.withOpacity(0.3)
-                      : const Color(0xFF1F1F1F),
+                  color: isMe ? AppColors.greyOne.withValues(
+                    alpha: 0.3
+                  ) : const Color(0xFF1F1F1F),
                   borderRadius: BorderRadius.only(
                     topLeft: const Radius.circular(16),
                     topRight: isMe ? Radius.zero : const Radius.circular(16),

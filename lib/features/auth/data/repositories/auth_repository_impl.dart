@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:lisa_beauty_salon/core/errors/exceptions.dart';
 import 'package:lisa_beauty_salon/core/errors/failures.dart';
-import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/utils/typedef.dart';
 import 'package:lisa_beauty_salon/features/auth/data/data_sources/auth_data_source.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/user_dto.dart';

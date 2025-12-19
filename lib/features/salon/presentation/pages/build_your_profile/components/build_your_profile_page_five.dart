@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/app_constants.dart';
-import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
@@ -19,6 +18,7 @@ class BuildYourProfilePageFive extends StatelessWidget {
 
   const BuildYourProfilePageFive({
     required this.pageController,
+    super.key,
   });
 
   @override

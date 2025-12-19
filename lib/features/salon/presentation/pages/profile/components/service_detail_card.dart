@@ -41,7 +41,9 @@ class ServiceDetailCard extends StatelessWidget {
                     : Container(
                         height: 70,
                         width: 70,
-                        color: AppColors.pinkTwo.withOpacity(0.1),
+                        color: AppColors.pinkTwo.withValues(
+                          alpha: 0.1
+                        ),
                         child: const Icon(Icons.image, color: AppColors.pinkTwo),
                       ),
               ),

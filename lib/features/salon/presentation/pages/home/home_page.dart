@@ -60,7 +60,9 @@ class _HomePageState extends State<HomePage> {
         },
         barrierDismissible: false,
         barrierLabel: 'Dismiss',
-        barrierColor: AppColors.blackOne.withOpacity(0.5),
+        barrierColor: AppColors.blackOne.withValues(
+          alpha: 0.5
+        ),
         transitionDuration: const Duration(milliseconds: 400),
       ).then((value) {
         if (value == true) {

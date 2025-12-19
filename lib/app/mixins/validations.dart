@@ -65,6 +65,7 @@ mixin FieldsValidation {
     if (value == null || value.isEmpty) {
       return "Required*";
     }
+    return null;
   }
 
   String? validateTextWithDashes(String? value) {

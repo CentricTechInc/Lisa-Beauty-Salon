@@ -67,7 +67,7 @@ class BuildYourProfilePageFour extends StatelessWidget {
 }
 
 class _ShowServicesWidget extends StatelessWidget {
-  const _ShowServicesWidget({required this.pageController, super.key});
+  const _ShowServicesWidget({required this.pageController});
   final PageController pageController;
 
   @override

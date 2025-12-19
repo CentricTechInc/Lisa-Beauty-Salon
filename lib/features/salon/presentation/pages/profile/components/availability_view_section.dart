@@ -113,7 +113,9 @@ class AvailabilityViewSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.pinkTwo.withOpacity(0.1),
+                  color: AppColors.pinkTwo.withValues(
+                    alpha: 0.1
+                  ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const CommonText(
@@ -147,7 +149,9 @@ class AvailabilityViewSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.pinkTwo.withOpacity(0.1),
+                  color: AppColors.pinkTwo.withValues(
+                    alpha: 0.1
+                  ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const CommonText(

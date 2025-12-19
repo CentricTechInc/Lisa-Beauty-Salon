@@ -39,7 +39,9 @@ class CircularDaySelector extends StatelessWidget {
             height: 32,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: isSelected ? AppColors.pinkTwo.withOpacity(0.1) : AppColors.whiteOne,
+              color: isSelected ? AppColors.pinkTwo.withValues(
+                alpha: 0.1
+              ) : AppColors.whiteOne,
               border: Border.all(
                 color: isSelected ? AppColors.pinkTwo : AppColors.greyOne,
                 width: 1,

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
@@ -7,7 +6,6 @@ import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/components/message_card_component.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/message_detail_page.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key});
