@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
@@ -228,13 +229,10 @@ class HomePage extends StatelessWidget {
             ),
           ),
           VerticalSpacing(20),
-          SizedBox(
-            height: context.height * 0.3 ,
-            child: ListView.builder(
-              itemCount: items.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                final item = items[index];
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: items.map((item) {
                 return GestureDetector(
                   onTap: () {
                     showFeatureInDevelopment();
@@ -242,20 +240,17 @@ class HomePage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
                           width: 110,
                           height: 120,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  24
-                              ),
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      item['image'] ?? ''
-                                  ),
-                                  fit: BoxFit.cover
-                              )
+                            borderRadius: BorderRadius.circular(24),
+                            image: DecorationImage(
+                              image: AssetImage(item['image'] ?? ''),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         VerticalSpacing(5),
@@ -269,7 +264,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 );
-              },
+              }).toList(),
             ),
           ),
 
@@ -291,7 +286,7 @@ class HomePage extends StatelessWidget {
           //     ),
           //   ),
           // ),
-          VerticalSpacing(20),
+          VerticalSpacing(30),
           // New Promotional Card Section
           Container(
             width: context.width - 40,
@@ -449,7 +444,10 @@ class HomePage extends StatelessWidget {
               distance: salon['distance'],
               imagePath: salon['image'],
               onTap: () {
-                showFeatureInDevelopment();
+                Get.toNamed(
+                  RouteNames.salonDetail,
+                  arguments: salon,
+                );
               },
             ),
           )),

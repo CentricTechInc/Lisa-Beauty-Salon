@@ -55,4 +55,7 @@ class Assets {
   static const String faqIcon = "assets/svgs/faq.svg";
   static const String chatSupportIcon = "assets/svgs/chat_support.svg";
   static const String callSupportIcon = "assets/svgs/call_support.svg";
+
+  static const String salonOne = "assets/images/salon_one.png";
+  static const String salonTwo = "assets/images/salon_two.png";
 }

@@ -126,7 +126,6 @@ class _CommonTabBarWidgetOneState extends State<CommonTabBarWidgetOne>
   }
 }
 
-/// Use this widget, if the tab content is of infinite height
 class CommonTabBarWidgetTwo extends StatefulWidget {
   const CommonTabBarWidgetTwo({
     super.key,
@@ -145,6 +144,11 @@ class CommonTabBarWidgetTwo extends StatefulWidget {
     this.unselectedLabelFontSize = 14,
     this.unselectedLabelFontWeight = FontWeight.w400,
     this.tabPadding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    this.containerDecoration,
+    this.tabAlignment,
+    this.labelPadding,
+    this.indicatorSize = TabBarIndicatorSize.tab,
+    this.indicatorRadius = 8,
   }) : assert(
          tabs.length == tabViews.length,
          'Tabs and TabViews must match in length',
@@ -165,6 +169,11 @@ class CommonTabBarWidgetTwo extends StatefulWidget {
   final double unselectedLabelFontSize;
   final FontWeight unselectedLabelFontWeight;
   final EdgeInsets tabPadding;
+  final BoxDecoration? containerDecoration;
+  final TabAlignment? tabAlignment;
+  final EdgeInsetsGeometry? labelPadding;
+  final TabBarIndicatorSize indicatorSize;
+  final double indicatorRadius;
 
   @override
   State<CommonTabBarWidgetTwo> createState() => _CommonTabBarWidgetTwoState();
@@ -213,7 +222,7 @@ class _CommonTabBarWidgetTwoState extends State<CommonTabBarWidgetTwo>
             padding: widget.tabPadding,
             child: Container(
               height: height * widget.heightFactor,
-              decoration: BoxDecoration(
+              decoration: widget.containerDecoration ?? BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: AppColors.greyOne),
                 color: AppColors.transparent,
@@ -222,7 +231,9 @@ class _CommonTabBarWidgetTwoState extends State<CommonTabBarWidgetTwo>
                 controller: _tabController,
                 onTap: widget.onTap,
                 isScrollable: widget.isScrollable,
-                indicatorSize: TabBarIndicatorSize.tab,
+                tabAlignment: widget.tabAlignment,
+                labelPadding: widget.labelPadding,
+                indicatorSize: widget.indicatorSize,
                 indicatorAnimation: TabIndicatorAnimation.elastic,
                 dividerColor: AppColors.transparent,
                 labelColor: widget.selectedLabelColor,
@@ -243,7 +254,7 @@ class _CommonTabBarWidgetTwoState extends State<CommonTabBarWidgetTwo>
                 ),
                 indicator: BoxDecoration(
                   color: widget.indicatorColor,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(widget.indicatorRadius),
                 ),
                 tabs: widget.tabs.map((title) => Text(title)).toList(),
               ),

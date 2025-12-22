@@ -292,6 +292,12 @@ class Strings {
   static const String bloomAndBladeText = "At The Bloom & Blade";
   static const String nineAmText = "09:00 AM";
   static const String nearestSalonText = "Nearest Salon";
+  static const String salonDetailsText = "Salon Details";
+  static const String aboutSalonText = "About";
+  static const String salonServicesText = "Services";
+  static const String packageText = "Package";
+  static const String galleryText = "Gallery";
+  static const String reviewsText = "Reviews";
   static const String viewAllText = "View All";
   static const String weekRevenueText = "This Week's Revenue";
   static const String weekRevenuePriceText = "\$1,240";
@@ -488,4 +494,12 @@ class Strings {
   static const String callSupportTimeText = "Monday to Friday 10:30 am- 1:30 pm";
   static const String faqsText = "FAQs";
   static const String supportPhoneNumber = "+1234567890";
+
+  // Salon Detail Page
+  static const String openingHoursText = "Opening Hours";
+  static const String addressText = "Address";
+  static const String getDirectionsText = "Get Directions";
+  static const String openText = "Open";
+  static const String closedText = "Closed";
+  static const String allReviewsCountText = "All reviews";
 }
