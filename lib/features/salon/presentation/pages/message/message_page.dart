@@ -5,7 +5,7 @@ import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/components/message_card_component.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_message_card.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key});
@@ -95,7 +95,7 @@ class _MessagePageState extends State<MessagePage> {
                     RouteNames.messageDetail
                   );
                 },
-                child: MessageCardComponent(
+                child: CommonMessageCard(
                   name: message['name'],
                   message: message['message'],
                   time: message['time'],

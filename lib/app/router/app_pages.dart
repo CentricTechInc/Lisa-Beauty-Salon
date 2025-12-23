@@ -18,8 +18,9 @@ import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointme
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/review_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/map_navigation_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/salon_detail/salon_detail_page.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/message/message_detail_page.dart' as customer;
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/build_your_profile_page.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/message_detail_page.dart';
+import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/message_detail_page.dart' as salon;
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/about_us_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/change_password_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/notification_page.dart';
@@ -72,7 +73,9 @@ class AppPages {
     ),
     GetPage(
       name: RouteNames.messageDetail, 
-      page: () => MessageDetailPage()
+      page: () => Get.previousRoute == RouteNames.mainSalon 
+        ? const salon.MessageDetailPage() 
+        : const customer.MessageDetailPage()
     ),
     GetPage(
       name: RouteNames.profileEdit, 

@@ -8,6 +8,7 @@ import 'package:lisa_beauty_salon/features/customer/presentation/controllers/set
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/home/home_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/map_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/appointment_page.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/message/message_page.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_bar.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 
@@ -20,7 +21,7 @@ class CustomerShell extends StatelessWidget {
     HomePage(),
     MapPage(),
     AppointmentPage(),
-    Container(),
+    MessagePage(),
     Container(),
   ];
 
