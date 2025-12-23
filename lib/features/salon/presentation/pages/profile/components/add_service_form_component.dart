@@ -18,19 +18,14 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 
-class AddServiceFormComponent extends StatefulWidget {
+class AddServiceFormComponent extends StatelessWidget with FieldsValidation {
   final VoidCallback onSaved;
 
-  const AddServiceFormComponent({
+  AddServiceFormComponent({
     required this.onSaved,
     super.key,
   });
 
-  @override
-  State<AddServiceFormComponent> createState() => _AddServiceFormComponentState();
-}
-
-class _AddServiceFormComponentState extends State<AddServiceFormComponent> with FieldsValidation {
   final _formKey = GlobalKey<FormState>();
 
   final serviceCategoryNameController = TextEditingController();
@@ -40,6 +35,7 @@ class _AddServiceFormComponentState extends State<AddServiceFormComponent> with 
   final servicePriceController = TextEditingController();
   final serviceDescription = TextEditingController();
   final photoNotifier = ValueNotifier<String?>(null);
+  final subCategoryListNotifier = ValueNotifier<List<String>>([]);
 
   Future<File?> pickImageFromGallery() async {
     try {
@@ -172,38 +168,40 @@ class _AddServiceFormComponentState extends State<AddServiceFormComponent> with 
                         .toList(),
                     validator: validateTextNotEmpty,
                     onChanged: (value) {
-                      setState(() {
-                        serviceCategoryNameController.text = value ?? '';
-                        subCategoryController.clear();
-                      });
+                      serviceCategoryNameController.text = value ?? '';
+                      subCategoryController.clear();
+                      subCategoryListNotifier.value = categorySubCategories[value] ?? [];
                     },
                   ),
                   const VerticalSpacing(20),
-                  CommonDropdownField(
-                    titleLabelText: Strings.subCategoryLabelText,
-                    items: (categorySubCategories[serviceCategoryNameController.text] ?? [])
-                        .map((value) => DropdownMenuItem(
-                              value: value,
-                              child: CommonText(
-                                value,
-                                fontSize: 15,
-                                color: AppColors.greyTwo,
-                              ),
-                            ))
-                        .toList(),
-                    selectedItemBuilder: (context) => (categorySubCategories[serviceCategoryNameController.text] ?? [])
-                        .map((value) => CommonText(
-                              value,
-                              fontSize: 15,
-                              color: AppColors.blackTwo,
-                            ))
-                        .toList(),
-                    value: subCategoryController.text.isEmpty ? null : subCategoryController.text,
-                    validator: validateTextNotEmpty,
-                    onChanged: (value) {
-                      setState(() {
-                        subCategoryController.text = value ?? '';
-                      });
+                  ValueListenableBuilder<List<String>>(
+                    valueListenable: subCategoryListNotifier,
+                    builder: (context, subCategories, child) {
+                      return CommonDropdownField(
+                        titleLabelText: Strings.subCategoryLabelText,
+                        items: subCategories
+                            .map((value) => DropdownMenuItem(
+                                  value: value,
+                                  child: CommonText(
+                                    value,
+                                    fontSize: 15,
+                                    color: AppColors.greyTwo,
+                                  ),
+                                ))
+                            .toList(),
+                        selectedItemBuilder: (context) => subCategories
+                            .map((value) => CommonText(
+                                  value,
+                                  fontSize: 15,
+                                  color: AppColors.blackTwo,
+                                ))
+                            .toList(),
+                        value: subCategoryController.text.isEmpty ? null : subCategoryController.text,
+                        validator: validateTextNotEmpty,
+                        onChanged: (value) {
+                          subCategoryController.text = value ?? '';
+                        },
+                      );
                     },
                   ),
                   const VerticalSpacing(20),
@@ -321,7 +319,7 @@ class _AddServiceFormComponentState extends State<AddServiceFormComponent> with 
                       servicePrice: double.tryParse(price) ?? 0,
                     ),
                   );
-                  widget.onSaved();
+                  onSaved();
                 } else {
                   MessageUtils.showErrorSnackBar(
                     Strings.fillRequiredFieldsText,

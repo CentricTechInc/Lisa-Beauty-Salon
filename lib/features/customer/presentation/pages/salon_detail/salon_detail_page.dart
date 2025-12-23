@@ -13,18 +13,8 @@ import 'components/package_tab.dart';
 import 'components/gallery_tab.dart';
 import 'components/review_tab.dart';
 
-class SalonDetailPage extends StatefulWidget {
+class SalonDetailPage extends StatelessWidget {
   const SalonDetailPage({super.key});
-
-  @override
-  State<SalonDetailPage> createState() => _SalonDetailPageState();
-}
-
-class _SalonDetailPageState extends State<SalonDetailPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

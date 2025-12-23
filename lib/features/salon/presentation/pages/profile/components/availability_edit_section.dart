@@ -11,39 +11,34 @@ import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'circular_day_selector.dart';
 import 'time_selector_block.dart';
 
-class AvailabilityEditSection extends StatefulWidget {
+class AvailabilityEditSection extends StatelessWidget {
   final VoidCallback onSaved;
 
-  const AvailabilityEditSection({
+  AvailabilityEditSection({
     required this.onSaved,
     super.key,
   });
 
-  @override
-  State<AvailabilityEditSection> createState() => _AvailabilityEditSectionState();
-}
-
-class _AvailabilityEditSectionState extends State<AvailabilityEditSection> {
   final authController = Get.find<AuthController>();
 
-  // Simple Mode Controllers
+  // Simple Mode Notifiers
   final fromTimeController = TextEditingController(text: "08:30");
   final toTimeController = TextEditingController(text: "09:30");
-  String fromPeriod = Strings.amText;
-  String toPeriod = Strings.pmText;
-  List<String> selectedDays = [
+  final fromPeriodNotifier = ValueNotifier<String>(Strings.amText);
+  final toPeriodNotifier = ValueNotifier<String>(Strings.pmText);
+  final selectedDaysNotifier = ValueNotifier<List<String>>([
     Strings.monShortText,
     Strings.tueShortText,
     Strings.wedShortText,
     Strings.thuShortText,
     Strings.friShortText,
-  ];
+  ]);
 
-  // Break Time Controllers
+  // Break Time Notifiers
   final breakFromController = TextEditingController(text: "12:30");
   final breakToController = TextEditingController(text: "01:30");
-  String breakFromPeriod = Strings.pmText;
-  String breakToPeriod = Strings.pmText;
+  final breakFromPeriodNotifier = ValueNotifier<String>(Strings.pmText);
+  final breakToPeriodNotifier = ValueNotifier<String>(Strings.pmText);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +96,7 @@ class _AvailabilityEditSectionState extends State<AvailabilityEditSection> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: CommonButton(
-            onPressed: widget.onSaved,
+            onPressed: onSaved,
             text: Strings.setAvailabilityText,
             radius: 12,
             textFontWeight: 600,
@@ -114,31 +109,46 @@ class _AvailabilityEditSectionState extends State<AvailabilityEditSection> {
   Widget _buildSimpleMode() {
     return Column(
       children: [
-        CircularDaySelector(
-          selectedDays: selectedDays,
-          onDayToggle: (day) {
-            setState(() {
-              if (selectedDays.contains(day)) {
-                selectedDays.remove(day);
-              } else {
-                selectedDays.add(day);
-              }
-            });
+        ValueListenableBuilder<List<String>>(
+          valueListenable: selectedDaysNotifier,
+          builder: (context, selectedDays, child) {
+            return CircularDaySelector(
+              selectedDays: selectedDays,
+              onDayToggle: (day) {
+                final newList = List<String>.from(selectedDays);
+                if (newList.contains(day)) {
+                  newList.remove(day);
+                } else {
+                  newList.add(day);
+                }
+                selectedDaysNotifier.value = newList;
+              },
+            );
           },
         ),
         const VerticalSpacing(30),
-        TimeSelectorBlock(
-          label: Strings.fromText,
-          timeController: fromTimeController,
-          selectedPeriod: fromPeriod,
-          onPeriodChanged: (p) => setState(() => fromPeriod = p),
+        ValueListenableBuilder<String>(
+          valueListenable: fromPeriodNotifier,
+          builder: (context, fromPeriod, child) {
+            return TimeSelectorBlock(
+              label: Strings.fromText,
+              timeController: fromTimeController,
+              selectedPeriod: fromPeriod,
+              onPeriodChanged: (p) => fromPeriodNotifier.value = p,
+            );
+          },
         ),
         const VerticalSpacing(20),
-        TimeSelectorBlock(
-          label: Strings.toText,
-          timeController: toTimeController,
-          selectedPeriod: toPeriod,
-          onPeriodChanged: (p) => setState(() => toPeriod = p),
+        ValueListenableBuilder<String>(
+          valueListenable: toPeriodNotifier,
+          builder: (context, toPeriod, child) {
+            return TimeSelectorBlock(
+              label: Strings.toText,
+              timeController: toTimeController,
+              selectedPeriod: toPeriod,
+              onPeriodChanged: (p) => toPeriodNotifier.value = p,
+            );
+          },
         ),
       ],
     );
@@ -164,46 +174,51 @@ class _AvailabilityEditSectionState extends State<AvailabilityEditSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CommonText(
+        const CommonText(
           "${Strings.addBreakTimeText} (Optional)",
           fontSize: 18,
           fontWeight: 700,
           color: AppColors.blackTwo,
         ),
         const VerticalSpacing(20),
-        TimeSelectorBlock(
-          label: Strings.fromText,
-          timeController: breakFromController,
-          selectedPeriod: breakFromPeriod,
-          onPeriodChanged: (p) => setState(() => breakFromPeriod = p),
+        ValueListenableBuilder<String>(
+          valueListenable: breakFromPeriodNotifier,
+          builder: (context, breakFromPeriod, child) {
+            return TimeSelectorBlock(
+              label: Strings.fromText,
+              timeController: breakFromController,
+              selectedPeriod: breakFromPeriod,
+              onPeriodChanged: (p) => breakFromPeriodNotifier.value = p,
+            );
+          },
         ),
         const VerticalSpacing(20),
-        TimeSelectorBlock(
-          label: Strings.toText,
-          timeController: breakToController,
-          selectedPeriod: breakToPeriod,
-          onPeriodChanged: (p) => setState(() => breakToPeriod = p),
+        ValueListenableBuilder<String>(
+          valueListenable: breakToPeriodNotifier,
+          builder: (context, breakToPeriod, child) {
+            return TimeSelectorBlock(
+              label: Strings.toText,
+              timeController: breakToController,
+              selectedPeriod: breakToPeriod,
+              onPeriodChanged: (p) => breakToPeriodNotifier.value = p,
+            );
+          },
         ),
       ],
     );
   }
 }
 
-class _DayScheduleCustomizeItem extends StatefulWidget {
+class _DayScheduleCustomizeItem extends StatelessWidget {
   final String day;
 
-  const _DayScheduleCustomizeItem({required this.day});
+  _DayScheduleCustomizeItem({required this.day});
 
-  @override
-  State<_DayScheduleCustomizeItem> createState() => _DayScheduleCustomizeItemState();
-}
-
-class _DayScheduleCustomizeItemState extends State<_DayScheduleCustomizeItem> {
   final isEnabled = false.obs;
   final fromTimeController = TextEditingController(text: "08:30");
   final toTimeController = TextEditingController(text: "09:30");
-  String fromPeriod = Strings.amText;
-  String toPeriod = Strings.pmText;
+  final fromPeriodNotifier = ValueNotifier<String>(Strings.amText);
+  final toPeriodNotifier = ValueNotifier<String>(Strings.pmText);
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +237,7 @@ class _DayScheduleCustomizeItemState extends State<_DayScheduleCustomizeItem> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonText(
-                  widget.day,
+                  day,
                   fontSize: 16,
                   fontWeight: 600,
                   color: AppColors.blackTwo,
@@ -238,18 +253,28 @@ class _DayScheduleCustomizeItemState extends State<_DayScheduleCustomizeItem> {
               return Column(
                 children: [
                   const VerticalSpacing(20),
-                  TimeSelectorBlock(
-                    label: Strings.fromText,
-                    timeController: fromTimeController,
-                    selectedPeriod: fromPeriod,
-                    onPeriodChanged: (p) => setState(() => fromPeriod = p),
+                  ValueListenableBuilder<String>(
+                    valueListenable: fromPeriodNotifier,
+                    builder: (context, fromPeriod, child) {
+                      return TimeSelectorBlock(
+                        label: Strings.fromText,
+                        timeController: fromTimeController,
+                        selectedPeriod: fromPeriod,
+                        onPeriodChanged: (p) => fromPeriodNotifier.value = p,
+                      );
+                    },
                   ),
                   const VerticalSpacing(20),
-                  TimeSelectorBlock(
-                    label: Strings.toText,
-                    timeController: toTimeController,
-                    selectedPeriod: toPeriod,
-                    onPeriodChanged: (p) => setState(() => toPeriod = p),
+                  ValueListenableBuilder<String>(
+                    valueListenable: toPeriodNotifier,
+                    builder: (context, toPeriod, child) {
+                      return TimeSelectorBlock(
+                        label: Strings.toText,
+                        timeController: toTimeController,
+                        selectedPeriod: toPeriod,
+                        onPeriodChanged: (p) => toPeriodNotifier.value = p,
+                      );
+                    },
                   ),
                 ],
               );

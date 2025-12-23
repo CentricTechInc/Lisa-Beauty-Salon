@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/controllers/setting_controller.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/home/home_page.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/map_page.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_bar.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 
@@ -15,7 +17,7 @@ class CustomerShell extends StatelessWidget {
 
   final pages = [
     HomePage(),
-    Container(),
+    MapPage(),
     Container(),
     Container(),
     Container(),
@@ -25,6 +27,14 @@ class CustomerShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => CommonScaffoldWidget(
       bgColor: AppColors.whiteOne,
+      padding: EdgeInsets.zero,
+      useSafeArea: false,
+      extendBody: true,
+      systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: AppColors.whiteOne,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
       bottomNavigationBar: CommonBottomBar(
         currentIndex: controller.currentIndex.value,
         onTap: controller.changeTab,

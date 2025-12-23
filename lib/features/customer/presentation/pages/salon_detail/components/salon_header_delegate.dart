@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 
 class SalonHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -33,15 +34,23 @@ class SalonHeaderDelegate extends SliverPersistentHeaderDelegate {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: AppColors.whiteOne,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Center(
-                  child: Icon(Icons.chevron_left, color: AppColors.blackTwo),
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteOne,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.chevron_left, 
+                      color: AppColors.blackTwo
+                    ),
+                  ),
                 ),
               ),
               Container(

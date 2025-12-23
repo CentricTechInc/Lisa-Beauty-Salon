@@ -7,20 +7,15 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'info_row.dart';
 
-class AboutTab extends StatefulWidget {
+class AboutTab extends StatelessWidget {
   const AboutTab({super.key});
-
-  @override
-  State<AboutTab> createState() => _AboutTabState();
-}
-
-class _AboutTabState extends State<AboutTab> {
-  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
     const String fullText =
         "Welcome to Bloom & Blade, where your beauty is our priority. Our team of experts is dedicated to providing you with the best experience possible. Whether you're looking for a fresh cut, a stunning new color, or a relaxing spa treatment, we've got you covered. Visit us today and let us help you bloom!";
+
+    final ValueNotifier<bool> isExpandedNotifier = ValueNotifier<bool>(false);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -35,36 +30,39 @@ class _AboutTabState extends State<AboutTab> {
             color: AppColors.blackTwo,
           ),
           VerticalSpacing(12),
-          RichText(
-            text: TextSpan(
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppColors.greyTwo,
-                height: 1.5,
-                fontFamily: Strings.fontFamily,
-              ),
-              children: [
-                TextSpan(
-                  text: _isExpanded
-                      ? fullText
-                      : "${fullText.substring(0, 150)}...",
-                ),
-                TextSpan(
-                  text: _isExpanded ? " Read less" : " Read more",
+          ValueListenableBuilder<bool>(
+            valueListenable: isExpandedNotifier,
+            builder: (context, isExpanded, child) {
+              return RichText(
+                text: TextSpan(
                   style: const TextStyle(
-                    color: AppColors.pinkTwo,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.greyTwo,
+                    height: 1.5,
+                    fontFamily: Strings.fontFamily,
                   ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      setState(() {
-                        _isExpanded = !_isExpanded;
-                      });
-                    },
+                  children: [
+                    TextSpan(
+                      text: isExpanded
+                          ? fullText
+                          : "${fullText.substring(0, 150)}...",
+                    ),
+                    TextSpan(
+                      text: isExpanded ? " Read less" : " Read more",
+                      style: const TextStyle(
+                        color: AppColors.pinkTwo,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          isExpandedNotifier.value = !isExpandedNotifier.value;
+                        },
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
           VerticalSpacing(24),
           const CommonText(

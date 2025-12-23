@@ -63,6 +63,10 @@ class HomePage extends StatelessWidget {
       },
     ];
     return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20
+      ),
       child: Column(
         children: [
           Row(

@@ -4,7 +4,7 @@ import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
-class CommonMultiSelectDropdown<T> extends StatefulWidget {
+class CommonMultiSelectDropdown<T> extends StatelessWidget {
   const CommonMultiSelectDropdown({
     super.key,
     required this.items,
@@ -41,196 +41,190 @@ class CommonMultiSelectDropdown<T> extends StatefulWidget {
   final AutovalidateMode autovalidateMode;
 
   @override
-  State<CommonMultiSelectDropdown<T>> createState() => _CommonMultiSelectDropdownState<T>();
-}
-
-class _CommonMultiSelectDropdownState<T> extends State<CommonMultiSelectDropdown<T>> {
-  bool _isExpanded = false;
-
-  void _toggleExpanded() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> isExpandedNotifier = ValueNotifier<bool>(false);
+
     return FormField<List<T>>(
-      initialValue: widget.selectedItems,
-      validator: widget.validator,
-      autovalidateMode: widget.autovalidateMode,
+      initialValue: selectedItems,
+      validator: validator,
+      autovalidateMode: autovalidateMode,
       builder: (FormFieldState<List<T>> state) {
         final hasError = state.hasError;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (widget.titleLabelText.isNotEmpty) ...[
-              CommonText(
-                widget.titleLabelText,
-                fontSize: 14,
-                fontWeight: 700,
-                color: widget.textColor,
-              ),
-              const VerticalSpacing(8),
-            ],
-            GestureDetector(
-              onTap: _toggleExpanded,
-              child: Container(
-                padding: widget.contentPadding,
-                decoration: BoxDecoration(
-                  color: widget.fillColor,
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  border: Border.all(
-                    color: hasError ? Colors.red : widget.borderColor,
-                    width: hasError ? 1.25 : 1,
+        return ValueListenableBuilder<bool>(
+          valueListenable: isExpandedNotifier,
+          builder: (context, isExpanded, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (titleLabelText.isNotEmpty) ...[
+                  CommonText(
+                    titleLabelText,
+                    fontSize: 14,
+                    fontWeight: 700,
+                    color: textColor,
                   ),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CommonText(
-                        widget.selectedItems.isEmpty
-                            ? widget.hintText
-                            : "${widget.selectedItems.length} ${Strings.selectedText}",
-                        fontSize: 15,
-                        color: widget.selectedItems.isEmpty ? widget.hintColor : widget.textColor,
-                      ),
-                    ),
-                    Icon(
-                      _isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                      color: hasError ? Colors.red : widget.iconColor,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (hasError) ...[
-              const VerticalSpacing(8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: CommonText(
-                  state.errorText ?? '',
-                  fontSize: 12,
-                  color: Colors.red,
-                ),
-              ),
-            ],
-            if (_isExpanded) ...[
-              const VerticalSpacing(8),
-              Container(
-                constraints: const BoxConstraints(maxHeight: 200),
-                decoration: BoxDecoration(
-                  color: AppColors.whiteOne,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.greyOne),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(
-                        alpha: 0.05
-                      ),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  itemCount: widget.items.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1, color: AppColors.greyFour),
-                  itemBuilder: (context, index) {
-                    final item = widget.items[index];
-                    final isSelected = widget.selectedItems.contains(item);
-                    return InkWell(
-                      onTap: () {
-                        final newSelected = List<T>.from(widget.selectedItems);
-                        if (isSelected) {
-                          newSelected.remove(item);
-                        } else {
-                          newSelected.add(item);
-                        }
-                        state.didChange(newSelected);
-                        widget.onChanged(newSelected);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color: isSelected ? AppColors.success : Colors.white,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: isSelected ? AppColors.success : AppColors.greyTwo,
-                                ),
-                              ),
-                              child: isSelected
-                                  ? const Icon(Icons.check, size: 14, color: Colors.white)
-                                  : null,
-                            ),
-                            const HorizontalSpacing(12),
-                            Expanded(
-                              child: CommonText(
-                                widget.itemLabelBuilder(item),
-                                fontSize: 14,
-                                color: AppColors.blackTwo,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-            if (widget.selectedItems.isNotEmpty) ...[
-              const VerticalSpacing(12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: widget.selectedItems.map((item) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  const VerticalSpacing(8),
+                ],
+                GestureDetector(
+                  onTap: () => isExpandedNotifier.value = !isExpandedNotifier.value,
+                  child: Container(
+                    padding: contentPadding,
                     decoration: BoxDecoration(
-                      color: AppColors.pinkTwo.withValues(
-                        alpha: 0.1
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                      color: fillColor,
+                      borderRadius: BorderRadius.circular(borderRadius),
                       border: Border.all(
-                        color: AppColors.pinkTwo.withValues(
-                          alpha: 0.3
-                        )
+                        color: hasError ? Colors.red : borderColor,
+                        width: hasError ? 1.25 : 1,
                       ),
                     ),
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        CommonText(
-                          widget.itemLabelBuilder(item),
-                          fontSize: 12,
-                          fontWeight: 500,
-                          color: AppColors.pinkTwo,
+                        Expanded(
+                          child: CommonText(
+                            selectedItems.isEmpty
+                                ? hintText
+                                : "${selectedItems.length} ${Strings.selectedText}",
+                            fontSize: 15,
+                            color: selectedItems.isEmpty ? hintColor : textColor,
+                          ),
                         ),
-                        const HorizontalSpacing(4),
-                        GestureDetector(
-                          onTap: () {
-                            final newSelected = List<T>.from(widget.selectedItems);
-                            newSelected.remove(item);
-                            state.didChange(newSelected);
-                            widget.onChanged(newSelected);
-                          },
-                          child: const Icon(Icons.close, size: 14, color: AppColors.pinkTwo),
+                        Icon(
+                          isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                          color: hasError ? Colors.red : iconColor,
                         ),
                       ],
                     ),
-                  );
-                }).toList(),
-              ),
-            ],
-          ],
+                  ),
+                ),
+                if (hasError) ...[
+                  const VerticalSpacing(8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: CommonText(
+                      state.errorText ?? '',
+                      fontSize: 12,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+                if (isExpanded) ...[
+                  const VerticalSpacing(8),
+                  Container(
+                    constraints: const BoxConstraints(maxHeight: 200),
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteOne,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.greyOne),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(
+                            alpha: 0.05
+                          ),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      itemCount: items.length,
+                      separatorBuilder: (_, __) => const Divider(height: 1, color: AppColors.greyFour),
+                      itemBuilder: (context, index) {
+                        final item = items[index];
+                        final isSelected = selectedItems.contains(item);
+                        return InkWell(
+                          onTap: () {
+                            final newSelected = List<T>.from(selectedItems);
+                            if (isSelected) {
+                              newSelected.remove(item);
+                            } else {
+                              newSelected.add(item);
+                            }
+                            state.didChange(newSelected);
+                            onChanged(newSelected);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    color: isSelected ? AppColors.success : Colors.white,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: isSelected ? AppColors.success : AppColors.greyTwo,
+                                    ),
+                                  ),
+                                  child: isSelected
+                                      ? const Icon(Icons.check, size: 14, color: Colors.white)
+                                      : null,
+                                ),
+                                const HorizontalSpacing(12),
+                                Expanded(
+                                  child: CommonText(
+                                    itemLabelBuilder(item),
+                                    fontSize: 14,
+                                    color: AppColors.blackTwo,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+                if (selectedItems.isNotEmpty) ...[
+                  const VerticalSpacing(12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: selectedItems.map((item) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: AppColors.pinkTwo.withValues(
+                            alpha: 0.1
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: AppColors.pinkTwo.withValues(
+                              alpha: 0.3
+                            )
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CommonText(
+                              itemLabelBuilder(item),
+                              fontSize: 12,
+                              fontWeight: 500,
+                              color: AppColors.pinkTwo,
+                            ),
+                            const HorizontalSpacing(4),
+                            GestureDetector(
+                              onTap: () {
+                                final newSelected = List<T>.from(selectedItems);
+                                newSelected.remove(item);
+                                state.didChange(newSelected);
+                                onChanged(newSelected);
+                              },
+                              child: const Icon(Icons.close, size: 14, color: AppColors.pinkTwo),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ],
+            );
+          },
         );
       },
     );

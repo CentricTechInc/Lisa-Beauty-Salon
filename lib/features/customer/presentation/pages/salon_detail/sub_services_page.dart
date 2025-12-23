@@ -8,51 +8,46 @@ import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
-class SubServicesPage extends StatefulWidget {
+class SubServicesPage extends StatelessWidget {
   const SubServicesPage({super.key});
 
   @override
-  State<SubServicesPage> createState() => _SubServicesPageState();
-}
-
-class _SubServicesPageState extends State<SubServicesPage> {
-  final List<Map<String, dynamic>> subServices = [
-    {
-      "audience": "Woman",
-      "title": "Hair Wash & Blow-Dry/Styling",
-      "price": "\$3.12",
-      "description":
-          "Revitalize your look with a refreshing wash and blow-dry. Enjoy sleek, styled hair that shines and turns heads!",
-      "isSelected": true,
-    },
-    {
-      "audience": "Man",
-      "title": "Haircut",
-      "price": "\$25.00",
-      "description":
-          "Get a sharp haircut and a precise beard trim for a polished, fresh appearance.",
-      "isSelected": false,
-    },
-    {
-      "audience": "Man",
-      "title": "Beard Trim",
-      "price": "\$15.00",
-      "description":
-          "Get a sharp haircut and a precise beard trim for a polished, fresh appearance.",
-      "isSelected": false,
-    },
-    {
-      "audience": "Kids",
-      "title": "Kids' Haircut",
-      "price": "\$15.00",
-      "description":
-          "Fun and friendly haircut experience for kids, ensuring they leave with a smile and a stylish new look.",
-      "isSelected": false,
-    },
-  ];
-
-  @override
   Widget build(BuildContext context) {
+    final ValueNotifier<List<Map<String, dynamic>>> subServicesNotifier = ValueNotifier<List<Map<String, dynamic>>>([
+      {
+        "audience": "Woman",
+        "title": "Hair Wash & Blow-Dry/Styling",
+        "price": "\$3.12",
+        "description":
+            "Revitalize your look with a refreshing wash and blow-dry. Enjoy sleek, styled hair that shines and turns heads!",
+        "isSelected": true,
+      },
+      {
+        "audience": "Man",
+        "title": "Haircut",
+        "price": "\$25.00",
+        "description":
+            "Get a sharp haircut and a precise beard trim for a polished, fresh appearance.",
+        "isSelected": false,
+      },
+      {
+        "audience": "Man",
+        "title": "Beard Trim",
+        "price": "\$15.00",
+        "description":
+            "Get a sharp haircut and a precise beard trim for a polished, fresh appearance.",
+        "isSelected": false,
+      },
+      {
+        "audience": "Kids",
+        "title": "Kids' Haircut",
+        "price": "\$15.00",
+        "description":
+            "Fun and friendly haircut experience for kids, ensuring they leave with a smile and a stylish new look.",
+        "isSelected": false,
+      },
+    ]);
+
     return CommonScaffoldWidget(
       useSafeArea: true,
       padding: EdgeInsets.zero,
@@ -60,25 +55,30 @@ class _SubServicesPageState extends State<SubServicesPage> {
         children: [
           _buildHeader(),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20, 
-                vertical: 20
-              ),
-              itemCount: subServices.length,
-              separatorBuilder: (context, index) => VerticalSpacing(16),
-              itemBuilder: (context, index) {
-                final service = subServices[index];
-                return _SubServiceCard(
-                  audience: service['audience'] as String,
-                  title: service['title'] as String,
-                  price: service['price'] as String,
-                  description: service['description'] as String,
-                  isSelected: service['isSelected'] as bool,
-                  onChanged: (val) {
-                    setState(() {
-                      subServices[index]['isSelected'] = val;
-                    });
+            child: ValueListenableBuilder<List<Map<String, dynamic>>>(
+              valueListenable: subServicesNotifier,
+              builder: (context, subServices, child) {
+                return ListView.separated(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20, 
+                    vertical: 20
+                  ),
+                  itemCount: subServices.length,
+                  separatorBuilder: (context, index) => VerticalSpacing(16),
+                  itemBuilder: (context, index) {
+                    final service = subServices[index];
+                    return _SubServiceCard(
+                      audience: service['audience'] as String,
+                      title: service['title'] as String,
+                      price: service['price'] as String,
+                      description: service['description'] as String,
+                      isSelected: service['isSelected'] as bool,
+                      onChanged: (val) {
+                        final newList = List<Map<String, dynamic>>.from(subServicesNotifier.value);
+                        newList[index] = {...newList[index], 'isSelected': val};
+                        subServicesNotifier.value = newList;
+                      },
+                    );
                   },
                 );
               },
@@ -98,20 +98,20 @@ class _SubServicesPageState extends State<SubServicesPage> {
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: CommonButton(
               onPressed: () => Get.back(),
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 15,
                 vertical: 15
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CommonText(
+                  CommonText(
                     "Continue",
                     fontSize: 16,
                     fontWeight: 600,
                     color: AppColors.whiteOne,
                   ),
-                  const CommonText(
+                  CommonText(
                     "\$8.12",
                     fontSize: 16,
                     fontWeight: 600,

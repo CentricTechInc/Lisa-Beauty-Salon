@@ -21,23 +21,18 @@ import 'components/earning_item_component.dart';
 import 'components/payout_details_component.dart';
 import 'components/payout_item_component.dart';
 
-class PaymentHistoryPage extends StatefulWidget {
+class PaymentHistoryPage extends StatelessWidget {
   const PaymentHistoryPage({super.key});
 
   @override
-  State<PaymentHistoryPage> createState() => _PaymentHistoryPageState();
-}
-
-class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
-  String _selectedFilter = Strings.thisWeekText;
-  final List<String> _filters = [
-    Strings.thisWeekText,
-    Strings.thisMonthText,
-    Strings.thisYearText
-  ];
-
-  @override
   Widget build(BuildContext context) {
+    final ValueNotifier<String> selectedFilterNotifier = ValueNotifier<String>(Strings.thisWeekText);
+    final List<String> filters = [
+      Strings.thisWeekText,
+      Strings.thisMonthText,
+      Strings.thisYearText
+    ];
+
     return CommonScaffoldWidget(
       padding: EdgeInsets.zero,
       child: SingleChildScrollView(
@@ -70,16 +65,25 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                 ],
               ),
             ),
-            CommonTabBarWidgetTwo(
-              tabPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              indicatorColor: AppColors.pinkTwo,
-              selectedLabelColor: AppColors.whiteOne,
-              unselectedLabelColor: AppColors.greyTwo,
-              tabs: const [Strings.earningsButtonText, Strings.payoutsButtonText],
-              tabViews: [
-                _buildEarningsTab(),
-                _buildPayoutsTab(),
-              ],
+            ValueListenableBuilder<String>(
+              valueListenable: selectedFilterNotifier,
+              builder: (context, selectedFilter, child) {
+                return Column(
+                  children: [
+                    CommonTabBarWidgetTwo(
+                      tabPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      indicatorColor: AppColors.pinkTwo,
+                      selectedLabelColor: AppColors.whiteOne,
+                      unselectedLabelColor: AppColors.greyTwo,
+                      tabs: const [Strings.earningsButtonText, Strings.payoutsButtonText],
+                      tabViews: [
+                        _buildEarningsTab(context, selectedFilter, filters, selectedFilterNotifier),
+                        _buildPayoutsTab(context, selectedFilter, filters, selectedFilterNotifier),
+                      ],
+                    ),
+                  ],
+                );
+              },
             ),
           ],
         ),
@@ -87,25 +91,25 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
     );
   }
 
-  Widget _buildEarningsTab() {
+  Widget _buildEarningsTab(BuildContext context, String selectedFilter, List<String> filters, ValueNotifier<String> notifier) {
     return Column(
       children: [
-        _buildFilterDropdown(),
-        _buildEarningList(),
+        _buildFilterDropdown(context, selectedFilter, filters, notifier),
+        _buildEarningList(selectedFilter),
       ],
     );
   }
 
-  Widget _buildPayoutsTab() {
+  Widget _buildPayoutsTab(BuildContext context, String selectedFilter, List<String> filters, ValueNotifier<String> notifier) {
     return Column(
       children: [
-        _buildFilterDropdown(),
-        _buildPayoutList(),
+        _buildFilterDropdown(context, selectedFilter, filters, notifier),
+        _buildPayoutList(selectedFilter),
       ],
     );
   }
 
-  Widget _buildFilterDropdown() {
+  Widget _buildFilterDropdown(BuildContext context, String selectedFilter, List<String> filters, ValueNotifier<String> notifier) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
@@ -114,17 +118,17 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
           SizedBox(
             width: context.width * 0.34,
             child: CommonDropdownField<String>(
-              value: _selectedFilter,
+              value: selectedFilter,
               contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               borderRadius: 12,
-              items: _filters.map((filter) {
+              items: filters.map((filter) {
                 return DropdownMenuItem<String>(
                   value: filter,
                   child: CommonText(filter, fontSize: 13, color: AppColors.blackTwo),
                 );
               }).toList(),
               selectedItemBuilder: (context) {
-                return _filters.map((filter) {
+                return filters.map((filter) {
                   return Align(
                     alignment: Alignment.centerLeft,
                     child: CommonText(filter, fontSize: 13, color: AppColors.blackTwo),
@@ -133,9 +137,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
               },
               onChanged: (value) {
                 if (value != null) {
-                  setState(() {
-                    _selectedFilter = value;
-                  });
+                  notifier.value = value;
                 }
               },
             ),
@@ -145,9 +147,9 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
     );
   }
 
-  Widget _buildEarningList() {
-    final earnings = _getMockEarnings();
-    if (_selectedFilter == Strings.thisYearText) {
+  Widget _buildEarningList(String selectedFilter) {
+    final earnings = _getMockEarnings(selectedFilter);
+    if (selectedFilter == Strings.thisYearText) {
       final groupedEarnings = _groupEarningsByMonth(earnings);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,7 +172,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: EarningItemComponent(
                       earning: e,
-                      onTap: () => _showEarningDetails(e),
+                      onTap: () => _showEarningDetails(Get.context!, e),
                     ),
                   )),
             ],
@@ -185,16 +187,16 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: EarningItemComponent(
                   earning: e,
-                  onTap: () => _showEarningDetails(e),
+                  onTap: () => _showEarningDetails(Get.context!, e),
                 ),
               ))
           .toList(),
     );
   }
 
-  Widget _buildPayoutList() {
+  Widget _buildPayoutList(String selectedFilter) {
     final payouts = _getMockPayouts();
-    if (_selectedFilter == Strings.thisYearText) {
+    if (selectedFilter == Strings.thisYearText) {
       final groupedPayouts = _groupPayoutsByMonth(payouts);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,7 +219,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: PayoutItemComponent(
                       payout: p,
-                      onTap: () => _showPayoutDetails(p),
+                      onTap: () => _showPayoutDetails(Get.context!, p),
                     ),
                   )),
             ],
@@ -232,14 +234,14 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: PayoutItemComponent(
                   payout: p,
-                  onTap: () => _showPayoutDetails(p),
+                  onTap: () => _showPayoutDetails(Get.context!, p),
                 ),
               ))
           .toList(),
     );
   }
 
-  void _showEarningDetails(EarningModel earning) {
+  void _showEarningDetails(BuildContext context, EarningModel earning) {
     CommonBottomSheet.show(
       context,
       title: "",
@@ -249,7 +251,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
     );
   }
 
-  void _showPayoutDetails(PayoutModel payout) {
+  void _showPayoutDetails(BuildContext context, PayoutModel payout) {
     CommonBottomSheet.show(
       context,
       title: "",
@@ -259,7 +261,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
     );
   }
 
-  List<EarningDto> _getMockEarnings() {
+  List<EarningDto> _getMockEarnings(String selectedFilter) {
     return [
       EarningDto(
         dateTime: DateTime(2025, 11, 12, 20, 0),
@@ -303,7 +305,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
         platformFee: 13.00,
         totalAmount: 54.99,
       ),
-      if (_selectedFilter == Strings.thisYearText) ...[
+      if (selectedFilter == Strings.thisYearText) ...[
         EarningDto(
           dateTime: DateTime(2025, 10, 05, 10, 30),
           clientName: "John Doe",

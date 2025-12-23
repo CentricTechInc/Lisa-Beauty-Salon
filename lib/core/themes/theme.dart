@@ -27,6 +27,7 @@ class AppColors {
   static const Color blackOne = Color(0xFF000000);
   static const Color blackTwo = Color(0xFF40393A);
   static const Color blackThree = Color(0xFF13000A);
+  static const Color blackFour = Color(0xFF13000A40);
   static const Color transparent = Colors.transparent;
   static const Color redOne = Colors.red;
   static const Color greenOne = Color(0xFF00C950);

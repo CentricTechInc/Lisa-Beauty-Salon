@@ -44,17 +44,48 @@ class CustomSliderThumbCircle extends SliderComponentShape {
       ..strokeWidth = 3;
 
     final Paint shadowPaint = Paint()
-      ..color = AppColors.blackOne.withValues(
-        alpha: 0.1
-      )
+      ..color = AppColors.blackOne.withValues(alpha: 0.1)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
 
+    // Draw Shadow
     canvas.drawCircle(center + const Offset(0, 2), thumbRadius, shadowPaint);
 
+    // Draw Thumb Circle
     canvas.drawCircle(center, thumbRadius, whiteCirclePaint);
-
     canvas.drawCircle(center, thumbRadius, pinkBorderPaint);
 
-    // canvas.drawCircle(center, thumbRadius / 2, pinkInnerCirclePaint);
+    // Draw Value Bubble
+    final double actualValue = min + (max - min) * value;
+    final String valueText = "${actualValue.toInt()}KM";
+
+    final TextPainter tp = TextPainter(
+      text: TextSpan(
+        text: valueText,
+        style: const TextStyle(
+          color: AppColors.whiteOne,
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    final double bubbleWidth = tp.width + 12;
+    final double bubbleHeight = tp.height + 6;
+
+    // Design shows a red bubble with white text
+    final Rect bubbleRect = Rect.fromCenter(
+      center: center + const Offset(0, 20), // Below the thumb
+      width: bubbleWidth,
+      height: bubbleHeight,
+    );
+
+    final Paint bubblePaint = Paint()..color = AppColors.pinkTwo;
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(bubbleRect, const Radius.circular(6)),
+      bubblePaint,
+    );
+
+    tp.paint(canvas, bubbleRect.topLeft + const Offset(6, 3));
   }
 }

@@ -29,4 +29,5 @@ class RouteNames {
   static const String chatSupport = "/chatSupport";
   static const String salonDetail = '/salonDetail';
   static const String subServices = '/subServices'; 
+  static const String mapNavigation = '/mapNavigation';
 }

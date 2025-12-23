@@ -14,6 +14,7 @@ import 'package:lisa_beauty_salon/features/auth/presentation/pages/terms_and_con
 import 'package:lisa_beauty_salon/features/auth/presentation/pages/welcome/welcome_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/salon_detail/sub_services_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/shell/customer_shell.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/map_navigation_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/salon_detail/salon_detail_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/build_your_profile_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/message/message_detail_page.dart';
@@ -126,6 +127,10 @@ class AppPages {
     GetPage(
       name: RouteNames.subServices,
       page: () => const SubServicesPage(),
+    ),
+    GetPage(
+      name: RouteNames.mapNavigation,
+      page: () => MapNavigationPage(selectedIndex: Get.arguments as int),
     ),
   ];
 }
