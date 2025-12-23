@@ -7,6 +7,7 @@ import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/controllers/setting_controller.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/home/home_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/map_page.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/appointment_page.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_bar.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 
@@ -18,7 +19,7 @@ class CustomerShell extends StatelessWidget {
   final pages = [
     HomePage(),
     MapPage(),
-    Container(),
+    AppointmentPage(),
     Container(),
     Container(),
   ];
@@ -47,10 +48,12 @@ class CustomerShell extends StatelessWidget {
             Assets.bottomBarIconTwo,
           ),
           SvgPicture.asset(
-            Assets.bottomBarIconThree,
+            controller.currentIndex.value == 2 ? Assets.bottomBarIconThree // Need to check if there is an active version
+            : Assets.bottomBarIconThree,
           ),
           SvgPicture.asset(
-            Assets.bottomBarIconFour,
+            controller.currentIndex.value == 3 ? Assets.bottomBarIconFour
+            : Assets.bottomBarIconFour,
           ),
           Container(
             width: 48,

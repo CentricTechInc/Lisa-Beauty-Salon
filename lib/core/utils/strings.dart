@@ -312,6 +312,16 @@ class Strings {
   static const String upcomingText = "Upcoming";
   static const String previousText = "Previous";
   static const String cancelledText = "Cancelled";
+  static const String yourAppointmentsText = "Your Appointments";
+  static const String reviewText = "Review";
+  static const String rescheduleText = "Reschedule";
+  static const String cancelText = "Cancel";
+  static const String reminderText = "30 min before";
+  static const String chatText = "Chat";
+  static const String directionText = "Direction";
+  static const String dateAndTimeText = "Date & Time";
+  static const String cancellationOfAppointmentText = "Cancellation of appointment";
+  static const String cancelAppointmentConfirmationText = "Are you sure, you want to cancel this appointment?";
 
   static const String financeText = "Finance";
   static const String availableForPayoutsText = "Available For Payouts";
