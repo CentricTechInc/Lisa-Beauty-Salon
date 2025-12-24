@@ -28,7 +28,7 @@ class SuggestionCardComponent extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: AppColors.whiteOne,
@@ -51,13 +51,6 @@ class SuggestionCardComponent extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CommonText(
-                    category,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: AppColors.pinkTwo,
-                  ),
-                  const VerticalSpacing(4),
                   CommonText(
                     name,
                     fontSize: 18,

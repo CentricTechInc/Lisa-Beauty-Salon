@@ -33,4 +33,5 @@ class RouteNames {
   static const String mapSearch = '/mapSearch';
   static const String review = '/review';
   static const String bookAppointment = '/bookAppointment';
+  static const String appointmentCheckout = '/appointmentCheckout';
 }

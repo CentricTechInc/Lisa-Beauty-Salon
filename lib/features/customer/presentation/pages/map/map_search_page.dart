@@ -9,23 +9,40 @@ import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/compo
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
-class MapSearchPage extends StatelessWidget {
+class MapSearchPage extends StatefulWidget {
   const MapSearchPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final searchController = TextEditingController();
+  State<MapSearchPage> createState() => _MapSearchPageState();
+}
 
+class _MapSearchPageState extends State<MapSearchPage> {
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteTwo,
       body: SafeArea(
         child: Column(
           children: [
             SearchFieldHeaderComponent(
-              controller: searchController,
+              controller: _searchController,
               onBackTap: () => Get.back(),
               onFilterTap: () {
-                FocusScope.of(context).unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
                 _showFilterBottomSheet(context);
               },
             ),

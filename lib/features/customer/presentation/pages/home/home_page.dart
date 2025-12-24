@@ -69,6 +69,7 @@ class HomePage extends StatelessWidget {
       ),
       child: Column(
         children: [
+          VerticalSpacing(30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -8,6 +8,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_sliding_button.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 
 class BookAppointmentPage extends StatefulWidget {
   const BookAppointmentPage({super.key});
@@ -64,42 +65,17 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
     return CommonScaffoldWidget(
       useSafeArea: true,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const VerticalSpacing(10),
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () => Get.back(),
-                child: Container(
-                  width: 45,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteOne,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: AppColors.greyOne
-                    )
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      CupertinoIcons.chevron_back,
-                      color: AppColors.blackTwo,
-                    ),
-                  ),
-                ),
-              ),
-              const HorizontalSpacing(15),
-              const CommonText(
-                "Book Appointment",
-                fontSize: 24,
-                fontWeight: 600,
-                color: AppColors.blackTwo,
-              ),
-            ],
+          const CommonText(
+            "Book Appointment",
+            fontSize: 24,
+            fontWeight: 600,
+            color: AppColors.blackTwo,
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -361,8 +337,7 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
         rightLabel: "Continue",
         onLeftTap: () => Get.back(),
         onRightTap: () {
-          // Handle continue
-          Get.back();
+          Get.toNamed(RouteNames.appointmentCheckout);
         },
         leftActiveColor: AppColors.whiteOne,
         rightActiveColor: AppColors.pinkTwo,
