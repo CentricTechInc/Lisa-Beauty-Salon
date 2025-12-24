@@ -11,8 +11,8 @@ import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
-class SupportPage extends StatelessWidget {
-  const SupportPage({super.key});
+class CustomerSupportPage extends StatelessWidget {
+  const CustomerSupportPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class SupportPage extends StatelessWidget {
                   ),
                 ),
                 const HorizontalSpacing(10),
-                CommonText(
+                const CommonText(
                   Strings.supportText,
                   fontSize: 24,
                   fontWeight: 600,
@@ -62,7 +62,7 @@ class SupportPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  CommonText(
+                  const CommonText(
                     Strings.supportDescriptionText,
                     fontSize: 16,
                     fontWeight: 400,
@@ -75,14 +75,14 @@ class SupportPage extends StatelessWidget {
                     icon: Assets.faqIcon,
                     title: Strings.faqsText,
                     subtitle: Strings.faqsDescriptionText,
-                    onTap: () => Get.toNamed(RouteNames.salonFaq),
+                    onTap: () => Get.toNamed(RouteNames.customerFaq),
                   ),
                   const VerticalSpacing(15),
                   _buildSupportCard(
                     icon: Assets.chatSupportIcon,
                     title: Strings.chatsText,
                     subtitle: Strings.needHelpText,
-                    onTap: () => Get.toNamed(RouteNames.salonChatSupport),
+                    onTap: () => Get.toNamed(RouteNames.customerChatSupport),
                   ),
                   const VerticalSpacing(15),
                   _buildSupportCard(

@@ -364,4 +364,40 @@ mixin FieldsValidation {
     }
     return null;
   }
+
+  String? validateExpiryDate(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Required*";
+    }
+
+    if (value.length != 5 || !value.contains('/')) {
+      return "Invalid Format (MM/YY)";
+    }
+
+    final parts = value.split('/');
+    if (parts.length != 2) {
+      return "Invalid Format (MM/YY)";
+    }
+
+    final month = int.tryParse(parts[0]);
+    final year = int.tryParse(parts[1]);
+
+    if (month == null || year == null) {
+      return "Invalid Expiry Date";
+    }
+
+    if (month < 1 || month > 12) {
+      return "Invalid Month";
+    }
+
+    final now = DateTime.now();
+    final currentYearShort = now.year % 100;
+    final currentMonth = now.month;
+
+    if (year < currentYearShort || (year == currentYearShort && month < currentMonth)) {
+      return "Card has expired";
+    }
+
+    return null;
+  }
 }

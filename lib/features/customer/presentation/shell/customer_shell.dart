@@ -9,6 +9,7 @@ import 'package:lisa_beauty_salon/features/customer/presentation/pages/home/home
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/map_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/appointment_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/message/message_page.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/profile_page.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_bar.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 
@@ -22,13 +23,13 @@ class CustomerShell extends StatelessWidget {
     MapPage(),
     AppointmentPage(),
     MessagePage(),
-    Container(),
+    CustomerProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => CommonScaffoldWidget(
-      bgColor: AppColors.whiteOne,
+      bgColor: AppColors.whiteTwo,
       padding: EdgeInsets.zero,
       useSafeArea: false,
       extendBody: true,

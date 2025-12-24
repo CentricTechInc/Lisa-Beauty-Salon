@@ -7,8 +7,8 @@ import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/close_account_dialog_component.dart';
-import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/profile_menu_item.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/sign_out_dialog_component.dart';
+import 'package:lisa_beauty_salon/shared/widgets/profile_menu_item.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
@@ -85,7 +85,7 @@ class ProfilePage extends StatelessWidget {
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
             'onTap': () {
-              Get.toNamed(RouteNames.changePassword);
+              Get.toNamed(RouteNames.salonChangePassword);
             },
           },
           {
@@ -96,7 +96,7 @@ class ProfilePage extends StatelessWidget {
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
             'onTap': () {
-              Get.toNamed(RouteNames.notification);
+              Get.toNamed(RouteNames.salonNotification);
             },
           },
         ],
@@ -112,7 +112,7 @@ class ProfilePage extends StatelessWidget {
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
             'onTap': () {
-              Get.toNamed(RouteNames.support);
+              Get.toNamed(RouteNames.salonSupport);
             },
           },
           {
@@ -123,7 +123,7 @@ class ProfilePage extends StatelessWidget {
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
             'onTap': () {
-              Get.toNamed(RouteNames.privacyPolicy);
+              Get.toNamed(RouteNames.salonPrivacyPolicy);
             },
           },
           {
@@ -134,7 +134,7 @@ class ProfilePage extends StatelessWidget {
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
             'onTap': () {
-              Get.toNamed(RouteNames.termsAndConditions);
+              Get.toNamed(RouteNames.salonTermsAndConditions);
             },
           },
           {
@@ -145,7 +145,7 @@ class ProfilePage extends StatelessWidget {
             "iconBackgroundColor": AppColors.whiteThree,
             "backgroundColor": AppColors.whiteOne,
             'onTap': () {
-              Get.toNamed(RouteNames.aboutUs);
+              Get.toNamed(RouteNames.salonAboutUs);
             },
           },
         ],
@@ -294,7 +294,7 @@ class ProfilePage extends StatelessWidget {
                         onTap: item['onTap'],
                         iconColor: item['iconColor'],
                         arrowIconColor: item['arrowIconColor'],
-                        iconbackgroundColor: item['iconBackgroundColor'],
+                        iconBackgroundColor: item['iconBackgroundColor'],
                         backgroundColor: item['backgroundColor'],
                       ),
                       if (index < section['items'].length - 1)
