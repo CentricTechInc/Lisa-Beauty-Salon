@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 
 class CustomerEditProfilePage extends StatefulWidget {
   const CustomerEditProfilePage({super.key});
@@ -35,6 +38,7 @@ class _CustomerEditProfilePageState extends State<CustomerEditProfilePage> with 
   late final ValueNotifier<String?> _genderNotifier;
   late final ValueNotifier<String?> _stateNotifier;
   late final ValueNotifier<String?> _cityNotifier;
+  late final ValueNotifier<String?> _photoNotifier;
 
   @override
   void initState() {
@@ -42,6 +46,7 @@ class _CustomerEditProfilePageState extends State<CustomerEditProfilePage> with 
     _genderNotifier = ValueNotifier(_genderController.text.isEmpty ? null : _genderController.text);
     _stateNotifier = ValueNotifier(_stateController.text.isEmpty ? null : _stateController.text);
     _cityNotifier = ValueNotifier(_cityController.text.isEmpty ? null : _cityController.text);
+    _photoNotifier = ValueNotifier<String?>(null);
   }
 
   @override
@@ -58,6 +63,7 @@ class _CustomerEditProfilePageState extends State<CustomerEditProfilePage> with 
     _genderNotifier.dispose();
     _stateNotifier.dispose();
     _cityNotifier.dispose();
+    _photoNotifier.dispose();
     super.dispose();
   }
 
@@ -169,11 +175,11 @@ class _CustomerEditProfilePageState extends State<CustomerEditProfilePage> with 
                     validateTextNotEmpty,
                   ),
                   const VerticalSpacing(20),
-                  Obx(
-                    () => ValueListenableBuilder<String?>(
-                      valueListenable: _stateNotifier,
-                      builder: (context, state, _) {
-                        return CommonDropdownField(
+                  ValueListenableBuilder<String?>(
+                    valueListenable: _stateNotifier,
+                    builder: (context, state, _) {
+                      return Obx(
+                        () => CommonDropdownField(
                           titleLabelText: Strings.stateText,
                           value: (authController.countryDataOfUs?.states ?? []).firstWhereOrNull((s) => s.name == state),
                           items: (authController.countryDataOfUs?.states ?? [])
@@ -210,70 +216,71 @@ class _CustomerEditProfilePageState extends State<CustomerEditProfilePage> with 
                             _cityNotifier.value = null;
                             _cityController.text = '';
                           },
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                   const VerticalSpacing(20),
-                  Obx(() {
-                    final cities = authController.citiesList;
-                    final selectedIndex = cities.indexWhere(
-                      (c) =>
-                          c.name ==
-                          authController.selectedCityForBuildYourProfile.value,
-                    );
-                    final int? safeIndex = selectedIndex >= 0 ? selectedIndex : null;
-
-                    return CommonDropdownField<int>(
-                      titleLabelText: Strings.cityText,
-                      value: safeIndex,
-                      items: cities.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final city = entry.value;
-                        return DropdownMenuItem(
-                          value: index,
-                          child: CommonText(
-                            city.name,
-                            fontSize: 15,
-                            color: AppColors.greyTwo,
-                          ),
+                  ValueListenableBuilder<String?>(
+                    valueListenable: _cityNotifier,
+                    builder: (context, city, _) {
+                      return Obx(() {
+                        final cities = authController.citiesList;
+                        final selectedIndex = cities.indexWhere(
+                          (c) => c.name == city,
                         );
-                      }).toList(),
-                      selectedItemBuilder: (context) =>
-                          cities.asMap().entries.map((entry) {
+                        final int? safeIndex = selectedIndex >= 0 ? selectedIndex : null;
+
+                        return CommonDropdownField<int>(
+                          titleLabelText: Strings.cityText,
+                          value: safeIndex,
+                          items: cities.asMap().entries.map((entry) {
+                            final index = entry.key;
                             final city = entry.value;
-                            return CommonText(
-                              city.name,
-                              fontSize: 15,
-                              color: AppColors.blackTwo,
+                            return DropdownMenuItem(
+                              value: index,
+                              child: CommonText(
+                                city.name,
+                                fontSize: 15,
+                                color: AppColors.greyTwo,
+                              ),
                             );
                           }).toList(),
-                      validator: (value) {
-                        String cityName = '';
-                        if ((value != null && value >= 0 && value < cities.length)) {
-                          cityName =
+                          selectedItemBuilder: (context) =>
+                              cities.asMap().entries.map((entry) {
+                                final city = entry.value;
+                                return CommonText(
+                                  city.name,
+                                  fontSize: 15,
+                                  color: AppColors.blackTwo,
+                                );
+                              }).toList(),
+                          validator: (value) {
+                            String cityName = '';
+                            if ((value != null && value >= 0 && value < cities.length)) {
+                              cityName = cities[value].name;
+                              return validateTextOnly(cityName);
+                            } else {
+                              return validateTextOnly(cityName);
+                            }
+                          },
+                          onChanged: (value) {
+                            if (value != null && value >= 0 && value < cities.length) {
+                              _cityController.text = cities[value].name;
                               authController.selectedCityForBuildYourProfile.value =
                                   cities[value].name;
-                          return validateTextOnly(cityName);
-                        } else {
-                          return validateTextOnly(cityName);
-                        }
-                      },
-                      onChanged: (value) {
-                        if (value != null && value >= 0 && value < cities.length) {
-                          _cityController.text = cities[value].name;
-                          authController.selectedCityForBuildYourProfile.value =
-                              cities[value].name;
-                          _cityNotifier.value = cities[value].name;
-                        } else {
-                          _cityController.text = '';
-                          authController.selectedCityForBuildYourProfile.value = '';
-                          _cityNotifier.value = null;
-                        }
-                      },
-                      hintText: cities.isEmpty ? 'No cities available' : 'Select City',
-                    );
-                  }),
+                              _cityNotifier.value = cities[value].name;
+                            } else {
+                              _cityController.text = '';
+                              authController.selectedCityForBuildYourProfile.value = '';
+                              _cityNotifier.value = null;
+                            }
+                          },
+                          hintText: cities.isEmpty ? 'No cities available' : 'Select City',
+                        );
+                      });
+                    },
+                  ),
                   const VerticalSpacing(20),
                   _buildTextField(
                     "Zip Code", 
@@ -337,36 +344,67 @@ class _CustomerEditProfilePageState extends State<CustomerEditProfilePage> with 
     );
   }
 
+  Future<File?> _pickImageFromGallery() async {
+    try {
+      final picker = ImagePicker();
+      final picked = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+      );
+
+      if (picked == null) return null;
+      return File(picked.path);
+    } catch (e) {
+      LoggerService.info("Image pick error: $e");
+      return null;
+    }
+  }
+
   Widget _buildProfileImage() {
     return Center(
       child: Stack(
         children: [
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: const DecorationImage(
-                image: NetworkImage(
-                  "https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg="
+          ValueListenableBuilder<String?>(
+            valueListenable: _photoNotifier,
+            builder: (context, path, _) {
+              return Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: path != null
+                        ? FileImage(File(path)) as ImageProvider
+                        : const NetworkImage(
+                            "https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg=",
+                          ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                fit: BoxFit.cover,
-              ),
-            ),
+              );
+            },
           ),
           Positioned(
             bottom: 0,
             right: 0,
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                color: AppColors.whiteOne,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.edit,
-                size: 16,
-                color: AppColors.pinkTwo,
+            child: GestureDetector(
+              onTap: () async {
+                final file = await _pickImageFromGallery();
+                if (file != null) {
+                  _photoNotifier.value = file.path;
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
+                  color: AppColors.whiteOne,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.edit,
+                  size: 16,
+                  color: AppColors.pinkTwo,
+                ),
               ),
             ),
           ),

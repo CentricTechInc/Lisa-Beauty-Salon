@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
-import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/components/close_account_dialog.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
@@ -118,9 +117,16 @@ class _CustomerPaymentMethodsPageState extends State<CustomerPaymentMethodsPage>
                 const Spacer(),
                 CommonButton(
                   onPressed: () {
-                    Get.dialog(
-                      const CustomerCloseAccountDialog()
-                    );
+                    if (_methods.isNotEmpty) {
+                      setState(() {
+                        _methods.removeAt(_selectedIndex);
+                        if (_methods.isNotEmpty && _selectedIndex >= _methods.length) {
+                          _selectedIndex = _methods.length - 1;
+                        } else if (_methods.isEmpty) {
+                          _selectedIndex = -1;
+                        }
+                      });
+                    }
                   },
                   text: "Delete Account",
                   width: double.infinity,

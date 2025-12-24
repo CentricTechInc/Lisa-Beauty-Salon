@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
-import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/components/close_account_dialog.dart';
-import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/components/sign_out_dialog.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/components/close_account_dialog_component.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/components/sign_out_dialog_component.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/profile_menu_item.dart';
@@ -110,7 +110,7 @@ class CustomerProfilePage extends StatelessWidget {
             "backgroundColor": AppColors.pinkTwo.withValues(alpha: 0.2),
             'onTap': () async {
               final result = await Get.dialog(
-                const CustomerCloseAccountDialog(),
+                CustomerCloseAccountDialogComponent(),
                 barrierDismissible: true,
               );
               if (result == true) {
@@ -132,7 +132,7 @@ class CustomerProfilePage extends StatelessWidget {
             "backgroundColor": AppColors.whiteOne,
             'onTap': () async {
               final result = await Get.dialog(
-                const CustomerSignOutDialog(),
+                CustomerSignOutDialogComponent(),
                 barrierDismissible: true,
               );
               if (result == true) {
@@ -199,39 +199,18 @@ class CustomerProfilePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                        "https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg="
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: const DecorationImage(
+                  image: NetworkImage(
+                    "https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg="
                   ),
+                  fit: BoxFit.cover,
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(
-                      color: AppColors.whiteOne,
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      Assets.profileEditIcon,
-                      width: 16,
-                      height: 16,
-                      colorFilter: const ColorFilter.mode(AppColors.pinkTwo, BlendMode.srcIn),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
             Container(
               padding: const EdgeInsets.all(12),
