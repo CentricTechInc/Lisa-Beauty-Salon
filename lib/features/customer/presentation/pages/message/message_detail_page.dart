@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
@@ -83,7 +84,16 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
         _showEmojiPicker.value = false;
         _messageFocusNode.unfocus();
       },
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+      padding: const EdgeInsets.only(
+        left: 15,
+        right: 15,
+        top: 20,
+      ),
+      systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: AppColors.whiteOne,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

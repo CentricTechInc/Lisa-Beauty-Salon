@@ -30,6 +30,7 @@ class RouteNames {
   static const String salonDetail = '/salonDetail';
   static const String subServices = '/subServices'; 
   static const String mapNavigation = '/mapNavigation';
+  static const String mapSearch = '/mapSearch';
   static const String review = '/review';
   static const String bookAppointment = '/bookAppointment';
 }

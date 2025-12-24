@@ -17,6 +17,7 @@ import 'package:lisa_beauty_salon/features/customer/presentation/shell/customer_
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/book_appointment_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/review_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/map_navigation_page.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/map_search_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/salon_detail/salon_detail_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/message/message_detail_page.dart' as customer;
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/build_your_profile_page.dart';
@@ -144,6 +145,10 @@ class AppPages {
     GetPage(
       name: RouteNames.bookAppointment,
       page: () => const BookAppointmentPage(),
+    ),
+    GetPage(
+      name: RouteNames.mapSearch,
+      page: () => const MapSearchPage(),
     ),
   ];
 }

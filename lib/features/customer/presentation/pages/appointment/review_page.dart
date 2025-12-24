@@ -47,7 +47,6 @@ class _ReviewPageState extends State<ReviewPage> {
                 child: Container(
                   width: 45,
                   height: 45,
-                  padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: AppColors.whiteOne,
                     borderRadius: BorderRadius.circular(16),

@@ -73,13 +73,12 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                 child: Container(
                   width: 45,
                   height: 45,
-                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                      color: AppColors.whiteOne,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                          color: AppColors.greyOne
-                      )
+                    color: AppColors.whiteOne,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: AppColors.greyOne
+                    )
                   ),
                   child: const Center(
                     child: Icon(
@@ -363,6 +362,7 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
         onLeftTap: () => Get.back(),
         onRightTap: () {
           // Handle continue
+          Get.back();
         },
         leftActiveColor: AppColors.whiteOne,
         rightActiveColor: AppColors.pinkTwo,
