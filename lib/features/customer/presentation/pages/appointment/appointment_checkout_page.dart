@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/components/suggestion_card_component.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/components/booking_success_bottom_sheet.dart';
@@ -135,7 +136,11 @@ class _AppointmentCheckoutPageState extends State<AppointmentCheckoutPage> {
                         color: AppColors.blackTwo,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(
+                            RouteNames.customerAddAccount
+                          );
+                        },
                         child: Row(
                           children: [
                             const CommonText(

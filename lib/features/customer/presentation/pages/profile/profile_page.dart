@@ -212,16 +212,19 @@ class CustomerProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.greyOne),
-              ),
-              child: SvgPicture.asset(
-                Assets.notificationIcon,
-                width: 20,
-                height: 20,
+            GestureDetector(
+              onTap: () => Get.toNamed(RouteNames.customerNotification),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.greyOne),
+                ),
+                child: SvgPicture.asset(
+                  Assets.notificationIcon,
+                  width: 20,
+                  height: 20,
+                ),
               ),
             ),
           ],

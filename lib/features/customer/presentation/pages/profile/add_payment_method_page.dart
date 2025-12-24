@@ -48,14 +48,14 @@ class CardExpiryInputFormatter extends TextInputFormatter {
   }
 }
 
-class CustomerAddAccountPage extends StatefulWidget {
-  const CustomerAddAccountPage({super.key});
+class CustomerAddPaymentMethodPage extends StatefulWidget {
+  const CustomerAddPaymentMethodPage({super.key});
 
   @override
-  State<CustomerAddAccountPage> createState() => _CustomerAddAccountPageState();
+  State<CustomerAddPaymentMethodPage> createState() => _CustomerAddPaymentMethodPageState();
 }
 
-class _CustomerAddAccountPageState extends State<CustomerAddAccountPage> with FieldsValidation {
+class _CustomerAddPaymentMethodPageState extends State<CustomerAddPaymentMethodPage> with FieldsValidation {
 
   final _formkey = GlobalKey<FormState>();
 
@@ -272,7 +272,7 @@ class _CustomerAddAccountPageState extends State<CustomerAddAccountPage> with Fi
         ),
         HorizontalSpacing(15),
         const CommonText(
-          "Add Account",
+          "Add Payment Method",
           fontSize: 24,
           fontWeight: 600,
           color: AppColors.blackTwo,

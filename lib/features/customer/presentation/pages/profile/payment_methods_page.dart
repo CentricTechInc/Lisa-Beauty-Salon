@@ -128,7 +128,7 @@ class _CustomerPaymentMethodsPageState extends State<CustomerPaymentMethodsPage>
                       });
                     }
                   },
-                  text: "Delete Account",
+                  text: "Delete Payment Method",
                   width: double.infinity,
                   backgroundColor: AppColors.whiteOne,
                   textColor: AppColors.blackTwo,
@@ -137,7 +137,7 @@ class _CustomerPaymentMethodsPageState extends State<CustomerPaymentMethodsPage>
                 const VerticalSpacing(16),
                 CommonButton(
                   onPressed: () => Get.toNamed(RouteNames.customerAddAccount),
-                  text: "Add Account",
+                  text: "Add Payment Method",
                   width: double.infinity,
                   backgroundColor: AppColors.pinkTwo,
                 ),

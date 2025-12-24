@@ -20,7 +20,7 @@ import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointme
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/profile_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/profile_edit_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/payment_methods_page.dart';
-import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/add_account_page.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/add_payment_method_page.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/change_password_page.dart' as customer_change_password;
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/notification_page.dart' as customer_notification;
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/profile/support_page.dart' as customer_support;
@@ -117,7 +117,7 @@ class AppPages {
     ),
     GetPage(
       name: RouteNames.customerAddAccount,
-      page: () => const CustomerAddAccountPage(),
+      page: () => const CustomerAddPaymentMethodPage(),
     ),
     GetPage(
       name: RouteNames.customerChangePassword,
