@@ -227,38 +227,48 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> with FieldsValidation
                       ],
                     ),
                     VerticalSpacing(20),
-                    CommonButton(
-                      backgroundColor: AppColors.pinkTwo,
-                      radius: 15,
-                      child: CommonText(
-                        Strings.signUpText,
-                        color: AppColors.whiteOne,
-                        fontWeight: 600,
-                        fontSize: 18,
+                    Obx(
+                      () => CommonButton(
+                        backgroundColor: AppColors.pinkTwo,
+                        radius: 15,
+                        isLoading: authController.isLoading.value,
+                        child: CommonText(
+                          Strings.signUpText,
+                          color: AppColors.whiteOne,
+                          fontWeight: 600,
+                          fontSize: 18,
+                        ),
+                        onPressed: () async {
+                          final isFormStateValid =
+                              _formKey.currentState!.validate();
+                          final isAgreedToTermsAndCondition =
+                              authController.agreeToTermsAndCondition.value;
+                          if (isFormStateValid && isAgreedToTermsAndCondition) {
+                            try {
+                              authController.isLoading.value = true;
+                              await Future.delayed(
+                                const Duration(seconds: 2),
+                              );
+                              MessageUtils.showSuccessSnackBar(
+                                "Account Created Successfully",
+                              );
+                              Get.toNamed(RouteNames.emailVerification);
+                            } finally {
+                              authController.isLoading.value = false;
+                            }
+                          } else {
+                            if (!authController.agreeToTermsAndCondition.value) {
+                              MessageUtils.showErrorSnackBar(
+                                'You must agree to the Terms and Conditions and Privacy Policy.',
+                              );
+                            } else {
+                              MessageUtils.showErrorSnackBar(
+                                'Please make sure that all fields have been filled.',
+                              );
+                            }
+                          }
+                        },
                       ),
-                      onPressed: () {
-                        final isFormStateValid = _formKey.currentState!
-                            .validate();
-                        final isAgreedToTermsAndCondition = authController
-                            .agreeToTermsAndCondition.value;
-                        if (isFormStateValid && isAgreedToTermsAndCondition) {
-                          Get.toNamed(
-                              RouteNames.emailVerification
-                          );
-                        }
-                        else{
-                          if (!authController.agreeToTermsAndCondition.value) {
-                            MessageUtils.showErrorSnackBar(
-                              'You must agree to the Terms and Conditions and Privacy Policy.',
-                            );
-                          }
-                          else{
-                            MessageUtils.showErrorSnackBar(
-                              'Please make sure that all fields have been filled.',
-                            );
-                          }
-                        }
-                      },
                     ),
                     VerticalSpacing(30),
                   ],

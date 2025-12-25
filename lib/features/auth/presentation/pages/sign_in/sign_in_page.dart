@@ -167,44 +167,43 @@ class _SignInPageState extends State<SignInPage> with FieldsValidation {
                       ],
                     ),
                     VerticalSpacing(30),
-                    CommonButton(
-                      backgroundColor: AppColors.pinkTwo,
-                      radius: 15,
-                      child: CommonText(
-                        Strings.loginText,
-                        color: AppColors.whiteOne,
-                        fontWeight: 600,
-                        fontSize: 18,
-                      ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          MessageUtils.showSuccessSnackBar(
-                            "Login Fields Validation Completed",
-                          );
-                          Future.delayed(
-                            Duration(
-                              seconds: 2
-                            ),
-                            () {
-                              if (authController.selectedCategory.value == Strings.salonsText) {
-                                Get.offAllNamed(
-                                  RouteNames.mainSalon
-                                );
+                    Obx(
+                      () => CommonButton(
+                        backgroundColor: AppColors.pinkTwo,
+                        radius: 15,
+                        isLoading: authController.isLoading.value,
+                        child: CommonText(
+                          Strings.loginText,
+                          color: AppColors.whiteOne,
+                          fontWeight: 600,
+                          fontSize: 18,
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              authController.isLoading.value = true;
+                              await Future.delayed(
+                                const Duration(seconds: 2),
+                              );
+                              MessageUtils.showSuccessSnackBar(
+                                "Login Successful",
+                              );
+                              if (authController.selectedCategory.value ==
+                                  Strings.salonsText) {
+                                Get.offAllNamed(RouteNames.mainSalon);
+                              } else {
+                                Get.offAllNamed(RouteNames.mainCustomer);
                               }
-                              else {
-                                Get.offAllNamed(
-                                  RouteNames.mainCustomer
-                                );
-                              }
+                            } finally {
+                              authController.isLoading.value = false;
                             }
-                          );
-                        }
-                        else {
-                          MessageUtils.showErrorSnackBar(
-                            "Please make sure to fill all these fields",
-                          );
-                        }
-                      },
+                          } else {
+                            MessageUtils.showErrorSnackBar(
+                              "Please make sure to fill all these fields",
+                            );
+                          }
+                        },
+                      ),
                     ),
                     VerticalSpacing(30),
                   ],

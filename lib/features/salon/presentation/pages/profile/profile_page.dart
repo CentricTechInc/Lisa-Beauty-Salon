@@ -198,9 +198,14 @@ class ProfilePage extends StatelessWidget {
     ];
 
     return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          VerticalSpacing(40),
           // Profile Header
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,

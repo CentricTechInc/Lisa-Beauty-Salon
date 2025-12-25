@@ -52,67 +52,130 @@ class _MessagePageState extends State<MessagePage> {
       'unreadCount': 0,
       'image': 'https://i.pravatar.cc/150?u=5',
     },
+    {
+      'name': 'Gina Apple',
+      'message': 'I would like to book an appoin...',
+      'time': 'Yesterday',
+      'unreadCount': 0,
+      'image': 'https://i.pravatar.cc/150?u=5',
+    },
+    {
+      'name': 'Gina Apple',
+      'message': 'I would like to book an appoin...',
+      'time': 'Yesterday',
+      'unreadCount': 0,
+      'image': 'https://i.pravatar.cc/150?u=5',
+    },
+    {
+      'name': 'Gina Apple',
+      'message': 'I would like to book an appoin...',
+      'time': 'Yesterday',
+      'unreadCount': 0,
+      'image': 'https://i.pravatar.cc/150?u=5',
+    },
+    {
+      'name': 'Gina Apple',
+      'message': 'I would like to book an appoin...',
+      'time': 'Yesterday',
+      'unreadCount': 0,
+      'image': 'https://i.pravatar.cc/150?u=5',
+    },
+    {
+      'name': 'Gina Apple',
+      'message': 'I would like to book an appoin...',
+      'time': 'Yesterday',
+      'unreadCount': 0,
+      'image': 'https://i.pravatar.cc/150?u=5',
+    },
+    {
+      'name': 'Gina Apple',
+      'message': 'I would like to book an appoin...',
+      'time': 'Yesterday',
+      'unreadCount': 0,
+      'image': 'https://i.pravatar.cc/150?u=5',
+    },
+    {
+      'name': 'Gina Apple',
+      'message': 'I would like to book an appoin...',
+      'time': 'Yesterday',
+      'unreadCount': 0,
+      'image': 'https://i.pravatar.cc/150?u=5',
+    },
+    {
+      'name': 'Gina Apple',
+      'message': 'I would like to book an appoin...',
+      'time': 'Yesterday',
+      'unreadCount': 0,
+      'image': 'https://i.pravatar.cc/150?u=5',
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Header
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CommonText(
-              Strings.messagesText,
-              fontSize: 24,
-              fontWeight: 600,
-              color: AppColors.blackTwo,
-            ),
-            GestureDetector(
-              onTap: () {
-                showFeatureUnderDevelopment();
-              },
-              child: Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.greyOne),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Icon(
-                  CupertinoIcons.search,
-                  color: AppColors.blackTwo,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20
+      ),
+      child: Column(
+        children: [
+          VerticalSpacing(40),
+          // Header
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonText(
+                Strings.messagesText,
+                fontSize: 24,
+                fontWeight: 600,
+                color: AppColors.blackTwo,
+              ),
+              GestureDetector(
+                onTap: () {
+                  showFeatureUnderDevelopment();
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.greyOne),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Icon(
+                    CupertinoIcons.search,
+                    color: AppColors.blackTwo,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        VerticalSpacing(10),
-        // Message List
-        Expanded(
-          child: ListView.separated(
-            itemCount: _messages.length,
-            separatorBuilder: (context, index) => VerticalSpacing(24),
-            itemBuilder: (context, index) {
-              final message = _messages[index];
-              return GestureDetector(
-                onTap: () {
-                  Get.toNamed(
-                    RouteNames.messageDetail
-                  );
-                },
-                child: CommonMessageCard(
-                  name: message['name'],
-                  message: message['message'],
-                  time: message['time'],
-                  unreadCount: message['unreadCount'],
-                  imageUrl: message['image'],
-                ),
-              );
-            },
+            ],
           ),
-        ),
-      ],
+          VerticalSpacing(10),
+          // Message List
+          Expanded(
+            child: ListView.separated(
+              itemCount: _messages.length,
+              separatorBuilder: (context, index) => VerticalSpacing(24),
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return GestureDetector(
+                  onTap: () {
+                    Get.toNamed(
+                      RouteNames.messageDetail
+                    );
+                  },
+                  child: CommonMessageCard(
+                    name: message['name'],
+                    message: message['message'],
+                    time: message['time'],
+                    unreadCount: message['unreadCount'],
+                    imageUrl: message['image'],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

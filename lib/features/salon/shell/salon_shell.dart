@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
@@ -33,6 +34,14 @@ class SalonShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => CommonScaffoldWidget(
       bgColor: AppColors.whiteTwo,
+      padding: EdgeInsets.zero,
+      useSafeArea: false,
+      extendBody: true,
+      systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: AppColors.whiteOne,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
       bottomNavigationBar: CommonBottomBar(
         currentIndex: controller.currentIndex.value,
         onTap: controller.changeTab,

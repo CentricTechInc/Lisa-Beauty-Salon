@@ -96,8 +96,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20
+      ),
       child: Column(
         children: [
+          VerticalSpacing(40),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

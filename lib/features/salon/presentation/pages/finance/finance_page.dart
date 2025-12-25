@@ -36,10 +36,14 @@ class _FinancePageState extends State<FinancePage> {
       fit: StackFit.expand,
       children: [
         SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 20
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VerticalSpacing(16),
+              VerticalSpacing(40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -209,7 +213,7 @@ class _FinancePageState extends State<FinancePage> {
           ),
         ),
         Positioned(
-          bottom: 10,
+          bottom: 110,
           left: 0,
           right: 0,
           child: Center(
