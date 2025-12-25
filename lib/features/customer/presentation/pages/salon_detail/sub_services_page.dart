@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
@@ -97,7 +98,9 @@ class SubServicesPage extends StatelessWidget {
             ),
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: CommonButton(
-              onPressed: () => Get.back(),
+              onPressed: () => Get.toNamed(
+                RouteNames.bookAppointment
+              ),
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
                 vertical: 15

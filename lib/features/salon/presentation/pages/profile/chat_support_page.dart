@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -233,9 +234,9 @@ class _ChatSupportPageState extends State<ChatSupportPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _Dot(),
-                SizedBox(width: 4),
+                HorizontalSpacing(4),
                 _Dot(),
-                SizedBox(width: 4),
+                HorizontalSpacing(4),
                 _Dot(),
               ],
             ),
@@ -307,7 +308,7 @@ class _ChatSupportPageState extends State<ChatSupportPage> {
           const HorizontalSpacing(12),
           GestureDetector(
             onTap: () {
-              // Send message action
+              showFeatureUnderDevelopment();
             },
             child: Container(
               width: 50,

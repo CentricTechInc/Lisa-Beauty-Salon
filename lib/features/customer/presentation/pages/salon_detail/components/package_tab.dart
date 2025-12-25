@@ -45,9 +45,10 @@ class PackageTab extends StatelessWidget {
       child: Column(
         children: [
           ...packages.map((package) => Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: PackageCard(package: package),
-              )),
+            padding: const EdgeInsets.only(bottom: 16),
+            child: PackageCard(package: package),
+            )
+          ),
         ],
       ),
     );

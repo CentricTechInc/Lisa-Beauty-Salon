@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/close_account_dialog_component.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/sign_out_dialog_component.dart';
@@ -219,19 +220,24 @@ class ProfilePage extends StatelessWidget {
               ),
               const Spacer(),
               // Notification Button
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: AppColors.whiteOne,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.greyOne, width: 1),
-                ),
-                padding: const EdgeInsets.all(12),
-                child: SvgPicture.asset(
-                  Assets.notificationIcon,
-                  width: 20,
-                  height: 20,
+              GestureDetector(
+                onTap: () {
+                  showFeatureUnderDevelopment();
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteOne,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppColors.greyOne, width: 1),
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: SvgPicture.asset(
+                    Assets.notificationIcon,
+                    width: 20,
+                    height: 20,
+                  ),
                 ),
               ),
             ],

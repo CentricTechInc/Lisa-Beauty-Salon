@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -72,9 +73,18 @@ class AboutTab extends StatelessWidget {
             color: AppColors.blackTwo,
           ),
           VerticalSpacing(16),
-          const InfoRow(label: "Monday - Friday", value: "09:00 - 20:00"),
-          const InfoRow(label: "Saturday", value: "09:00 - 18:00"),
-          const InfoRow(label: "Sunday", value: Strings.closedText),
+          const InfoRow(
+            label: "Monday - Friday",
+            value: "09:00 - 20:00"
+          ),
+          const InfoRow(
+            label: "Saturday",
+            value: "09:00 - 18:00"
+          ),
+          const InfoRow(
+            label: "Sunday",
+            value: Strings.closedText
+          ),
           VerticalSpacing(24),
           const CommonText(
             Strings.addressText,
@@ -91,14 +101,19 @@ class AboutTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Center(
-              child:
-                  Icon(Icons.map_outlined, size: 40, color: AppColors.greyTwo),
+              child: Icon(
+                Icons.map_outlined,
+                size: 40,
+                color: AppColors.greyTwo
+              ),
             ),
           ),
           VerticalSpacing(16),
           CommonButton(
             height: 54,
-            onPressed: () {},
+            onPressed: () {
+              showFeatureUnderDevelopment();
+            },
             text: Strings.getDirectionsText,
             textFontSize: 16,
             textFontWeight: 600,

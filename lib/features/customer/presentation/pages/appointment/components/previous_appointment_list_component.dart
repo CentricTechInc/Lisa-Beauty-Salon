@@ -18,7 +18,6 @@ class PreviousAppointmentListComponent extends StatelessWidget {
                 ? "12 November 2025 - 08:00 PM"
                 : "16 November 2025 - 05:30 PM",
             image: index == 0 ? Assets.salonOne : Assets.salonTwo,
-            onTap: () {}, // Add Previous details later
           ),
         ),
       ),

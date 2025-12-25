@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
@@ -21,7 +22,7 @@ class _ReviewPageState extends State<ReviewPage> {
   final TextEditingController _reviewController = TextEditingController();
   final ValueNotifier<bool> _recommendYes = ValueNotifier(true);
   final ValueNotifier<bool> _recommendNo = ValueNotifier(false);
-  final ValueNotifier<int> _rating = ValueNotifier(0);
+  final ValueNotifier<double> _rating = ValueNotifier(0.0);
 
   @override
   void dispose() {
@@ -119,9 +120,7 @@ class _ReviewPageState extends State<ReviewPage> {
                   _buildStarRatingSelector(),
                   const VerticalSpacing(60),
                   CommonButton(
-                    onPressed: () {
-                      Get.back();
-                    },
+                    onPressed: _submitReview,
                     text: "Submit Review",
                     backgroundColor: AppColors.pinkTwo,
                     height: 56,
@@ -268,27 +267,78 @@ class _ReviewPageState extends State<ReviewPage> {
     );
   }
 
+  void _submitReview() async {
+    // Show loader
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(
+          color: AppColors.pinkTwo,
+        ),
+      ),
+      barrierDismissible: false,
+    );
+
+    // Simulate network delay
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Close loader
+    Get.back();
+
+    // Navigate to Home Shell
+    Get.offAllNamed(RouteNames.mainCustomer);
+  }
+
   Widget _buildStarRatingSelector() {
-    return ValueListenableBuilder<int>(
+    return ValueListenableBuilder<double>(
       valueListenable: _rating,
       builder: (context, rating, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(5, (index) {
-            return GestureDetector(
-              onTap: () => _rating.value = index + 1,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Icon(
-                  index < rating ? Icons.star_rate_rounded : Icons.star_outline_rounded,
-                  color: AppColors.yellowOne,
-                  size: 48,
-                ),
-              ),
-            );
-          }),
+        return Center(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onHorizontalDragUpdate: (details) => _handleRatingGesture(details.localPosition.dx),
+            onTapDown: (details) => _handleRatingGesture(details.localPosition.dx),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(5, (index) {
+                IconData icon;
+                if (rating >= index + 1) {
+                  icon = Icons.star_rate_rounded;
+                } else if (rating > index) {
+                  icon = Icons.star_half_rounded;
+                } else {
+                  icon = Icons.star_outline_rounded;
+                }
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Icon(
+                    icon,
+                    color: AppColors.yellowOne,
+                    size: 48,
+                  ),
+                );
+              }),
+            ),
+          ),
         );
       },
     );
+  }
+
+  void _handleRatingGesture(double xPosition) {
+    const double totalStars = 5;
+    const double starWidth = 56.0; // 48 icon size + 4 padding on each side
+    
+    // Calculate raw rating
+    double rawRating = xPosition / starWidth;
+    
+    // Snap to 0.5 increments
+    double snappedRating = (rawRating * 2).ceil() / 2.0;
+    
+    // Clamp between 0.5 and 5.0
+    double newRating = snappedRating.clamp(0.5, totalStars);
+    
+    if (_rating.value != newRating) {
+      _rating.value = newRating;
+    }
   }
 }

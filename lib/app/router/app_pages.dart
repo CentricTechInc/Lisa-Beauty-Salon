@@ -49,6 +49,8 @@ import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/bank
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/services_page.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/availability_page.dart';
 import 'package:lisa_beauty_salon/features/salon/shell/salon_shell.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/shell/customer_shell_binding.dart';
+import 'package:lisa_beauty_salon/features/salon/shell/salon_shell_binding.dart';
 
 class AppPages {
   static const String initial = RouteNames.splash;
@@ -94,10 +96,12 @@ class AppPages {
     GetPage(
       name: RouteNames.mainCustomer,
       page: () => CustomerShell(),
+      binding: CustomerShellBinding(),
     ),
     GetPage(
       name: RouteNames.mainSalon,
       page: () => SalonShell(),
+      binding: SalonShellBinding(),
     ),
     GetPage(
       name: RouteNames.profileEdit,

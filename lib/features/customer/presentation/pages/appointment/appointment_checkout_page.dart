@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/map/components/suggestion_card_component.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/components/booking_success_bottom_sheet.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
@@ -304,18 +304,39 @@ class _AppointmentCheckoutPageState extends State<AppointmentCheckoutPage> {
       leftLabel: "Back",
       rightLabel: "Checkout",
       onLeftTap: () => Get.back(),
-      onRightTap: () {
-        Get.bottomSheet(
-          const BookingSuccessBottomSheet(),
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-        );
-      },
+      onRightTap: _handleCheckout,
       leftActiveColor: AppColors.whiteOne,
       rightActiveColor: AppColors.pinkTwo,
       leftActiveTextColor: AppColors.greyTwo,
       rightActiveTextColor: AppColors.whiteOne,
       inactiveTextColor: AppColors.greyTwo,
+    );
+  }
+
+  void _handleCheckout() async {
+    // Show loader
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(
+          color: AppColors.pinkTwo,
+        ),
+      ),
+      barrierDismissible: false,
+    );
+
+    // Simulate payment processing delay
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Close loader
+    Get.back();
+
+    // Show Success Bottom Sheet
+    Get.bottomSheet(
+      const BookingSuccessBottomSheet(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      isDismissible: false,
+      enableDrag: false,
     );
   }
 }

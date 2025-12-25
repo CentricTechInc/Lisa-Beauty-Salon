@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_sheet_component.dart';
 
@@ -299,25 +300,34 @@ class _UpcomingAppointmentDetailsSheet extends StatelessWidget {
           color: AppColors.blackTwo,
         ),
         VerticalSpacing(20),
-        Container(
-          height: 50,
-          width: 140,
-          decoration: BoxDecoration(
-            color: AppColors.blackThree, 
-            borderRadius: BorderRadius.circular(16)
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-               Icon(Icons.chat_bubble_outline, color: AppColors.whiteOne, size: 20),
-               HorizontalSpacing(8),
-               CommonText(
-                 "Chat",
-                 color: AppColors.whiteOne,
-                 fontSize: 16,
-                 fontWeight: 500,
-               )
-            ],
+        GestureDetector(
+          onTap: () {
+            showFeatureUnderDevelopment();
+          },
+          child: Container(
+            height: 50,
+            width: 140,
+            decoration: BoxDecoration(
+              color: AppColors.blackThree,
+              borderRadius: BorderRadius.circular(16)
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                 Icon(
+                   Icons.chat_bubble_outline,
+                   color: AppColors.whiteOne,
+                   size: 20,
+                 ),
+                 HorizontalSpacing(8),
+                 CommonText(
+                   "Chat",
+                   color: AppColors.whiteOne,
+                   fontSize: 16,
+                   fontWeight: 500,
+                 )
+              ],
+            ),
           ),
         ),
         VerticalSpacing(30),
@@ -877,14 +887,17 @@ class _PreviousAppointmentDetailsSheet extends StatelessWidget {
           ),
         ),
         VerticalSpacing(10),
-        CommonText(
-          notes,
-          fontSize: 14,
-          fontWeight: 400,
-          color: AppColors.blackTwo,
-          textAlign: TextAlign.start,
-          textOverflow: TextOverflow.visible,
-          maxLines: 3,
+        Align(
+          alignment: Alignment.centerLeft,
+          child: CommonText(
+            notes,
+            fontSize: 14,
+            fontWeight: 400,
+            color: AppColors.blackTwo,
+            textAlign: TextAlign.start,
+            textOverflow: TextOverflow.visible,
+            maxLines: 3,
+          ),
         ),
         VerticalSpacing(20),
         Align(
@@ -907,14 +920,17 @@ class _PreviousAppointmentDetailsSheet extends StatelessWidget {
           ),
         ),
         VerticalSpacing(10),
-        CommonText(
-          reviewText,
-          fontSize: 14,
-          fontWeight: 400,
-          color: AppColors.greyTwo,
-          textAlign: TextAlign.start,
-          textOverflow: TextOverflow.visible,
-          maxLines: 4,
+        Align(
+          alignment: Alignment.centerLeft,
+          child: CommonText(
+            reviewText,
+            fontSize: 14,
+            fontWeight: 400,
+            color: AppColors.greyTwo,
+            textAlign: TextAlign.start,
+            textOverflow: TextOverflow.visible,
+            maxLines: 4,
+          ),
         ),
         VerticalSpacing(30),
       ],
@@ -1203,14 +1219,17 @@ class _CancelledAppointmentDetailsSheet extends StatelessWidget {
           ),
         ),
         VerticalSpacing(10),
-        CommonText(
-          notes,
-          fontSize: 14,
-          fontWeight: 400,
-          color: AppColors.blackTwo,
-          textAlign: TextAlign.start,
-          textOverflow: TextOverflow.visible,
-          maxLines: 3,
+        Align(
+          alignment: Alignment.centerLeft,
+          child: CommonText(
+            notes,
+            fontSize: 14,
+            fontWeight: 400,
+            color: AppColors.blackTwo,
+            textAlign: TextAlign.start,
+            textOverflow: TextOverflow.visible,
+            maxLines: 3,
+          ),
         ),
         VerticalSpacing(30),
       ],

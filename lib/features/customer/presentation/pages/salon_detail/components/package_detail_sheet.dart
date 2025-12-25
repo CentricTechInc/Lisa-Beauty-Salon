@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
@@ -128,7 +129,9 @@ class PackageDetailSheet extends StatelessWidget {
             VerticalSpacing(30),
             // Booking Footer
             CommonButton(
-              onPressed: () => Get.back(),
+              onPressed: () => Get.toNamed(
+                RouteNames.bookAppointment
+              ),
               radius: 16,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),

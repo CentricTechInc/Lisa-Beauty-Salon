@@ -74,8 +74,7 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    // checkAuthStatus();
-    loadCountries();
+    // Countries will be loaded on demand to prevent navigation delays
     super.onInit();
   }
 

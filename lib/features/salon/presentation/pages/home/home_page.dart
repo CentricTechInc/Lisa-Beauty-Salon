@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/home/components/enable_location_dialog_component.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
-import 'package:lisa_beauty_salon/core/utils/message.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -92,11 +92,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void showFeatureInDevelopment() {
-    MessageUtils.showInfoSnackBar(
-      Strings.featureUnderDevelopment
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,9 +121,9 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                    GestureDetector(
-                    onTap: () {
-                      showFeatureInDevelopment();
-                    },
+                      onTap: () {
+                        showFeatureUnderDevelopment();
+                      },
                     child: Container(
                       width: 48,
                       height: 48,
@@ -151,9 +146,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   HorizontalSpacing(10),
                   GestureDetector(
-                    onTap: () {
-                      showFeatureInDevelopment();
-                    },
+                      onTap: () {
+                        showFeatureUnderDevelopment();
+                      },
                     child: Container(
                       width: 48,
                       height: 48,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart ';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
-import 'package:lisa_beauty_salon/core/utils/message.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_tabbar_widget.dart';
@@ -12,11 +12,6 @@ import 'package:lisa_beauty_salon/features/salon/presentation/pages/appointment/
 class AppointmentPage extends StatelessWidget {
   const AppointmentPage({super.key});
 
-  void showFeatureInDevelopment() {
-    MessageUtils.showInfoSnackBar(
-      Strings.featureUnderDevelopment
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +38,9 @@ class AppointmentPage extends StatelessWidget {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        showFeatureInDevelopment();
-                      },
+                        onTap: () {
+                          showFeatureUnderDevelopment();
+                        },
                       child: Container(
                         width: 48,
                         height: 48,
@@ -69,9 +64,9 @@ class AppointmentPage extends StatelessWidget {
                     ),
                     HorizontalSpacing(10),
                     GestureDetector(
-                      onTap: () {
-                        showFeatureInDevelopment();
-                      },
+                        onTap: () {
+                          showFeatureUnderDevelopment();
+                        },
                       child: Container(
                         width: 48,
                         height: 48,

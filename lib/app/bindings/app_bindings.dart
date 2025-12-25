@@ -8,9 +8,8 @@ import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_co
 
 class AppBindings extends Bindings {
 
-  @override
-  void dependencies() {
-    Get.lazyPut<APIService>(() => APIService(), fenix:  true);
+  static void init() {
+    Get.lazyPut<APIService>(() => APIService(), fenix: true);
 
     Get.lazyPut<AuthDataSource>(
       () => AuthDataSourceImpl(),
@@ -28,6 +27,10 @@ class AppBindings extends Bindings {
       () => AuthController(),
       fenix: true,
     );
+  }
 
+  @override
+  void dependencies() {
+    init();
   }
 }

@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
-import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
@@ -18,11 +18,6 @@ class HomePage extends StatelessWidget {
 
   final searchController = TextEditingController();
 
-  void showFeatureInDevelopment() {
-    MessageUtils.showInfoSnackBar(
-      Strings.featureUnderDevelopment
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +89,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      showFeatureInDevelopment();
+                      showFeatureUnderDevelopment();
                     },
                     child: Container(
                       width: 48,
@@ -118,9 +113,9 @@ class HomePage extends StatelessWidget {
                   ),
                   HorizontalSpacing(10),
                   GestureDetector(
-                    onTap: () {
-                      showFeatureInDevelopment();
-                    },
+                      onTap: () {
+                        showFeatureUnderDevelopment();
+                      },
                     child: Container(
                       width: 48,
                       height: 48,
@@ -157,7 +152,7 @@ class HomePage extends StatelessWidget {
               ),
               suffix: GestureDetector(
                 onTap: () {
-                  showFeatureInDevelopment();
+                  showFeatureUnderDevelopment();
                 },
                 child: Icon(
                   Icons.tune,
@@ -239,9 +234,9 @@ class HomePage extends StatelessWidget {
             child: Row(
               children: items.map((item) {
                 return GestureDetector(
-                  onTap: () {
-                    showFeatureInDevelopment();
-                  },
+                    onTap: () {
+                      showFeatureUnderDevelopment();
+                    },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -377,7 +372,7 @@ class HomePage extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           alignment: Alignment.centerLeft,
                           onPressed: () {
-                            showFeatureInDevelopment();
+                            showFeatureUnderDevelopment();
                           },
                           text: "Book Now",
                           textFontSize: 10,
@@ -427,7 +422,7 @@ class HomePage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  showFeatureInDevelopment();
+                  showFeatureUnderDevelopment();
                 },
                 child: CommonText(
                   Strings.viewAllText,

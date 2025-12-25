@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:lisa_beauty_salon/app/mixins/validations.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/input_formatters.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 
-class WithdrawBottomSheetComponent extends StatelessWidget {
+class WithdrawBottomSheetComponent extends StatelessWidget with FieldsValidation {
   const WithdrawBottomSheetComponent({super.key});
 
   @override
@@ -67,23 +70,28 @@ class WithdrawBottomSheetComponent extends StatelessWidget {
               labelText: Strings.payoutPlaceholderText,
               hintText: Strings.payoutPlaceholderText,
               suffix: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.blackTwo, 
-                        width: 1.5
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Icon(
-                      Icons.attach_money,
-                      size: 14,
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    border: Border.all(
                       color: AppColors.blackTwo,
+                      width: 1.5
                     ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.attach_money,
+                    size: 14,
+                    color: AppColors.blackTwo,
                   ),
                 ),
+              ),
+              validator: validatePrice,
+              inputFormatter: [
+                FilteringTextInputFormatter.allow(RegExp(r'[R\s\d.]')),
+                CurrencyInputFormatter(currencySymbol: "R "),
+              ],
             ),
             VerticalSpacing(24),
             Container(

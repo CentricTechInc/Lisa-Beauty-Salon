@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_message_card.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -73,16 +74,21 @@ class _MessagePageState extends State<MessagePage> {
                 fontWeight: 600,
                 color: AppColors.blackTwo,
               ),
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.greyOne),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Icon(
-                  CupertinoIcons.search,
-                  color: AppColors.blackTwo,
+              GestureDetector(
+                onTap: () {
+                  showFeatureUnderDevelopment();
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.greyOne),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Icon(
+                    CupertinoIcons.search,
+                    color: AppColors.blackTwo,
+                  ),
                 ),
               ),
             ],

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:country_state_city_dropdown/country_state_city_dropdown.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:lisa_beauty_salon/core/errors/exceptions.dart';
 import 'package:lisa_beauty_salon/core/errors/failures.dart';
@@ -54,10 +55,8 @@ class AuthRepositoryImpl implements AuthRepository {
       final jsonString = await rootBundle.loadString(
         'packages/country_state_city_dropdown/assets/data/country_state_city.json',
       );
-      final List<dynamic> jsonList = json.decode(jsonString);
-      final countries = jsonList.map(
-        (country) => Country.fromJson(country)
-      ).toList();
+      
+      final countries = await compute(_decodeAndMapCountries, jsonString);
 
       return Right(countries);
     } catch (e) {
@@ -68,5 +67,10 @@ class AuthRepositoryImpl implements AuthRepository {
         )
       );
     }
+  }
+
+  static List<Country> _decodeAndMapCountries(String jsonString) {
+    final List<dynamic> jsonList = json.decode(jsonString);
+    return jsonList.map((country) => Country.fromJson(country)).toList();
   }
 }

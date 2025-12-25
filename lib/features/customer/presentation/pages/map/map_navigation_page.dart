@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
@@ -306,7 +307,9 @@ class MapNavigationPage extends StatelessWidget {
               ),
             ),
             CommonButton(
-              onPressed: () {},
+              onPressed: () {
+                showFeatureUnderDevelopment();
+              },
               width: 140,
               height: 64,
               radius: 32,

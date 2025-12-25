@@ -24,10 +24,18 @@ class CurrencyInputFormatter extends TextInputFormatter {
       newText = currencySymbol;
     }
 
-    int prefixLength = currencySymbol.length;
-    int selectionIndex = newValue.selection.end > prefixLength
-        ? newValue.selection.end
-        : prefixLength;
+    int selectionIndex = newValue.selection.end;
+
+    // Shift selection if the currency symbol was missing in the raw input 
+    // but is present in the formatted output
+    if (!newValue.text.startsWith(currencySymbol) && newText.startsWith(currencySymbol)) {
+      selectionIndex += currencySymbol.length;
+    }
+
+    // Always ensure cursor is after the symbol
+    if (selectionIndex < currencySymbol.length) {
+      selectionIndex = currencySymbol.length;
+    }
 
     if (selectionIndex > newText.length) {
       selectionIndex = newText.length;

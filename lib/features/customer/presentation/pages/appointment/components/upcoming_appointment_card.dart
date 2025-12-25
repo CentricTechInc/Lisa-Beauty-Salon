@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/components/upcoming_appointment_detail_bottom_sheet.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_switch_widget.dart';
@@ -14,14 +15,12 @@ class UpcomingAppointmentCard extends StatefulWidget {
   final String salonName;
   final String date;
   final String image;
-  final VoidCallback onTap;
 
   const UpcomingAppointmentCard({
     super.key,
     required this.salonName,
     required this.date,
     required this.image,
-    required this.onTap,
   });
 
   @override
@@ -34,7 +33,7 @@ class _UpcomingAppointmentCardState extends State<UpcomingAppointmentCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _showDetailsBottomSheet(context),
+      onTap: () => _showUpcomingDetails(),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -265,210 +264,11 @@ class _UpcomingAppointmentCardState extends State<UpcomingAppointmentCard> {
     );
   }
 
-  void _showDetailsBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
+  void _showUpcomingDetails() {
+    Get.bottomSheet(
+      const UpcomingAppointmentDetailBottomSheet(),
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.9,
-          decoration: const BoxDecoration(
-            color: AppColors.whiteOne,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-          ),
-          child: Column(
-            children: [
-              const VerticalSpacing(12),
-              Container(
-                width: 48,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: AppColors.greyOne,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              const VerticalSpacing(24),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset(
-                          widget.image,
-                          width: 120,
-                          height: 120,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const VerticalSpacing(16),
-                      CommonText(
-                        widget.salonName,
-                        fontSize: 22,
-                        fontWeight: 600,
-                        color: AppColors.blackTwo,
-                      ),
-                      const VerticalSpacing(4),
-                      const CommonText(
-                        "6391 Elgin St. Celina, Delaware...",
-                        fontSize: 14,
-                        color: AppColors.greyTwo,
-                      ),
-                      const VerticalSpacing(24),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 10
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.blackThree,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: _buildActionBtn(
-                                  icon: Icons.chat_bubble_outline,
-                                  label: "Chat"
-                                )
-                              ),
-                              Expanded(
-                                child: _buildActionBtn(
-                                  icon: Icons.directions_outlined,
-                                  label: "Direction"
-                                )
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const VerticalSpacing(32),
-                      _buildDetailRow("Date & Time", widget.date, isHighlight: true),
-                      const VerticalSpacing(24),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: CommonText(
-                          "Services",
-                          fontSize: 16,
-                          fontWeight: 600,
-                          color: AppColors.blackTwo,
-                        ),
-                      ),
-                      const VerticalSpacing(12),
-                      _buildServiceItem("Nail", "\$8.00"),
-                      const VerticalSpacing(8),
-                      _buildServiceItem("Facial", "\$24.99"),
-                      const VerticalSpacing(20),
-                      const Divider(color: AppColors.greyOne),
-                      const VerticalSpacing(20),
-                      _buildDetailRow("Total", "\$32.99", isBold: true, isHighlight: true),
-                      const VerticalSpacing(24),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: CommonText(
-                          "Notes",
-                          fontSize: 16,
-                          fontWeight: 600,
-                          color: AppColors.blackTwo,
-                        ),
-                      ),
-                      const VerticalSpacing(8),
-                      const CommonText(
-                        "Lorem ipsum dolor sit amet consectetur. Cras tincidunt purus sed scelerisque.",
-                        fontSize: 14,
-                        color: AppColors.greyTwo,
-                        lineHeight: 1.5,
-                      ),
-                      const VerticalSpacing(40),
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Transform.scale(
-                                scale: 0.7,
-                                child: CommonSwitchComponentNonReactive(
-                                  value: true,
-                                  onChanged: (val) {},
-                                  activeTrackColor: AppColors.pinkTwo,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 130,
-                                child: ValueListenableBuilder<String>(
-                                  valueListenable: _reminderTime,
-                                  builder: (context, value, child) {
-                                    return CommonDropdownField<String>(
-                                      value: value,
-                                      items: [
-                                        "15 min before",
-                                        "30 min before",
-                                        "45 min before"
-                                      ].map<DropdownMenuItem<String>>((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        if (newValue != null) {
-                                          _reminderTime.value = newValue;
-                                        }
-                                      },
-                                      selectedItemBuilder: (context) {
-                                        return [
-                                          "15 min before",
-                                          "30 min before",
-                                          "45 min before"
-                                        ].map((e) => CommonText(
-                                              e,
-                                              fontSize: 12,
-                                              color: AppColors.greyTwo,
-                                            )).toList();
-                                      },
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 0, vertical: 8),
-                                      borderRadius: 8,
-                                      borderColor: Colors.transparent,
-                                      fillColor: Colors.transparent,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          CommonButton(
-                            onPressed: () {
-                              Get.back();
-                              _showCancelDialog(context);
-                            },
-                            text: "Cancel",
-                            width: 100,
-                            height: 48,
-                            radius: 12,
-                            backgroundColor: AppColors.whiteOne,
-                            borderColor: AppColors.greyOne,
-                            textColor: AppColors.greyTwo,
-                            textFontSize: 14,
-                            textFontWeight: 600,
-                          ),
-                        ],
-                      ),
-                      const VerticalSpacing(24),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 

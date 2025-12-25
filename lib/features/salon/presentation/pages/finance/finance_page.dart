@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/components/earning_history_card_component.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/finance/components/finance_chart_component.dart';
@@ -59,7 +60,9 @@ class _FinancePageState extends State<FinancePage> {
                       width: 25,
                       height: 25,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showFeatureUnderDevelopment();
+                    },
                  ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 
 class SalonHeaderDelegate extends SliverPersistentHeaderDelegate {
   final String imagePath;
@@ -48,20 +49,29 @@ class SalonHeaderDelegate extends SliverPersistentHeaderDelegate {
                   child: const Center(
                     child: Icon(
                       Icons.chevron_left, 
-                      color: AppColors.blackTwo
+                      color: AppColors.blackTwo,
+                      size: 40,
                     ),
                   ),
                 ),
               ),
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: AppColors.whiteOne,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Center(
-                  child: Icon(Icons.sync, color: AppColors.blackTwo),
+              GestureDetector(
+                onTap: () {
+                  showFeatureUnderDevelopment();
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteOne,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.sync,
+                      color: AppColors.blackTwo
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -75,7 +85,9 @@ class SalonHeaderDelegate extends SliverPersistentHeaderDelegate {
             height: 20,
             decoration: const BoxDecoration(
               color: AppColors.whiteOne,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(30)
+              ),
             ),
           ),
         ),

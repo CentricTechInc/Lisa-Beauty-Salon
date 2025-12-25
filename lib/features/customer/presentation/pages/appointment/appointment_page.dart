@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
-import 'package:lisa_beauty_salon/core/utils/assets.dart';
+import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/components/previous_appointment_list_component.dart';
 import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointment/components/upcoming_appointment_list_component.dart';
@@ -9,7 +9,6 @@ import 'package:lisa_beauty_salon/features/customer/presentation/pages/appointme
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_tabbar_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
-import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 
 class AppointmentPage extends StatefulWidget {
   const AppointmentPage({super.key});
@@ -74,9 +73,15 @@ class _AppointmentPageState extends State<AppointmentPage> {
         ),
         Row(
           children: [
-            _buildHeaderIcon(CupertinoIcons.map),
+            GestureDetector(
+              onTap: () => showFeatureUnderDevelopment(),
+              child: _buildHeaderIcon(CupertinoIcons.map)
+            ),
             const HorizontalSpacing(12),
-            _buildHeaderIcon(Icons.tune),
+            GestureDetector(
+              onTap: () => showFeatureUnderDevelopment(),
+              child: _buildHeaderIcon(Icons.tune)
+            ),
           ],
         ),
       ],

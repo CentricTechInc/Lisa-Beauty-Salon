@@ -12,19 +12,21 @@ import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/prof
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_bar.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 
+import 'package:lisa_beauty_salon/shared/widgets/lazy_load_stack.dart';
+
 class SalonShell extends StatelessWidget {
   SalonShell({
     super.key
   });
 
-  final controller = Get.put(SettingController());
+  final controller = Get.find<SettingController>();
 
-  final pages = [
-    HomePage(),
-    AppointmentPage(),
-    FinancePage(),
-    MessagePage(),
-    ProfilePage(),
+  final List<WidgetBuilder> pages = [
+    (context) => HomePage(),
+    (context) => const AppointmentPage(),
+    (context) => const FinancePage(),
+    (context) => const MessagePage(),
+    (context) => const ProfilePage(),
   ];
 
   @override
@@ -52,10 +54,11 @@ class SalonShell extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: NetworkImage(
                   "https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg="
-                )
+                ),
+                fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(
                 16
@@ -64,9 +67,9 @@ class SalonShell extends StatelessWidget {
           )
         ],
       ),
-      child: IndexedStack(
+      child: LazyLoadStack(
         index: controller.currentIndex.value,
-        children: pages,
+        builders: pages,
       ),
     ));
   }
