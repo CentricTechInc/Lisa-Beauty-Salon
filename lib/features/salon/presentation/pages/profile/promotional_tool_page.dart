@@ -109,31 +109,7 @@ class _PromotionalToolPageState extends State<PromotionalToolPage> {
                               initialChildSize: 0.65,
                               maxChildSize: 0.9,
                               content: PromotionBottomSheetComponent(promotion: p),
-                              footer: CommonButton(
-                                height: 60,
-                                radius: 12,
-                                onPressed: () => Get.back(),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CommonText(
-                                        Strings.bookNowText,
-                                        fontSize: 18,
-                                        fontWeight: 600,
-                                        color: AppColors.whiteOne,
-                                      ),
-                                      CommonText(
-                                        p.priceText,
-                                        fontSize: 18,
-                                        fontWeight: 600,
-                                        color: AppColors.whiteOne,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+
                             );
                           },
                         ),

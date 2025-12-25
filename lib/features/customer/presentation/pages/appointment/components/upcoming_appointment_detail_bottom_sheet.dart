@@ -6,11 +6,20 @@ import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/helpers.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
+import 'package:lisa_beauty_salon/shared/widgets/common_switch_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 
-class UpcomingAppointmentDetailBottomSheet extends StatelessWidget {
+class UpcomingAppointmentDetailBottomSheet extends StatefulWidget {
   const UpcomingAppointmentDetailBottomSheet({super.key});
+
+  @override
+  State<UpcomingAppointmentDetailBottomSheet> createState() => _UpcomingAppointmentDetailBottomSheetState();
+}
+
+class _UpcomingAppointmentDetailBottomSheetState extends State<UpcomingAppointmentDetailBottomSheet> {
+  final ValueNotifier<String> _reminderTime = ValueNotifier("30 min before");
 
   @override
   Widget build(BuildContext context) {
@@ -141,18 +150,65 @@ class UpcomingAppointmentDetailBottomSheet extends StatelessWidget {
                   ),
                   const VerticalSpacing(40),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(CupertinoIcons.bell, size: 20, color: AppColors.pinkTwo),
-                      const HorizontalSpacing(12),
-                      const CommonText(
-                        Strings.reminderText,
-                        fontSize: 14,
-                        color: AppColors.blackTwo,
-                        fontWeight: 500,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Transform.scale(
+                            scale: 0.7,
+                            child: CommonSwitchComponentNonReactive(
+                              value: true,
+                              onChanged: (val) {},
+                              activeTrackColor: AppColors.pinkTwo,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 130,
+                            child: ValueListenableBuilder<String>(
+                              valueListenable: _reminderTime,
+                              builder: (context, value, child) {
+                                return CommonDropdownField<String>(
+                                  value: value,
+                                  items: [
+                                    "15 min before",
+                                    "30 min before",
+                                    "45 min before"
+                                  ].map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    if (newValue != null) {
+                                      _reminderTime.value = newValue;
+                                    }
+                                  },
+                                  selectedItemBuilder: (context) {
+                                    return [
+                                      "15 min before",
+                                      "30 min before",
+                                      "45 min before"
+                                    ].map((e) => CommonText(
+                                      e,
+                                      fontSize: 12,
+                                      color: AppColors.greyTwo,
+                                    )).toList();
+                                  },
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 0, 
+                                    vertical: 8
+                                  ),
+                                  borderRadius: 8,
+                                  borderColor: Colors.transparent,
+                                  fillColor: Colors.transparent,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      const HorizontalSpacing(4),
-                      const Icon(Icons.keyboard_arrow_down, size: 20, color: AppColors.greyTwo),
-                      const Spacer(),
                       CommonButton(
                         onPressed: () {
                           Get.back();
