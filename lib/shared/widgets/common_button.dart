@@ -5,7 +5,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 class CommonButton extends StatelessWidget {
   const CommonButton({
     super.key,
-    required this.onPressed,
+    this.onPressed,
 
     // Content
     this.text,
@@ -34,7 +34,7 @@ class CommonButton extends StatelessWidget {
   });
 
   // Action
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   // Content
   final String? text;
