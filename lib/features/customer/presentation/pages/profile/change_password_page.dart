@@ -11,6 +11,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 
 class CustomerChangePasswordPage extends StatefulWidget {
   const CustomerChangePasswordPage({super.key});
@@ -217,12 +218,20 @@ class _CustomerChangePasswordPageState extends State<CustomerChangePasswordPage>
                   fontSize: 16,
                   fontWeight: 600,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    final loadingService = Get.find<LoadingService>();
+                    loadingService.show();
+                    await Future.delayed(const Duration(milliseconds: 1500));
+                    loadingService.hide();
+                    
+                    // Small delay to ensure dialog is completely closed before popping the page
+                    await Future.delayed(const Duration(milliseconds: 100));
+                    
+                    Get.back();
                     MessageUtils.showSuccessSnackBar(
                       "Password has been changed successfully",
                     );
-                    Get.back();
                   } else {
                     MessageUtils.showErrorSnackBar(
                       "Please make sure to fill all the required fields correctly",

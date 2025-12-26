@@ -8,6 +8,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 
 class CustomerPaymentMethodsPage extends StatefulWidget {
   const CustomerPaymentMethodsPage({super.key});
@@ -116,8 +117,13 @@ class _CustomerPaymentMethodsPageState extends State<CustomerPaymentMethodsPage>
                 }),
                 const Spacer(),
                 CommonButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_methods.isNotEmpty) {
+                      final loadingService = Get.find<LoadingService>();
+                      loadingService.show();
+                      await Future.delayed(const Duration(milliseconds: 1500));
+                      loadingService.hide();
+
                       setState(() {
                         _methods.removeAt(_selectedIndex);
                         if (_methods.isNotEmpty && _selectedIndex >= _methods.length) {

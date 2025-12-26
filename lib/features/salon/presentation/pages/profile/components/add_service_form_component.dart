@@ -11,6 +11,7 @@ import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/components/profile_photo_picker_component.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
@@ -303,11 +304,18 @@ class AddServiceFormComponent extends StatelessWidget with FieldsValidation {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: CommonButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
+                  final loadingService = Get.find<LoadingService>();
+                  loadingService.show();
+
                   final price = servicePriceController.text
                       .replaceAll("R", '')
                       .replaceAll(' ', '');
+                  
+                  // Simulate network delay
+                  await Future.delayed(const Duration(seconds: 2));
+                  
                   authController.addService(
                     ServiceDto(
                       serviceCategory: serviceCategoryNameController.text,
@@ -319,7 +327,16 @@ class AddServiceFormComponent extends StatelessWidget with FieldsValidation {
                       servicePrice: double.tryParse(price) ?? 0,
                     ),
                   );
+
+                  loadingService.hide();
+                  
+                  // Small delay to ensure dialog is completely closed before navigating
+                  await Future.delayed(const Duration(milliseconds: 100));
+                  
                   onSaved();
+                  MessageUtils.showSuccessSnackBar(
+                    "Service added successfully",
+                  );
                 } else {
                   MessageUtils.showErrorSnackBar(
                     Strings.fillRequiredFieldsText,

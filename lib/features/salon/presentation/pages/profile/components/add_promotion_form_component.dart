@@ -8,6 +8,8 @@ import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/core/utils/input_formatters.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/features/promotions/data/dto/promotion_dto.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/build_your_profile/components/profile_photo_picker_component.dart';
@@ -194,8 +196,14 @@ class _AddPromotionFormComponentState extends State<AddPromotionFormComponent> w
             ),
             const VerticalSpacing(24),
             CommonButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState?.validate() ?? false) {
+                  final loadingService = Get.find<LoadingService>();
+                  loadingService.show();
+
+                  // Simulate network delay
+                  await Future.delayed(const Duration(seconds: 2));
+
                   final dto = PromotionDto(
                     title: titleController.text.trim(),
                     subtitle: subtitleController.text.trim(),
@@ -207,7 +215,16 @@ class _AddPromotionFormComponentState extends State<AddPromotionFormComponent> w
                     subCategory: '', // We can use services as sub-services or add another dropdown
                   );
                   authController.addPromotion(dto);
+
+                  loadingService.hide();
+                  
+                  // Small delay to ensure dialog is completely closed before navigating
+                  await Future.delayed(const Duration(milliseconds: 100));
+
                   widget.onSaved();
+                  MessageUtils.showSuccessSnackBar(
+                    "Promotion created successfully",
+                  );
                 }
               },
               text: Strings.saveText,

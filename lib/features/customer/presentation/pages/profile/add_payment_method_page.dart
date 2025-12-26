@@ -10,6 +10,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:intl/intl.dart';
 
 class CardExpiryInputFormatter extends TextInputFormatter {
@@ -160,8 +161,12 @@ class _CustomerAddPaymentMethodPageState extends State<CustomerAddPaymentMethodP
             ),
           ),
           CommonButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formkey.currentState!.validate()) {
+                final loadingService = Get.find<LoadingService>();
+                loadingService.show();
+                await Future.delayed(const Duration(seconds: 2));
+                loadingService.hide();
                 Get.back();
               }
             },

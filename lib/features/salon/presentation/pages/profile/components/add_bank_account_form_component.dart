@@ -12,6 +12,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 
 class AddBankAccountFormComponent extends StatefulWidget {
   final VoidCallback onSaved;
@@ -153,11 +154,17 @@ class _AddBankAccountFormComponentState extends State<AddBankAccountFormComponen
             textColor: AppColors.whiteOne,
             textFontSize: 16,
             textFontWeight: 500,
-            onPressed: () {
+            onPressed: () async {
               final haveConsented =
                   authController.confirmAndConsentToThisAccount.value;
 
               if (_formKey.currentState!.validate() && haveConsented) {
+                final loadingService = Get.find<LoadingService>();
+                loadingService.show();
+
+                // Simulate network delay
+                await Future.delayed(const Duration(seconds: 2));
+
                 authController.addBankAccount(
                   BankAccountInfoDto(
                     accountHolderFullName: accountHolderNameController.text,
@@ -166,7 +173,16 @@ class _AddBankAccountFormComponentState extends State<AddBankAccountFormComponen
                     areTermsAndConditionsAccepted: haveConsented,
                   ),
                 );
+
+                loadingService.hide();
+
+                // Small delay to ensure dialog is completely closed before navigating
+                await Future.delayed(const Duration(milliseconds: 100));
+
                 widget.onSaved();
+                MessageUtils.showSuccessSnackBar(
+                  "Bank account added successfully",
+                );
               } else if (!haveConsented) {
                 MessageUtils.showErrorSnackBar(
                   "Please check the confirmation to consent to link bank accounts",

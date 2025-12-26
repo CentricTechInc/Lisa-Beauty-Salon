@@ -8,6 +8,8 @@ import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_switch_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'circular_day_selector.dart';
 import 'time_selector_block.dart';
 
@@ -96,7 +98,23 @@ class AvailabilityEditSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: CommonButton(
-            onPressed: onSaved,
+            onPressed: () async {
+              final loadingService = Get.find<LoadingService>();
+              loadingService.show();
+              
+              // Simulate network delay
+              await Future.delayed(const Duration(seconds: 2));
+              
+              loadingService.hide();
+              
+              // Small delay to ensure dialog is completely closed before navigating
+              await Future.delayed(const Duration(milliseconds: 100));
+              
+              onSaved();
+              MessageUtils.showSuccessSnackBar(
+                "Availability updated successfully",
+              );
+            },
             text: Strings.setAvailabilityText,
             radius: 12,
             textFontWeight: 600,

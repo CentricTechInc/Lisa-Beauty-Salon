@@ -13,6 +13,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_file_upload_component.da
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 
 class ProfessionalInfoTab extends StatefulWidget {
   const ProfessionalInfoTab({super.key});
@@ -225,15 +226,28 @@ class _ProfessionalInfoTabState extends State<ProfessionalInfoTab>
           VerticalSpacing(30),
           CommonButton(
             text: "Save",
-            onPressed: () {
+            onPressed: () async {
               final fileError = validateFileSelection(
                 images: _imageFilesNotifier.value,
                 documents: _documentFilesNotifier.value,
               );
 
               if (_formKey.currentState!.validate() && fileError == null) {
-                // TODO: Implement Save
+                final loadingService = Get.find<LoadingService>();
+                loadingService.show();
+                
+                // Simulate network delay
+                await Future.delayed(const Duration(seconds: 2));
+                
+                loadingService.hide();
+                
+                // Small delay to ensure dialog is completely closed before popping the page
+                await Future.delayed(const Duration(milliseconds: 100));
+                
                 Get.back();
+                MessageUtils.showSuccessSnackBar(
+                  "Professional information updated successfully",
+                );
               } else if (fileError != null) {
                 MessageUtils.showErrorSnackBar(fileError);
               }

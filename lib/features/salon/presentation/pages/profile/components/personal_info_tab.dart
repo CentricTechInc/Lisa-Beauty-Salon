@@ -12,6 +12,8 @@ import 'package:lisa_beauty_salon/shared/widgets/common_dropdown_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
+import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
@@ -369,10 +371,23 @@ class _PersonalInfoTabState extends State<PersonalInfoTab>
           VerticalSpacing(30),
           CommonButton(
             text: "Save",
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                // TODO: Implement save functionality
+                final loadingService = Get.find<LoadingService>();
+                loadingService.show();
+                
+                // Simulate network delay
+                await Future.delayed(const Duration(seconds: 2));
+                
+                loadingService.hide();
+                
+                // Small delay to ensure dialog is completely closed before popping the page
+                await Future.delayed(const Duration(milliseconds: 100));
+                
                 Get.back();
+                MessageUtils.showSuccessSnackBar(
+                  "Personal information updated successfully",
+                );
               }
             },
             backgroundColor: AppColors.pinkTwo,
