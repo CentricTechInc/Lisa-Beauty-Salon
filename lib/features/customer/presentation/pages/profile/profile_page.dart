@@ -185,7 +185,7 @@ class CustomerProfilePage extends StatelessWidget {
               ],
             );
           }),
-          const VerticalSpacing(24),
+          const VerticalSpacing(55),
         ],
       ),
     );

@@ -115,7 +115,6 @@ class _MessagePageState extends State<MessagePage> {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 20,
-        vertical: 20
       ),
       child: Column(
         children: [

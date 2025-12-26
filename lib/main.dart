@@ -1,3 +1,5 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/app/app.dart';
@@ -17,5 +19,14 @@ void main() async {
     return service;
   });
 
-  runApp(const MainApp());
+  // This is commented out to disable DevicePreview as it is only active for development mode
+  // runApp(
+  //   DevicePreview(
+  //     enabled: !kReleaseMode,
+  //     builder: (context) => MainApp(),
+  //   ),
+  // );
+  runApp(
+    MainApp()
+  );
 }

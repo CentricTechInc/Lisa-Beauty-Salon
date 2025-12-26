@@ -110,7 +110,7 @@ class AppointmentPage extends StatelessWidget {
               CancelledAppointmentListComponent(),
             ],
           ),
-          VerticalSpacing(20),
+          VerticalSpacing(80),
         ],
       ),
     );

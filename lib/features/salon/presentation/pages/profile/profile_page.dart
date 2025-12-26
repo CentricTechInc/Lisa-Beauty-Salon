@@ -313,10 +313,11 @@ class ProfilePage extends StatelessWidget {
                     ],
                   );
                 }),
-                VerticalSpacing(16),
+                VerticalSpacing(24),
               ],
             );
           }),
+          VerticalSpacing(50),
         ],
       ),
     );

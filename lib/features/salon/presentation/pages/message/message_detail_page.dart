@@ -87,7 +87,6 @@ class _MessageDetailPageState extends State<MessageDetailPage> {
       padding: EdgeInsets.only(
         left: 15,
         right: 15,
-        top: 05
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

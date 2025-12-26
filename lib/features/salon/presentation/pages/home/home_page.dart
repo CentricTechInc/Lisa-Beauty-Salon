@@ -448,7 +448,7 @@ class _HomePageState extends State<HomePage> {
           ),
           VerticalSpacing(20),
           MonthlyStatisticsGraph(),
-          VerticalSpacing(20),
+          VerticalSpacing(90),
         ],
       ),
     );

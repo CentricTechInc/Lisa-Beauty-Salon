@@ -53,7 +53,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               const PreviousAppointmentListComponent(),
             ],
           ),
-          const VerticalSpacing(20),
+          const VerticalSpacing(70),
         ],
       ),
     );

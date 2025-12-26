@@ -451,7 +451,7 @@ class HomePage extends StatelessWidget {
               },
             ),
           )),
-          VerticalSpacing(20),
+          VerticalSpacing(70),
 
         ],
       ),

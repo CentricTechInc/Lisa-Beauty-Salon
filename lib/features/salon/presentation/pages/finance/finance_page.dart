@@ -154,51 +154,41 @@ class _FinancePageState extends State<FinancePage> {
                   ),
                 ),
               VerticalSpacing(32),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: CommonText(
-                    Strings.commissionBreakdownText,
-                    fontSize: 20,
-                    fontWeight: 700,
-                    color: AppColors.blackTwo,
-                  ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: CommonText(
+                  Strings.commissionBreakdownText,
+                  fontSize: 20,
+                  fontWeight: 700,
+                  color: AppColors.blackTwo,
                 ),
               ),
               VerticalSpacing(12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: CommonText(
-                  Strings.commissionBreakdownDescriptionText,
-                  fontSize: 14,
-                  fontWeight: 400,
-                  color: AppColors.greyTwo,
-                  lineHeight: 1.5,
-                  textOverflow: TextOverflow.visible,
-                ),
+              CommonText(
+                Strings.commissionBreakdownDescriptionText,
+                fontSize: 14,
+                fontWeight: 400,
+                color: AppColors.greyTwo,
+                lineHeight: 1.5,
+                textOverflow: TextOverflow.visible,
               ),
               VerticalSpacing(24),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _buildBreakdownRow(
-                  Strings.totalAppointmentCompletedText,
-                  Strings.totalAppointmentCompletedPlaceholderText,
-                ),
+              _buildBreakdownRow(
+                Strings.totalAppointmentCompletedText,
+                Strings.totalAppointmentCompletedPlaceholderText,
               ),
               VerticalSpacing(16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _buildBreakdownRow(
-                  Strings.platformFeeText,
-                  Strings.platformFeePlaceholderText,
-                ),
+              _buildBreakdownRow(
+                Strings.platformFeeText,
+                Strings.platformFeePlaceholderText,
               ),
               VerticalSpacing(32),
               CommonTabBarWidgetTwo(
                 indicatorColor: AppColors.pinkOne,
                 selectedLabelColor: AppColors.whiteOne,
                 unselectedLabelColor: AppColors.greyTwo,
+                labelPadding: EdgeInsets.zero,
+                tabPadding: EdgeInsets.zero,
                 tabs: const [
                   Strings.earningsButtonText,
                   Strings.payoutsButtonText,
@@ -208,7 +198,7 @@ class _FinancePageState extends State<FinancePage> {
                 },
                 tabViews: [_buildEarningsTab(), _buildPayoutsTab()],
               ),
-              VerticalSpacing(32),
+              VerticalSpacing(85),
             ],
           ),
         ),
@@ -239,82 +229,76 @@ class _FinancePageState extends State<FinancePage> {
   }
 
   Widget _buildEarningsTab() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          FinanceChartComponent(
-            title: Strings.earningStatisticsText,
-            data: earningsData,
+    return Column(
+      children: [
+        FinanceChartComponent(
+          title: Strings.earningStatisticsText,
+          data: earningsData,
+        ),
+        VerticalSpacing(32),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: CommonText(
+            Strings.earningHistoryText,
+            fontSize: 20,
+            fontWeight: 700,
+            color: AppColors.blackTwo,
           ),
-          VerticalSpacing(32),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: CommonText(
-              Strings.earningHistoryText,
-              fontSize: 20,
-              fontWeight: 700,
-              color: AppColors.blackTwo,
-            ),
-          ),
-          VerticalSpacing(16),
-          Column(
-            children: [
-              for (var i = 0; i < earningHistoryList.length; i++) ...[
-                if (i > 0) VerticalSpacing(16),
-                EarningHistoryCardComponent(
-                  date: earningHistoryList[i]['date'],
-                  time: earningHistoryList[i]['time'],
-                  professionalName: earningHistoryList[i]['professionalName'],
-                  services: earningHistoryList[i]['services'],
-                  earnAmount: earningHistoryList[i]['earnAmount'],
-                  imagePath: earningHistoryList[i]['imagePath'],
-                ),
-              ],
+        ),
+        VerticalSpacing(16),
+        Column(
+          children: [
+            for (var i = 0; i < earningHistoryList.length; i++) ...[
+              if (i > 0) VerticalSpacing(16),
+              EarningHistoryCardComponent(
+                date: earningHistoryList[i]['date'],
+                time: earningHistoryList[i]['time'],
+                professionalName: earningHistoryList[i]['professionalName'],
+                services: earningHistoryList[i]['services'],
+                earnAmount: earningHistoryList[i]['earnAmount'],
+                imagePath: earningHistoryList[i]['imagePath'],
+              ),
             ],
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 
   Widget _buildPayoutsTab() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          FinanceChartComponent(
-            title: Strings.payoutStatisticsText,
-            data: payoutsData,
+    return Column(
+      children: [
+        FinanceChartComponent(
+          title: Strings.payoutStatisticsText,
+          data: payoutsData,
+        ),
+        VerticalSpacing(32),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: CommonText(
+            Strings.payoutHistoryText,
+            fontSize: 20,
+            fontWeight: 700,
+            color: AppColors.blackTwo,
           ),
-          VerticalSpacing(32),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: CommonText(
-              Strings.payoutHistoryText,
-              fontSize: 20,
-              fontWeight: 700,
-              color: AppColors.blackTwo,
-            ),
-          ),
-          VerticalSpacing(16),
-          Column(
-            children: [
-              for (var i = 0; i < payoutHistoryList.length; i++) ...[
-                if (i > 0) VerticalSpacing(16),
-                PayoutHistoryCardComponent(
-                  date: payoutHistoryList[i]['date'],
-                  time: payoutHistoryList[i]['time'],
-                  bankName: payoutHistoryList[i]['bankName'],
-                  accountNumberMasked:
-                      payoutHistoryList[i]['accountNumberMasked'],
-                  withdrawAmount: payoutHistoryList[i]['withdrawAmount'],
-                ),
-              ],
+        ),
+        VerticalSpacing(16),
+        Column(
+          children: [
+            for (var i = 0; i < payoutHistoryList.length; i++) ...[
+              if (i > 0) VerticalSpacing(16),
+              PayoutHistoryCardComponent(
+                date: payoutHistoryList[i]['date'],
+                time: payoutHistoryList[i]['time'],
+                bankName: payoutHistoryList[i]['bankName'],
+                accountNumberMasked:
+                    payoutHistoryList[i]['accountNumberMasked'],
+                withdrawAmount: payoutHistoryList[i]['withdrawAmount'],
+              ),
             ],
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 
