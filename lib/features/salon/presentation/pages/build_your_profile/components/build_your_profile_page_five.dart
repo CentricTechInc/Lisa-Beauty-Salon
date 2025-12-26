@@ -14,7 +14,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 import 'package:lisa_beauty_salon/features/salon/presentation/pages/profile/components/circular_day_selector.dart';
 
-class BuildYourProfilePageFive extends StatelessWidget {
+class BuildYourProfilePageFive extends StatefulWidget {
   final PageController pageController;
 
   const BuildYourProfilePageFive({
@@ -23,7 +23,16 @@ class BuildYourProfilePageFive extends StatelessWidget {
   });
 
   @override
+  State<BuildYourProfilePageFive> createState() => _BuildYourProfilePageFiveState();
+}
+
+class _BuildYourProfilePageFiveState extends State<BuildYourProfilePageFive> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final authController = Get.find<AuthController>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -75,7 +84,7 @@ class BuildYourProfilePageFive extends StatelessWidget {
             VerticalSpacing(30),
             CommonButton(
               onPressed: () {
-                pageController.animateToPage(
+                widget.pageController.animateToPage(
                   5,
                   duration: Duration(milliseconds: 50),
                   curve: Curves.easeInOut
@@ -304,7 +313,7 @@ class DayScheduleRow extends StatelessWidget {
   }
 }
 
-class TimeSlotEditor extends StatelessWidget {
+class TimeSlotEditor extends StatefulWidget {
   final String? fromTitle;
   final String? toTitle;
   final TimeSlotDto? timeSlot;
@@ -319,19 +328,45 @@ class TimeSlotEditor extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final fromController = TextEditingController(
-        text: timeSlot?.fromTime ?? ""
-    );
-    final toController = TextEditingController(
-        text: timeSlot?.toTime ?? ""
-    );
+  State<TimeSlotEditor> createState() => _TimeSlotEditorState();
+}
 
+class _TimeSlotEditorState extends State<TimeSlotEditor> {
+  late final TextEditingController fromController;
+  late final TextEditingController toController;
+
+  @override
+  void initState() {
+    super.initState();
+    fromController = TextEditingController(text: widget.timeSlot?.fromTime ?? "");
+    toController = TextEditingController(text: widget.timeSlot?.toTime ?? "");
+  }
+
+  @override
+  void didUpdateWidget(covariant TimeSlotEditor oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.timeSlot?.fromTime != oldWidget.timeSlot?.fromTime) {
+      fromController.text = widget.timeSlot?.fromTime ?? "";
+    }
+    if (widget.timeSlot?.toTime != oldWidget.timeSlot?.toTime) {
+      toController.text = widget.timeSlot?.toTime ?? "";
+    }
+  }
+
+  @override
+  void dispose() {
+    fromController.dispose();
+    toController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CommonText(
-          fromTitle ?? '',
+          widget.fromTitle ?? '',
           fontSize: 14,
           fontWeight: 400,
           color: AppColors.blackTwo,
@@ -353,7 +388,7 @@ class TimeSlotEditor extends StatelessWidget {
                   cursorColor: AppColors.blackTwo,
                   textAlign: TextAlign.center,
                   onChanged: (val) {
-                    onTimeSelected(timeSlot!.copyWith(fromTime: val));
+                    widget.onTimeSelected(widget.timeSlot!.copyWith(fromTime: val));
                   },
                 ),
               ),
@@ -362,9 +397,9 @@ class TimeSlotEditor extends StatelessWidget {
             Expanded(
               flex: 4,
               child: AmPmToggleButtons(
-                initialPeriod: timeSlot?.fromAMPM,
+                initialPeriod: widget.timeSlot?.fromAMPM,
                 onPeriodSelected: (period) {
-                  onTimeSelected(timeSlot!.copyWith(fromAMPM: period));
+                  widget.onTimeSelected(widget.timeSlot!.copyWith(fromAMPM: period));
                 },
               ),
             )
@@ -372,7 +407,7 @@ class TimeSlotEditor extends StatelessWidget {
         ),
         VerticalSpacing(20),
         CommonText(
-          toTitle ?? '',
+          widget.toTitle ?? '',
           fontSize: 14,
           fontWeight: 400,
           color: AppColors.blackTwo,
@@ -394,7 +429,7 @@ class TimeSlotEditor extends StatelessWidget {
                   cursorColor: AppColors.blackTwo,
                   textAlign: TextAlign.center,
                   onChanged: (val) {
-                    onTimeSelected(timeSlot!.copyWith(toTime: val));
+                    widget.onTimeSelected(widget.timeSlot!.copyWith(toTime: val));
                   },
                 ),
               ),
@@ -403,9 +438,9 @@ class TimeSlotEditor extends StatelessWidget {
             Expanded(
               flex: 4,
               child: AmPmToggleButtons(
-                initialPeriod: timeSlot?.toAMPM,
+                initialPeriod: widget.timeSlot?.toAMPM,
                 onPeriodSelected: (period) {
-                  onTimeSelected(timeSlot!.copyWith(toAMPM: period));
+                  widget.onTimeSelected(widget.timeSlot!.copyWith(toAMPM: period));
                 },
               ),
             )

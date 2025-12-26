@@ -10,6 +10,7 @@ import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
@@ -167,43 +168,43 @@ class _SignInPageState extends State<SignInPage> with FieldsValidation {
                       ],
                     ),
                     VerticalSpacing(30),
-                    Obx(
-                      () => CommonButton(
-                        backgroundColor: AppColors.pinkTwo,
-                        radius: 15,
-                        isLoading: authController.isLoading.value,
-                        child: CommonText(
-                          Strings.loginText,
-                          color: AppColors.whiteOne,
-                          fontWeight: 600,
-                          fontSize: 18,
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            try {
-                              authController.isLoading.value = true;
-                              await Future.delayed(
-                                const Duration(seconds: 2),
-                              );
-                              MessageUtils.showSuccessSnackBar(
-                                "Login Successful",
-                              );
-                              if (authController.selectedCategory.value ==
-                                  Strings.salonsText) {
-                                Get.offAllNamed(RouteNames.mainSalon);
-                              } else {
-                                Get.offAllNamed(RouteNames.mainCustomer);
-                              }
-                            } finally {
-                              authController.isLoading.value = false;
-                            }
-                          } else {
-                            MessageUtils.showErrorSnackBar(
-                              "Please make sure to fill all these fields",
-                            );
-                          }
-                        },
+                    CommonButton(
+                      backgroundColor: AppColors.pinkTwo,
+                      radius: 15,
+                      child: CommonText(
+                        Strings.loginText,
+                        color: AppColors.whiteOne,
+                        fontWeight: 600,
+                        fontSize: 18,
                       ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final loadingService = Get.find<LoadingService>();
+                          try {
+                            loadingService.show();
+                            await Future.delayed(
+                              const Duration(seconds: 2),
+                            );
+                            loadingService.hide();
+                            MessageUtils.showSuccessSnackBar(
+                              "Login Successful",
+                            );
+                            if (authController.selectedCategory.value ==
+                                Strings.salonsText) {
+                              Get.offAllNamed(RouteNames.mainSalon);
+                            } else {
+                              Get.offAllNamed(RouteNames.mainCustomer);
+                            }
+                          } catch (e) {
+                            loadingService.hide();
+                            rethrow;
+                          }
+                        } else {
+                          MessageUtils.showErrorSnackBar(
+                            "Please make sure to fill all these fields",
+                          );
+                        }
+                      },
                     ),
                     VerticalSpacing(30),
                   ],

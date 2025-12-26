@@ -5,6 +5,7 @@ import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -268,21 +269,15 @@ class _ReviewPageState extends State<ReviewPage> {
   }
 
   void _submitReview() async {
+    final loadingService = Get.find<LoadingService>();
     // Show loader
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(
-          color: AppColors.pinkTwo,
-        ),
-      ),
-      barrierDismissible: false,
-    );
+    loadingService.show();
 
     // Simulate network delay
     await Future.delayed(const Duration(seconds: 2));
 
     // Close loader
-    Get.back();
+    loadingService.hide();
 
     // Navigate to Home Shell
     Get.offAllNamed(RouteNames.mainCustomer);

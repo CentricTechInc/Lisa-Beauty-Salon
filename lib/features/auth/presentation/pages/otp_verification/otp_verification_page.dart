@@ -6,6 +6,7 @@ import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -87,7 +88,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage>
     );
   }
 
-  void _submitOtp() {
+  void _submitOtp() async {
     final otp = _controllers.map((c) => c.text).join();
     final error = validateOtpCode(otp);
 
@@ -96,7 +97,16 @@ class _OtpVerificationPageState extends State<OtpVerificationPage>
       return;
     }
 
-    Get.toNamed(RouteNames.resetPassword);
+    final loadingService = Get.find<LoadingService>();
+    try {
+      loadingService.show();
+      await Future.delayed(const Duration(seconds: 2));
+      loadingService.hide();
+      Get.toNamed(RouteNames.resetPassword);
+    } catch (e) {
+      loadingService.hide();
+      rethrow;
+    }
   }
 
   @override

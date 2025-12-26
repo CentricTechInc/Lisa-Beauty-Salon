@@ -25,24 +25,35 @@ class BuildYourProfilePageOne extends StatefulWidget {
   State<BuildYourProfilePageOne> createState() => BuildYourProfilePageOneState();
 }
 
-class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with FieldsValidation {
-
+class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with FieldsValidation, AutomaticKeepAliveClientMixin {
+  late final AuthController authController;
   final _formKey = GlobalKey<FormState>();
 
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final ageController = TextEditingController();
-  final genderController = TextEditingController();
-  final mobileNumberController = TextEditingController();
-  final businessNameController = TextEditingController();
-  final streetAddressController = TextEditingController();
-  final cityController = TextEditingController();
-  final stateController = TextEditingController();
-  final zipCodeController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    authController = Get.find<AuthController>();
+
+    if (authController.stateController.text.isNotEmpty) {
+      authController.setCitiesAccordingToState(
+        authController.stateController.text,
+        Strings.buildYourProfileDropdownScenario,
+      );
+    }
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    final authController = Get.find<AuthController>();
+    super.build(context);
+
+    final genders = [
+      Strings.otherText,
+      Strings.maleText,
+      Strings.femaleText
+    ];
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -59,7 +70,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                   Expanded(
                     child: CommonTextField(
                       titleLabelText: Strings.firstNameText,
-                      controller: firstNameController,
+                      controller: authController.firstNameController,
                       labelText: Strings.firstNamePlaceholderText,
                       hintText: Strings.firstNamePlaceholderText,
                       labelSize: 15,
@@ -75,7 +86,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                   Expanded(
                     child: CommonTextField(
                       titleLabelText: Strings.lastNameText,
-                      controller: lastNameController,
+                      controller: authController.lastNameController,
                       labelText: Strings.lastNamePlaceholderText,
                       hintText: Strings.lastNamePlaceholderText,
                       labelSize: 15,
@@ -92,7 +103,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
               VerticalSpacing(10),
               CommonTextField(
                 titleLabelText: Strings.ageText,
-                controller: ageController,
+                controller: authController.ageController,
                 labelText: Strings.agePlaceholderText,
                 hintText: Strings.agePlaceholderText,
                 labelSize: 15,
@@ -106,11 +117,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
               VerticalSpacing(10),
               CommonDropdownField(
                 titleLabelText: Strings.genderText,
-                items: [
-                  Strings.otherText,
-                  Strings.maleText,
-                  Strings.femaleText
-                ].map((value) => DropdownMenuItem(
+                items: genders.map((value) => DropdownMenuItem(
                   value: value,
                   child: CommonText(
                     value,
@@ -118,17 +125,15 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                     color: AppColors.greyTwo,
                   ),
                 )).toList(),
-                selectedItemBuilder: (context) => [
-                  Strings.otherText,
-                  Strings.maleText,
-                  Strings.femaleText
-                ].map((value) => CommonText(
+                selectedItemBuilder: (context) => genders.map((value) => CommonText(
                   value,
                   fontSize: 15,
                   color: AppColors.blackTwo,
                 )).toList(),
+                validator: validateTextNotEmpty,
+                value: authController.genderController.text.isEmpty ? null : authController.genderController.text,
                 onChanged: (value) {
-                  genderController.text = value ?? '';
+                  authController.genderController.text = value ?? '';
                 },
               ),
               VerticalSpacing(20),
@@ -140,7 +145,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
               ),
               VerticalSpacing(5),
               InternationalPhoneNumberInput(
-                textFieldController: mobileNumberController,
+                textFieldController: authController.mobileNumberController,
                 inputDecoration: InputDecoration(
                   labelText: Strings.mobileNumberPlaceholderText,
                   hintText: Strings.mobileNumberPlaceholderText,
@@ -165,7 +170,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                     selectorType: PhoneInputSelectorType.BOTTOM_SHEET
                 ),
                 onInputChanged: (value) {
-                  LoggerService.info("mobileNumberController.text ${mobileNumberController.text}");
+                  LoggerService.info("mobileNumberController.text ${authController.mobileNumberController.text}");
                 },
                 validator: validateTextNotEmpty,
               ),
@@ -179,7 +184,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
               VerticalSpacing(20),
               CommonTextField(
                 titleLabelText: Strings.businessNameText,
-                controller: businessNameController,
+                controller: authController.businessNameController,
                 labelText: Strings.businessNamePlaceholderText,
                 hintText: Strings.businessNamePlaceholderText,
                 labelSize: 15,
@@ -192,7 +197,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
               VerticalSpacing(20),
               CommonTextField(
                 titleLabelText: Strings.streetAddressText,
-                controller: streetAddressController,
+                controller: authController.streetAddressController,
                 labelText: Strings.streetAddressPlaceholderText,
                 hintText: Strings.streetAddressPlaceholderText,
                 labelSize: 15,
@@ -210,7 +215,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                   items: (authController.countryDataOfUs?.states ??
                     []).map(
                       (state) => DropdownMenuItem(
-                        value: state,
+                        value: state.name,
                         child: CommonText(
                           state.name,
                           fontSize: 15,
@@ -226,11 +231,12 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                         color: AppColors.blackTwo,
                       )
                   ).toList(),
-                  validator: (value) => validateTextWithDashes(value?.name),
+                  validator: (value) => validateTextNotEmpty(value),
+                  value: authController.stateController.text.isEmpty ? null : authController.stateController.text,
                   onChanged: (value) {
-                    stateController.text = value?.name ?? '';
+                    authController.stateController.text = value ?? '';
                     authController.setCitiesAccordingToState(
-                      stateController.text,
+                      authController.stateController.text,
                       Strings.buildYourProfileDropdownScenario,
                     );
                   },
@@ -290,7 +296,7 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
               VerticalSpacing(20),
               CommonTextField(
                 titleLabelText: Strings.zipCodeText,
-                controller: zipCodeController,
+                controller: authController.zipCodeController,
                 labelText: Strings.zipCodePlaceholderText,
                 hintText: Strings.zipCodePlaceholderText,
                 labelSize: 15,
@@ -308,11 +314,11 @@ class BuildYourProfilePageOneState extends State<BuildYourProfilePageOne> with F
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     authController.setBasicProfileData(
-                        firstName: firstNameController.text,
-                        lastName: lastNameController.text,
-                        age: ageController.text,
-                        gender: genderController.text,
-                        phoneNumber: mobileNumberController.text
+                        firstName: authController.firstNameController.text,
+                        lastName: authController.lastNameController.text,
+                        age: authController.ageController.text,
+                        gender: authController.genderController.text,
+                        phoneNumber: authController.mobileNumberController.text
                     );
 
                     widget.pageController.animateToPage(

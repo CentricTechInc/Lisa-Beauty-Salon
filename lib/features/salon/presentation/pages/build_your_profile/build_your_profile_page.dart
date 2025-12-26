@@ -117,8 +117,9 @@ class _BuildYourProfilePageState extends State<BuildYourProfilePage> {
                     activeTrackColor: Colors.pink,
                     inactiveTrackColor: Colors.grey[300],
                     trackHeight: 3.0,
-                    thumbShape: CustomSliderThumbCircle(
-                      thumbRadius: 8
+                    thumbShape: const CustomSliderThumbCircle(
+                      thumbRadius: 8,
+                      showLabel: false,
                     ),
                     overlayShape: SliderComponentShape.noOverlay,
                     trackShape: RoundedRectSliderTrackShape(),
@@ -140,6 +141,7 @@ class _BuildYourProfilePageState extends State<BuildYourProfilePage> {
             VerticalSpacing(20),
             Expanded(
               child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
                 controller: _pageController,
                 onPageChanged: (index) {
                   _currentPageNotifier.value = index;

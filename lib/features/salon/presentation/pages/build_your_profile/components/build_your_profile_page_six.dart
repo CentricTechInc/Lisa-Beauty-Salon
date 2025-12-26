@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -11,6 +9,7 @@ import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/data/dto/build_profile_dto.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_bottom_sheet_component.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
@@ -19,7 +18,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 
-class BuildYourProfilePageSix extends StatelessWidget {
+class BuildYourProfilePageSix extends StatefulWidget {
   const BuildYourProfilePageSix({
     required this.pageController,
     super.key,
@@ -28,7 +27,16 @@ class BuildYourProfilePageSix extends StatelessWidget {
   final PageController pageController;
 
   @override
+  State<BuildYourProfilePageSix> createState() => _BuildYourProfilePageSixState();
+}
+
+class _BuildYourProfilePageSixState extends State<BuildYourProfilePageSix> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final authController = Get.find<AuthController>();
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -65,7 +73,7 @@ class BuildYourProfilePageSix extends StatelessWidget {
               }
               else {
                 return _ShowBankAccountsWidget(
-                  pageController: pageController,
+                  pageController: widget.pageController,
                 );
               }
             }),
@@ -139,7 +147,25 @@ class _ShowBankAccountsWidget extends StatelessWidget {
               VerticalSpacing(10),
 
               CommonButton(
-                onPressed: () => _showCompletionBottomSheet(context),
+                onPressed: () async {
+                  if (authController.selectedBankAccountIndex.value == null) {
+                    MessageUtils.showErrorSnackBar(
+                      "Please select at least one bank account as primary account",
+                    );
+                    return;
+                  }
+
+                  final loadingService = Get.find<LoadingService>();
+                  try {
+                    loadingService.show();
+                    await Future.delayed(const Duration(seconds: 2));
+                    loadingService.hide();
+                    _showCompletionBottomSheet(context);
+                  } catch (e) {
+                    loadingService.hide();
+                    rethrow;
+                  }
+                },
                 text: Strings.doneText,
                 textColor: AppColors.whiteOne,
               ),
@@ -197,16 +223,12 @@ class _ShowBankAccountsWidget extends StatelessWidget {
         ],
       ),
     );
-    Future.delayed(
-      Duration(
-        seconds: 2
-      ),
-      () {
-        Get.offAllNamed(
-          RouteNames.mainSalon
-        );
-      }
-    );
+
+    Future.delayed(const Duration(seconds: 2), () {
+      final authController = Get.find<AuthController>();
+      authController.resetOnboardingData();
+      Get.offAllNamed(RouteNames.mainSalon);
+    });
   }
 }
 
@@ -360,9 +382,6 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
 
   final _formKey = GlobalKey<FormState>();
 
-  final accountHolderNameController = TextEditingController();
-  final bankNameController = TextEditingController();
-  final accountNumberController = TextEditingController();
   final confirmAccountNumberController = TextEditingController();
 
   @override
@@ -376,7 +395,7 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
         children: [
           CommonTextField(
             titleLabelText: Strings.accountHolderNameText,
-            controller: accountHolderNameController,
+            controller: authController.bankAccountHolderNameController,
             labelText: Strings.accountHolderPlaceholderNameText,
             hintText: Strings.accountHolderPlaceholderNameText,
             labelSize: 15,
@@ -391,7 +410,7 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
           VerticalSpacing(20),
 
           CommonDropdownField(
-            titleLabelText: Strings.bankAccountNameText,
+            titleLabelText: Strings.bankNameText,
             items: _bankNames.map((value) => DropdownMenuItem(
               value: value,
               child: CommonText(
@@ -406,14 +425,15 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
               color: AppColors.blackTwo
             )).toList(),
             validator: validateTextNotEmpty,
-            onChanged: (value) => bankNameController.text = value ?? '',
+            value: authController.bankNameController.text.isEmpty ? null : authController.bankNameController.text,
+            onChanged: (value) => authController.bankNameController.text = value ?? '',
           ),
 
           VerticalSpacing(20),
 
           CommonTextField(
             titleLabelText: Strings.accountNumberNameText,
-            controller: accountNumberController,
+            controller: authController.accountNumberController,
             labelText: Strings.accountNumberNameText,
             hintText: Strings.accountNumberNameText,
             labelSize: 15,
@@ -476,9 +496,9 @@ class _ShowAddBankAccountsFormState extends State<_ShowAddBankAccountsForm> with
               if (_formKey.currentState!.validate() && haveConsented) {
                 authController.addBankAccount(
                   BankAccountInfoDto(
-                    accountHolderFullName: accountHolderNameController.text,
-                    bankName: bankNameController.text,
-                    accountNumber: accountNumberController.text,
+                    accountHolderFullName: authController.bankAccountHolderNameController.text,
+                    bankName: authController.bankNameController.text,
+                    accountNumber: authController.accountNumberController.text,
                     areTermsAndConditionsAccepted:
                     authController.confirmAndConsentToThisAccount.value,
                   ),

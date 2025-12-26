@@ -7,6 +7,7 @@ import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_back_button.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
@@ -182,16 +183,22 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> with FieldsValida
                     fontSize: 16,
                     fontWeight: 600,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      MessageUtils.showSuccessSnackBar(
-                        "Password has been reset, please login again",
-                      );
-                      Get.offAllNamed(
-                        RouteNames.signIn
-                      );
-                    }
-                    else {
+                      final loadingService = Get.find<LoadingService>();
+                      try {
+                        loadingService.show();
+                        await Future.delayed(const Duration(seconds: 2));
+                        loadingService.hide();
+                        MessageUtils.showSuccessSnackBar(
+                          "Password has been reset, please login again",
+                        );
+                        Get.offAllNamed(RouteNames.signIn);
+                      } catch (e) {
+                        loadingService.hide();
+                        rethrow;
+                      }
+                    } else {
                       MessageUtils.showErrorSnackBar(
                         "Please make sure to enter password and confirm password",
                       );

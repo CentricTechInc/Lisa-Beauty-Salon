@@ -7,6 +7,7 @@ import 'package:lisa_beauty_salon/core/services/logger_service.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_back_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
@@ -122,12 +123,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
                 fontWeight: 600,
                 fontSize: 18,
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  LoggerService.info(
-                    'Send Forgot Password Email to: ${emailController.text}',
-                  );
-                  Get.toNamed(RouteNames.otpVerification);
+                  final loadingService = Get.find<LoadingService>();
+                  try {
+                    loadingService.show();
+                    LoggerService.info(
+                      'Send Forgot Password Email to: ${emailController.text}',
+                    );
+                    await Future.delayed(const Duration(seconds: 2));
+                    loadingService.hide();
+                    Get.toNamed(RouteNames.otpVerification);
+                  } catch (e) {
+                    loadingService.hide();
+                    rethrow;
+                  }
                 } else {
                   MessageUtils.showErrorSnackBar(
                     "Please make sure to enter the email to receive OTP code",

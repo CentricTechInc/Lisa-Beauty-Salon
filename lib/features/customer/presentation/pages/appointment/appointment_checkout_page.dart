@@ -10,6 +10,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_sliding_button.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 
 class AppointmentCheckoutPage extends StatefulWidget {
@@ -314,21 +315,15 @@ class _AppointmentCheckoutPageState extends State<AppointmentCheckoutPage> {
   }
 
   void _handleCheckout() async {
+    final loadingService = Get.find<LoadingService>();
     // Show loader
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(
-          color: AppColors.pinkTwo,
-        ),
-      ),
-      barrierDismissible: false,
-    );
+    loadingService.show();
 
     // Simulate payment processing delay
     await Future.delayed(const Duration(seconds: 2));
 
     // Close loader
-    Get.back();
+    loadingService.hide();
 
     // Show Success Bottom Sheet
     Get.bottomSheet(

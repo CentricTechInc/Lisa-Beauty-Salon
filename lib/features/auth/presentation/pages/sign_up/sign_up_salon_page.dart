@@ -10,6 +10,7 @@ import 'package:lisa_beauty_salon/core/utils/assets.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_checkbox.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
@@ -227,48 +228,48 @@ class _SignUpSalonPageState extends State<SignUpSalonPage> with FieldsValidation
                       ],
                     ),
                     VerticalSpacing(20),
-                    Obx(
-                      () => CommonButton(
-                        backgroundColor: AppColors.pinkTwo,
-                        radius: 15,
-                        isLoading: authController.isLoading.value,
-                        child: CommonText(
-                          Strings.signUpText,
-                          color: AppColors.whiteOne,
-                          fontWeight: 600,
-                          fontSize: 18,
-                        ),
-                        onPressed: () async {
-                          final isFormStateValid =
-                              _formKey.currentState!.validate();
-                          final isAgreedToTermsAndCondition =
-                              authController.agreeToTermsAndCondition.value;
-                          if (isFormStateValid && isAgreedToTermsAndCondition) {
-                            try {
-                              authController.isLoading.value = true;
-                              await Future.delayed(
-                                const Duration(seconds: 2),
-                              );
-                              MessageUtils.showSuccessSnackBar(
-                                "Account Created Successfully",
-                              );
-                              Get.toNamed(RouteNames.emailVerification);
-                            } finally {
-                              authController.isLoading.value = false;
-                            }
-                          } else {
-                            if (!authController.agreeToTermsAndCondition.value) {
-                              MessageUtils.showErrorSnackBar(
-                                'You must agree to the Terms and Conditions and Privacy Policy.',
-                              );
-                            } else {
-                              MessageUtils.showErrorSnackBar(
-                                'Please make sure that all fields have been filled.',
-                              );
-                            }
-                          }
-                        },
+                    CommonButton(
+                      backgroundColor: AppColors.pinkTwo,
+                      radius: 15,
+                      child: CommonText(
+                        Strings.signUpText,
+                        color: AppColors.whiteOne,
+                        fontWeight: 600,
+                        fontSize: 18,
                       ),
+                      onPressed: () async {
+                        final isFormStateValid =
+                            _formKey.currentState!.validate();
+                        final isAgreedToTermsAndCondition =
+                            authController.agreeToTermsAndCondition.value;
+                        if (isFormStateValid && isAgreedToTermsAndCondition) {
+                          final loadingService = Get.find<LoadingService>();
+                          try {
+                            loadingService.show();
+                            await Future.delayed(
+                              const Duration(seconds: 2),
+                            );
+                            loadingService.hide();
+                            MessageUtils.showSuccessSnackBar(
+                              "Account Created Successfully",
+                            );
+                            Get.toNamed(RouteNames.emailVerification);
+                          } catch (e) {
+                            loadingService.hide();
+                            rethrow;
+                          }
+                        } else {
+                          if (!authController.agreeToTermsAndCondition.value) {
+                            MessageUtils.showErrorSnackBar(
+                              'You must agree to the Terms and Conditions and Privacy Policy.',
+                            );
+                          } else {
+                            MessageUtils.showErrorSnackBar(
+                              'Please make sure that all fields have been filled.',
+                            );
+                          }
+                        }
+                      },
                     ),
                     VerticalSpacing(30),
                   ],

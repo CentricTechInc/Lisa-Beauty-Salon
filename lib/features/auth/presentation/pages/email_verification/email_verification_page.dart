@@ -6,6 +6,7 @@ import 'package:lisa_beauty_salon/core/constants/route_constants.dart';
 import 'package:lisa_beauty_salon/core/themes/theme.dart';
 import 'package:lisa_beauty_salon/core/utils/message.dart';
 import 'package:lisa_beauty_salon/core/utils/strings.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_button.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_scaffold_widget.dart';
@@ -85,7 +86,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage>
     return validateOtpCode(otp);
   }
 
-  void _submitOtp() {
+  void _submitOtp() async {
     final otp = _controllers.map((c) => c.text).join();
     final error = validateOtpCode(otp);
 
@@ -94,11 +95,21 @@ class _EmailVerificationPageState extends State<EmailVerificationPage>
       return;
     }
 
-    final authController = Get.find<AuthController>();
-    if (authController.selectedCategory.value == Strings.salonsText) {
-      Get.toNamed(RouteNames.buildYourProfile);
-    } else {
-      Get.offAllNamed(RouteNames.mainCustomer);
+    final loadingService = Get.find<LoadingService>();
+    try {
+      loadingService.show();
+      await Future.delayed(const Duration(seconds: 2));
+      loadingService.hide();
+
+      final authController = Get.find<AuthController>();
+      if (authController.selectedCategory.value == Strings.salonsText) {
+        Get.toNamed(RouteNames.buildYourProfile);
+      } else {
+        Get.offAllNamed(RouteNames.mainCustomer);
+      }
+    } catch (e) {
+      loadingService.hide();
+      rethrow;
     }
   }
 
@@ -182,12 +193,28 @@ class _EmailVerificationPageState extends State<EmailVerificationPage>
                         fontWeight: 700,
                         color: AppColors.whiteTwo,
                       ),
-                      CommonText(
-                        Strings.resendText,
-                        fontSize: 16,
-                        fontWeight: 700,
-                        color: AppColors.pinkOne,
-                        decoration: TextDecoration.underline,
+                      GestureDetector(
+                        onTap: () async {
+                          final loadingService = Get.find<LoadingService>();
+                          try {
+                            loadingService.show();
+                            await Future.delayed(const Duration(seconds: 2));
+                            loadingService.hide();
+                            MessageUtils.showSuccessSnackBar(
+                              "OTP Resent successfully",
+                            );
+                          } catch (e) {
+                            loadingService.hide();
+                            rethrow;
+                          }
+                        },
+                        child: CommonText(
+                          Strings.resendText,
+                          fontSize: 16,
+                          fontWeight: 700,
+                          color: AppColors.pinkOne,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ],
                   ),

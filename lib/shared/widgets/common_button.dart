@@ -31,9 +31,6 @@ class CommonButton extends StatelessWidget {
 
     // Alignment
     this.alignment,
-
-    // State
-    this.isLoading = false,
   });
 
   // Action
@@ -64,28 +61,16 @@ class CommonButton extends StatelessWidget {
   // Alignment
   final AlignmentGeometry? alignment;
 
-  // State
-  final bool isLoading;
-
   @override
   Widget build(BuildContext context) {
-    final content = isLoading
-        ? SizedBox(
-            height: 20,
-            width: 20,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(textColor),
-            ),
-          )
-        : child ??
-            CommonText(
-              text ?? '',
-              color: textColor,
-              fontSize: textFontSize,
-              fontWeight: textFontWeight,
-              textAlign: TextAlign.center,
-            );
+    final content = child ??
+        CommonText(
+          text ?? '',
+          color: textColor,
+          fontSize: textFontSize,
+          fontWeight: textFontWeight,
+          textAlign: TextAlign.center,
+        );
 
     return Align(
       alignment: alignment ?? Alignment.center,

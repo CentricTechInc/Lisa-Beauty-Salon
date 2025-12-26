@@ -29,14 +29,33 @@ class BuildYourProfilePageThree extends StatefulWidget {
   State<BuildYourProfilePageThree> createState() => BuildYourProfilePageThreeState();
 }
 
-class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> with FieldsValidation {
-
+class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> with FieldsValidation, AutomaticKeepAliveClientMixin {
+  late final AuthController authController;
   final _formKey = GlobalKey<FormState>();
 
-  final professionalBioController = TextEditingController();
-  final yearsOfExperienceController = TextEditingController();
+  late final ValueNotifier<String?> photoNotifier;
 
-  final photoNotifier = ValueNotifier<String?>(null);
+  @override
+  void initState() {
+    super.initState();
+    authController = Get.find<AuthController>();
+    final data = authController.buildProfileData;
+
+    photoNotifier = ValueNotifier<String?>(
+      data?.profilePhotoFile != null && data!.profilePhotoFile.isNotEmpty 
+        ? data.profilePhotoFile 
+        : null
+    );
+  }
+
+  @override
+  void dispose() {
+    photoNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 
   Future<File?> pickImageFromGallery() async {
     try {
@@ -61,6 +80,7 @@ class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> wi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final authController = Get.find<AuthController>();
 
     return SingleChildScrollView(
@@ -92,17 +112,11 @@ class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> wi
                 ),
               ),
               VerticalSpacing(30),
-              CommonText(
-                Strings.uploadYourProfilePhotoText,
-                fontSize: 12,
-                fontWeight: 400,
-                color: AppColors.blackTwo,
-              ),
-              VerticalSpacing(10),
               ValueListenableBuilder(
                 valueListenable: photoNotifier,
                 builder: (context, path, _) {
                   return PhotoPickerComponent(
+                    title: Strings.uploadYourProfilePhotoText,
                     imagePath: path,
                     onTap: () async {
                       final file = await pickImageFromGallery();
@@ -116,7 +130,7 @@ class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> wi
               VerticalSpacing(20),
               CommonTextField(
                 titleLabelText: Strings.professionalAndBioOrHeadlineText,
-                controller: professionalBioController,
+                controller: authController.professionalBioController,
                 hintText: Strings.descriptionPlaceholderText,
                 labelText: null,
                 labelSize: 15,
@@ -133,7 +147,7 @@ class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> wi
               VerticalSpacing(20),
               CommonTextField(
                 titleLabelText: Strings.yearsOfExperienceText,
-                controller: yearsOfExperienceController,
+                controller: authController.yearsOfExperienceController,
                 labelText: Strings.yearsOfExperiencePlaceholderText,
                 hintText: Strings.yearsOfExperiencePlaceholderText,
                 labelSize: 15,
@@ -151,8 +165,8 @@ class BuildYourProfilePageThreeState extends State<BuildYourProfilePageThree> wi
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     authController.setProfessionalData(
-                      professionalBio: professionalBioController.text,
-                      yearsOfExperience: int.tryParse(yearsOfExperienceController.text) ?? 0,
+                      professionalBio: authController.professionalBioController.text,
+                      yearsOfExperience: int.tryParse(authController.yearsOfExperienceController.text) ?? 0,
                       profilePhotoFile: photoNotifier.value.toString()
                     );
 

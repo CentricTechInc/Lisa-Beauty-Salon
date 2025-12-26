@@ -29,16 +29,31 @@ class BuildYourProfilePageTwo extends StatefulWidget {
   State<BuildYourProfilePageTwo> createState() => BuildYourProfilePageTwoState();
 }
 
-class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with FieldsValidation {
-
+class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with FieldsValidation, AutomaticKeepAliveClientMixin {
+  late final AuthController authController;
   final _formKey = GlobalKey<FormState>();
 
-  final licenseTypeController = TextEditingController();
-  final numberOfProfessionalController = TextEditingController();
-  final licenseNumberController = TextEditingController();
-  final issuanceStateOrCountryController = TextEditingController();
-  final ValueNotifier<List<XFile>> _imageFilesNotifier = ValueNotifier([]);
-  final ValueNotifier<List<File>> _documentFilesNotifier = ValueNotifier([]);
+  late final ValueNotifier<List<XFile>> _imageFilesNotifier;
+  late final ValueNotifier<List<File>> _documentFilesNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    authController = Get.find<AuthController>();
+    
+    _imageFilesNotifier = ValueNotifier([]);
+    _documentFilesNotifier = ValueNotifier([]);
+  }
+
+  @override
+  void dispose() {
+    _imageFilesNotifier.dispose();
+    _documentFilesNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 
   String? validateFileSelection({
     required List<XFile> images,
@@ -53,7 +68,7 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
 
   @override
   Widget build(BuildContext context) {
-    final authController = Get.find<AuthController>();
+    super.build(context);
 
     final licenseTypesList = [
       Strings.barberLicenseType,
@@ -103,7 +118,7 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
               VerticalSpacing(30),
               CommonTextField(
                 titleLabelText: Strings.numberOfProfessionalText,
-                controller: numberOfProfessionalController,
+                controller: authController.numberOfProfessionalController,
                 labelText: Strings.numberOfProfessionalPlaceholderText,
                 hintText: Strings.numberOfProfessionalPlaceholderText,
                 labelSize: 15,
@@ -134,14 +149,15 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
                   )
                 ).toList(),
                 validator: validateTextNotEmpty,
+                value: authController.licenseTypeController.text.isEmpty ? null : authController.licenseTypeController.text,
                 onChanged: (value) {
-                  licenseTypeController.text = value ?? '';
+                  authController.licenseTypeController.text = value ?? '';
                 },
               ),
               VerticalSpacing(20),
               CommonTextField(
                 titleLabelText: Strings.licenseNumberText,
-                controller: licenseNumberController,
+                controller: authController.licenseNumberController,
                 labelText: Strings.licenseNumberPlaceholderText,
                 hintText: Strings.licenseNumberPlaceholderText,
                 labelSize: 15,
@@ -171,8 +187,11 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
                     color: AppColors.blackTwo,
                 )).toList(),
                 validator: (value) => validateTextWithDashes(value?.name),
+                value: authController.issuanceStateOrCountryController.text.isEmpty 
+                  ? null 
+                  : authController.countriesList.firstWhereOrNull((c) => c.name == authController.issuanceStateOrCountryController.text),
                 onChanged: (value) {
-                  issuanceStateOrCountryController.text = value?.name ?? '';
+                  authController.issuanceStateOrCountryController.text = value?.name ?? '';
                 },
               ),
               VerticalSpacing(20),
@@ -205,9 +224,9 @@ class BuildYourProfilePageTwoState extends State<BuildYourProfilePageTwo> with F
 
                   if (_formKey.currentState!.validate() && fileError  == null) {
                     authController.setLicenseData(
-                      licenseType: licenseTypeController.text,
-                      licenseNumber: licenseNumberController.text,
-                      licenseIssuanceStateOrCountry: issuanceStateOrCountryController.text,
+                      licenseType: authController.licenseTypeController.text,
+                      licenseNumber: authController.licenseNumberController.text,
+                      licenseIssuanceStateOrCountry: authController.issuanceStateOrCountryController.text,
                       licenseFile: ''
                     );
 

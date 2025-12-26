@@ -5,11 +5,13 @@ class CustomSliderThumbCircle extends SliderComponentShape {
   final double thumbRadius;
   final int min;
   final int max;
+  final bool showLabel;
 
   const CustomSliderThumbCircle({
     required this.thumbRadius,
     this.min = 0,
     this.max = 10,
+    this.showLabel = true,
   });
 
   @override
@@ -55,37 +57,39 @@ class CustomSliderThumbCircle extends SliderComponentShape {
     canvas.drawCircle(center, thumbRadius, pinkBorderPaint);
 
     // Draw Value Bubble
-    final double actualValue = min + (max - min) * value;
-    final String valueText = "${actualValue.toInt()}KM";
+    if (showLabel) {
+      final double actualValue = min + (max - min) * value;
+      final String valueText = "${actualValue.toInt()}KM";
 
-    final TextPainter tp = TextPainter(
-      text: TextSpan(
-        text: valueText,
-        style: const TextStyle(
-          color: AppColors.whiteOne,
-          fontSize: 10,
-          fontWeight: FontWeight.w700,
+      final TextPainter tp = TextPainter(
+        text: TextSpan(
+          text: valueText,
+          style: const TextStyle(
+            color: AppColors.whiteOne,
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+          ),
         ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
+        textDirection: TextDirection.ltr,
+      )..layout();
 
-    final double bubbleWidth = tp.width + 12;
-    final double bubbleHeight = tp.height + 6;
+      final double bubbleWidth = tp.width + 12;
+      final double bubbleHeight = tp.height + 6;
 
-    // Design shows a red bubble with white text
-    final Rect bubbleRect = Rect.fromCenter(
-      center: center + const Offset(0, 20), // Below the thumb
-      width: bubbleWidth,
-      height: bubbleHeight,
-    );
+      // Design shows a red bubble with white text
+      final Rect bubbleRect = Rect.fromCenter(
+        center: center + const Offset(0, 20), // Below the thumb
+        width: bubbleWidth,
+        height: bubbleHeight,
+      );
 
-    final Paint bubblePaint = Paint()..color = AppColors.pinkTwo;
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(bubbleRect, const Radius.circular(6)),
-      bubblePaint,
-    );
+      final Paint bubblePaint = Paint()..color = AppColors.pinkTwo;
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(bubbleRect, const Radius.circular(6)),
+        bubblePaint,
+      );
 
-    tp.paint(canvas, bubbleRect.topLeft + const Offset(6, 3));
+      tp.paint(canvas, bubbleRect.topLeft + const Offset(6, 3));
+    }
   }
 }

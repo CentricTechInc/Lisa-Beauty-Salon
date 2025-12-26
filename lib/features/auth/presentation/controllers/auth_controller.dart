@@ -1,6 +1,7 @@
 
 
 import 'package:country_state_city_dropdown/country_state_city_dropdown.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lisa_beauty_salon/core/constants/app_constants.dart';
 import 'package:lisa_beauty_salon/core/services/logger_service.dart';
@@ -76,6 +77,144 @@ class AuthController extends GetxController {
   void onInit() {
     // Countries will be loaded on demand to prevent navigation delays
     super.onInit();
+    _initBuildProfileControllers();
+  }
+
+  // --- Onboarding Flow Controllers ---
+
+  // Step 1: Basic Profile & Business
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final ageController = TextEditingController();
+  final genderController = TextEditingController();
+  final mobileNumberController = TextEditingController();
+  final businessNameController = TextEditingController();
+  final streetAddressController = TextEditingController();
+  final cityController = TextEditingController();
+  final stateController = TextEditingController();
+  final zipCodeController = TextEditingController();
+
+  // Step 2: License Information
+  final licenseTypeController = TextEditingController();
+  final numberOfProfessionalController = TextEditingController();
+  final licenseNumberController = TextEditingController();
+  final issuanceStateOrCountryController = TextEditingController();
+
+  // Step 3: Professional Info
+  final professionalBioController = TextEditingController();
+  final yearsOfExperienceController = TextEditingController();
+
+  // Step 4: Add Service Form
+  final serviceCategoryNameController = TextEditingController();
+  final subCategoryController = TextEditingController();
+  final serviceForController = TextEditingController();
+  final serviceNameController = TextEditingController();
+  final servicePriceController = TextEditingController();
+  final serviceDescriptionController = TextEditingController();
+
+  // Step 6: Add Bank Account Form
+  final bankAccountHolderNameController = TextEditingController();
+  final bankNameController = TextEditingController();
+  final accountNumberController = TextEditingController();
+
+  void _initBuildProfileControllers() {
+    final data = buildProfileData;
+    if (data != null) {
+      firstNameController.text = data.firstName;
+      lastNameController.text = data.lastName;
+      ageController.text = data.age;
+      genderController.text = data.gender;
+      mobileNumberController.text = data.phoneNumber;
+      businessNameController.text = data.businessName;
+      streetAddressController.text = data.streetAddress;
+      stateController.text = data.state;
+      cityController.text = data.city;
+      zipCodeController.text = data.zipCode;
+
+      licenseTypeController.text = data.licenseType;
+      licenseNumberController.text = data.licenseNumber;
+      issuanceStateOrCountryController.text = data.licenseIssuanceStateOrCountry;
+
+      professionalBioController.text = data.professionalBio;
+      yearsOfExperienceController.text = data.yearsOfExperience > 0 ? data.yearsOfExperience.toString() : "";
+    }
+  }
+
+  @override
+  void onClose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    ageController.dispose();
+    genderController.dispose();
+    mobileNumberController.dispose();
+    businessNameController.dispose();
+    streetAddressController.dispose();
+    cityController.dispose();
+    stateController.dispose();
+    zipCodeController.dispose();
+
+    licenseTypeController.dispose();
+    numberOfProfessionalController.dispose();
+    licenseNumberController.dispose();
+    issuanceStateOrCountryController.dispose();
+
+    professionalBioController.dispose();
+    yearsOfExperienceController.dispose();
+
+    serviceCategoryNameController.dispose();
+    subCategoryController.dispose();
+    serviceForController.dispose();
+    serviceNameController.dispose();
+    servicePriceController.dispose();
+    serviceDescriptionController.dispose();
+
+    bankAccountHolderNameController.dispose();
+    bankNameController.dispose();
+    accountNumberController.dispose();
+    
+    super.onClose();
+  }
+
+  void resetOnboardingData() {
+    firstNameController.clear();
+    lastNameController.clear();
+    ageController.clear();
+    genderController.clear();
+    mobileNumberController.clear();
+    businessNameController.clear();
+    streetAddressController.clear();
+    cityController.clear();
+    stateController.clear();
+    zipCodeController.clear();
+
+    licenseTypeController.clear();
+    numberOfProfessionalController.clear();
+    licenseNumberController.clear();
+    issuanceStateOrCountryController.clear();
+
+    professionalBioController.clear();
+    yearsOfExperienceController.clear();
+
+    serviceCategoryNameController.clear();
+    subCategoryController.clear();
+    serviceForController.clear();
+    serviceNameController.clear();
+    servicePriceController.clear();
+    serviceDescriptionController.clear();
+
+    bankAccountHolderNameController.clear();
+    bankNameController.clear();
+    accountNumberController.clear();
+
+    _buildProfileData.value = null;
+    selectedCityForBuildYourProfile.value = '';
+    selectedBankAccountIndex.value = null;
+    agreeToTermsAndCondition.value = false;
+    confirmAndConsentToThisAccount.value = false;
+    showAddServiceForm.value = false;
+    showAddBankAccountsForm.value = false;
+    
+    _buildProfileData.refresh();
   }
 
   void selectCategory(String category) {

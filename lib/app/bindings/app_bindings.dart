@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lisa_beauty_salon/core/services/loading_service.dart';
 import 'package:lisa_beauty_salon/core/networks/api_service.dart';
 import 'package:lisa_beauty_salon/features/auth/data/data_sources/auth_data_source.dart';
 import 'package:lisa_beauty_salon/features/auth/data/repositories/auth_repository_impl.dart';
@@ -9,6 +10,7 @@ import 'package:lisa_beauty_salon/features/auth/presentation/controllers/auth_co
 class AppBindings extends Bindings {
 
   static void init() {
+    Get.lazyPut<LoadingService>(() => LoadingService(), fenix: true);
     Get.lazyPut<APIService>(() => APIService(), fenix: true);
 
     Get.lazyPut<AuthDataSource>(

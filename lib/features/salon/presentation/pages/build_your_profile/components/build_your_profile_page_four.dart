@@ -21,7 +21,7 @@ import 'package:lisa_beauty_salon/shared/widgets/common_spacing.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text.dart';
 import 'package:lisa_beauty_salon/shared/widgets/common_text_field.dart';
 
-class BuildYourProfilePageFour extends StatelessWidget {
+class BuildYourProfilePageFour extends StatefulWidget {
   const BuildYourProfilePageFour({
     required this.pageController,
     super.key,
@@ -30,7 +30,16 @@ class BuildYourProfilePageFour extends StatelessWidget {
   final PageController pageController;
 
   @override
+  State<BuildYourProfilePageFour> createState() => _BuildYourProfilePageFourState();
+}
+
+class _BuildYourProfilePageFourState extends State<BuildYourProfilePageFour> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final authController = Get.find<AuthController>();
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -55,7 +64,7 @@ class BuildYourProfilePageFour extends StatelessWidget {
               }
               else {
                 return _ShowServicesWidget(
-                  pageController: pageController,
+                  pageController: widget.pageController,
                 );
               }
             }),
@@ -207,12 +216,6 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
 
   final _formKey = GlobalKey<FormState>();
 
-  final serviceCategoryNameController = TextEditingController();
-  final subCategoryController = TextEditingController();
-  final serviceForController = TextEditingController();
-  final serviceNameController = TextEditingController();
-  final servicePriceController = TextEditingController();
-  final serviceDescription = TextEditingController();
   final photoNotifier = ValueNotifier<String?>(null);
 
   final categoryNotifier = ValueNotifier<String>('');
@@ -344,9 +347,9 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
             validator: validateTextNotEmpty,
             onChanged: (value) {
               categoryNotifier.value = value ?? '';
-              serviceCategoryNameController.text = value ?? '';
+              authController.serviceCategoryNameController.text = value ?? '';
               subCategoryNotifier.value = '';
-              subCategoryController.clear();
+              authController.subCategoryController.clear();
             },
           ),
           const VerticalSpacing(20),
@@ -379,7 +382,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
                     validator: validateTextNotEmpty,
                     onChanged: (value) {
                       subCategoryNotifier.value = value ?? '';
-                      subCategoryController.text = value ?? '';
+                      authController.subCategoryController.text = value ?? '';
                     },
                   );
                 },
@@ -404,13 +407,13 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
             )).toList(),
             validator: validateTextNotEmpty,
             onChanged: (value) {
-              serviceForController.text = value ?? '';
+              authController.serviceForController.text = value ?? '';
             },
           ),
           VerticalSpacing(20),
           CommonTextField(
             titleLabelText: Strings.serviceNameText,
-            controller: serviceNameController,
+            controller: authController.serviceNameController,
             labelText: Strings.serviceNamePlaceholderText,
             hintText: Strings.serviceNamePlaceholderText,
             labelSize: 15,
@@ -424,7 +427,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
           VerticalSpacing(20),
           CommonTextField(
             titleLabelText: "${Strings.priceText}*",
-            controller: servicePriceController,
+            controller: authController.servicePriceController,
             labelText: Strings.pricePlaceholderText,
             hintText: Strings.pricePlaceholderText,
             labelSize: 15,
@@ -460,7 +463,7 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
           VerticalSpacing(20),
           CommonTextField(
             titleLabelText: "${Strings.descriptionText} (${Strings.optionalText})",
-            controller: serviceDescription,
+            controller: authController.serviceDescriptionController,
             labelText: null,
             hintText: Strings.descriptionPlaceholderText,
             labelSize: 15,
@@ -482,15 +485,15 @@ class _ShowAddServiceFormState extends State<_ShowAddServiceForm> with FieldsVal
             textColor: AppColors.whiteOne,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                final price = servicePriceController.text.replaceAll(
+                final price = authController.servicePriceController.text.replaceAll(
                   "R", '').replaceAll(' ', '');
                 authController.addService(
                   ServiceDto(
-                    serviceCategory: serviceCategoryNameController.text,
-                    subCategory: subCategoryController.text,
-                    serviceFor: serviceForController.text,
-                    serviceName: serviceNameController.text,
-                    serviceDescription: serviceDescription.text,
+                    serviceCategory: authController.serviceCategoryNameController.text,
+                    subCategory: authController.subCategoryController.text,
+                    serviceFor: authController.serviceForController.text,
+                    serviceName: authController.serviceNameController.text,
+                    serviceDescription: authController.serviceDescriptionController.text,
                     servicePhoto: photoNotifier.value.toString(),
                     servicePrice: double.tryParse(price) ?? 0,
                   )
